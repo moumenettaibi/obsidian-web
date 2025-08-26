@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian - MyMind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='obsidian-logo.png') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">   
+</head>
+<body class="text-gray-800">
+
+    <div class="flex h-screen bg-white">
+        <aside class="w-16 md:w-20 lg:w-64 flex flex-col items-center md:items-start p-4 bg-gray-50/80 border-r border-gray-200/80 transition-all duration-300">
+            <div class="flex items-center justify-center md:justify-start w-full mb-10 pt-2">
+                <img src="{{ url_for('static', filename='obsidian-logo.png') }}" alt="Obsidian Logo" class="w-10 h-10 rounded-full">
+                <div class="hidden lg:block ml-3">
+                    <h1 class="text-xl font-bold text-gray-800 leading-tight">Obsidian</h1>
+                    <p class="text-sm text-gray-500 leading-tight">my mind</p>
+                </div>
+            </div>
+            <nav class="flex flex-col items-center md:items-start space-y-4 w-full">
+                <a href="#" class="flex items-center p-2 text-gray-700 font-semibold rounded-lg w-full">
+                    <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                    <span class="hidden lg:block ml-4">my mind</span>
+                </a>
+                <a href="#" id="add-note-btn" class="flex items-center p-2 rounded-lg w-full">
+                    <i data-lucide="plus" class="w-5 h-5"></i>
+                    <span class="hidden lg:block ml-4">Add Note</span>
+                </a>
+                 <a href="#" id="import-btn" class="flex items-center p-2 text-gray-500 hover:text-gray-800 rounded-lg w-full cursor-pointer">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                    <span class="hidden lg:block ml-4">Force Sync</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 flex flex-col h-screen overflow-hidden">
+            <header class="flex-shrink-0 bg-white/80 backdrop-blur-sm p-4 z-10 border-b border-gray-200/80">
+                <div class="max-w-7xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <input type="text" id="searchInput" placeholder="Search my mind..." class="font-serif-display text-4xl text-gray-700 w-full bg-transparent focus:outline-none placeholder-gray-400">
+                        <button id="search-help-btn" class="ml-4 text-gray-400 hover:text-gray-600 transition-colors">
+                            <i data-lucide="help-circle" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                    <div id="folder-tags-container" class="mt-8 flex flex-nowrap items-center gap-2 overflow-x-auto pb-3"></div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50/50">
+                <div class="max-w-7xl mx-auto">
+                    <div id="card-container" class="card-grid"></div>
+                    <div id="loading-indicator" class="text-center py-10">
+                        <p class="text-gray-500">Reading your mind...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="search-help-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b">
+                <h2 class="text-lg font-bold text-gray-800">Rule Your Mind</h2>
+                <button id="search-help-close-btn" class="text-gray-500 hover:text-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-violet-600 mb-4">REFINE YOUR SEARCH RESULTS</h3>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">SHOE + RED</code>
+                                <span>Press ENTER after a keyword to create a deep search.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">object: CAR</code>
+                                <span>Search for objects inside images.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">cats || dogs</code>
+                                <span>OR Search.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">text: CAR</code>
+                                <span>Search for text within images or inside notes.</span>
+                            </li>
+                             <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">ARTICLES</code>
+                                <span>Search by card type (ARTICLES, WEBSITES, NOTES, SNIPPETS).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">format: PDF</code>
+                                <span>Search files by format.</span>
+                            </li>
+                             <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">YESTERDAY</code>
+                                <span>Search by date (YESTERDAY, LAST WEEK, MAY 19TH).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">SHOE + -RED</code>
+                                <span>Exclude something from the search results.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">"SHOES"</code>
+                                <span>To find an exact match (text or text in images).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">site: YOUTUBE</code>
+                                <span>Filter results by a specific website.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">tag: NAMEOFTAG</code>
+                                <span>Filter results by a specific tag.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-violet-600 mb-4">GLOBAL SHORTCUTS</h3>
+                        <ul class="space-y-4 text-sm">
+                           <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">N</code>
+                                <span>Shortcut to create a new note.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">+ ENTER</code>
+                                <span>Saves note as a new card.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">ESC</code>
+                                <span>Exit a card view.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <code class="bg-gray-100 text-gray-700 rounded px-2 py-1 mr-4">ENTER</code>
+                                <span>Focus on the search field.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="note-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div id="modal-content" class="relative bg-white rounded-lg shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+                <div class="flex-1 min-w-0">
+                    <h2 id="modal-title" class="text-sm font-semibold text-gray-600 truncate pr-2"></h2>
+                    <input type="text" id="modal-title-input" class="hidden text-sm font-semibold text-gray-800 border border-gray-300 rounded-md w-full p-1 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="flex items-center ml-4 space-x-2">
+                    <button id="modal-edit-btn" class="text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        </button>
+                    <button id="modal-delete-btn" class="text-gray-500 hover:text-red-600 hover:bg-red-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                         <i data-lucide="trash-2" class="h-5 w-5"></i>
+                    </button>
+                    <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-tags" class="p-4 border-b hidden flex-shrink-0"></div>
+            
+            <div class="flex-1 overflow-y-auto">
+                <div id="modal-body" class="p-6 markdown-content"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="media-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-4xl max-h-[90vh]">
+            <div class="media-modal-container">
+                <div id="media-modal-backdrop" class="media-modal-backdrop"></div>
+                
+                <div class="absolute top-4 right-4 z-20 flex items-center space-x-2">
+                    <button id="media-modal-delete-btn" type="button" class="text-gray-300 bg-black/30 hover:bg-red-600/80 rounded-full p-1.5 inline-flex items-center transition-colors">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                    <button id="media-modal-close-btn" type="button" class="text-gray-300 bg-black/30 hover:bg-black/60 rounded-full p-1.5 inline-flex items-center">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <div class="media-modal-body">
+                    <div class="media-modal-header">
+                        <img id="media-modal-poster" src="" alt="Poster" class="media-modal-poster">
+                        <div>
+                            <h2 id="media-modal-title" class="media-modal-title"></h2>
+                            <div id="media-modal-meta" class="media-modal-meta"></div>
+                            <div id="media-modal-genres" class="media-modal-genres"></div>
+                        </div>
+                    </div>
+                    <p id="media-modal-overview" class="media-modal-overview"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="audio-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-sm rounded-lg overflow-hidden relative shadow-2xl">
+            <div id="audio-modal-backdrop" class="absolute inset-0 bg-gray-900"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="relative p-8 text-white flex flex-col items-center">
+                <button id="audio-modal-close-btn" type="button" class="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors z-10">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                
+                <div id="audio-modal-cd" class="w-48 h-48 rounded-full shadow-2xl mb-6 relative">
+                    <div class="cd-inner-ring">
+                        <div class="cd-hole"></div>
+                    </div>
+                </div>
+
+                <h2 id="audio-modal-title" class="text-2xl font-bold text-center">Track Title</h2>
+                <p id="audio-modal-artist" class="text-sm text-gray-400 mb-6">Artist Name</p>
+                
+                <audio id="audio-modal-player" class="hidden"></audio>
+                <div id="custom-audio-player" class="w-full">
+                    <div id="timeline-container">
+                        <div id="timeline" class="w-full">
+                            <div id="timeline-progress" class="h-full rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400 mt-1">
+                        <span id="current-time">0:00</span>
+                        <span id="total-duration">0:00</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-6 mt-2">
+                        <button id="play-pause-btn" class="bg-violet-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg">
+                            <i data-lucide="play" class="w-6 h-6 ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="audio-modal-delete-btn" type="button" class="mt-6 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center gap-2">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i> Delete Note
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="youtube-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="relative bg-gray-100 rounded-lg shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col lg:flex-row overflow-hidden">
+            <button id="youtube-modal-close-btn" class="absolute top-3 right-3 text-gray-500 bg-white/50 hover:bg-white/90 hover:text-black rounded-full p-1.5 transition-colors z-20">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="w-full lg:w-2/3 h-1/2 lg:h-full bg-black flex-shrink-0">
+                <iframe id="youtube-iframe-player" class="w-full h-full"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="w-full lg:w-1/3 flex flex-col h-1/2 lg:h-full">
+                <div class="p-4 border-b border-gray-200 flex-shrink-0">
+                     <h2 id="youtube-modal-title" class="text-base font-semibold text-gray-700 truncate"></h2>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    <div id="youtube-modal-body" class="p-6 markdown-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="new-note-modal" class="fixed inset-0 z-[60] hidden flex-col p-8">        
+        <div class="absolute top-5 right-5">
+            <button id="new-note-close-btn" class="text-gray-400 hover:text-gray-800 transition-colors p-2 rounded-full bg-black/5 hover:bg-black/10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <div class="w-full h-full flex justify-center pt-16 pb-8">
+            <div class="w-full max-w-3xl h-full flex flex-col">
+                <input type="text" id="new-note-title"
+                       class="w-full bg-transparent text-gray-800 placeholder-gray-400 text-5xl font-serif-display focus:outline-none mb-6 flex-shrink-0"
+                       placeholder="Type your headline here.">
+                       <textarea id="new-note-content"
+                       placeholder="Start writing your thoughts..."
+                       class="w-full h-full bg-transparent text-gray-700 placeholder-gray-500 text-lg leading-relaxed focus:outline-none resize-none"></textarea>
+            </div>
+        </div>
+
+        <div class="absolute bottom-5 left-5">
+            <div class="relative">
+                <div id="shortcuts-popup" class="shortcuts-popup hidden">
+                    <div class="shortcut-item"><span>Heading</span><div class="flex gap-2"><kbd># H1</kbd><kbd>## H2</kbd></div></div>
+                    <div class="shortcut-item"><span>Bold Text</span><div><kbd>**text**</kbd> or <kbd>⌘+B</kbd></div></div>
+                    <div class="shortcut-item"><span>Highlight</span><kbd>==important words==</kbd></div>
+                    <div class="shortcut-item"><span>To-Do Item</span><kbd>[] uncompleted</kbd></div>
+                    <div class="shortcut-item"><span>Code Block</span><kbd>``` + Spacebar</kbd></div>
+                    <div class="shortcut-item"><span>Inline Code</span><kbd>`text`</kbd></div>
+                    <div class="shortcut-item"><span>Strikethrough</span><kbd>~~text~~</kbd></div>
+                    <div class="shortcut-item"><span>Divider</span><kbd>---</kbd></div>
+                </div>
+                <button id="shortcuts-help-btn" class="text-gray-500 font-semibold text-xs tracking-widest flex items-center gap-2 cursor-pointer hover:text-gray-800 transition-colors">
+                    <i data-lucide="keyboard" class="w-4 h-4"></i> SHORTCUTS
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-5 right-5">
+            <button id="new-note-save-btn" class="bg-white text-gray-500 px-5 py-2.5 rounded-full text-xs font-semibold shadow-md border border-gray-200 hover:border-gray-300 hover:text-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                SAVE (⌘+ENTER)
+            </button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

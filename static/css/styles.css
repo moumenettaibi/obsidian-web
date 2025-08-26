@@ -1,0 +1,612 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FDFDFD;
+}
+.font-serif-display {
+    font-family: 'Playfair Display', serif;
+}
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.highlight { background-color: #ede9fe; color: #5b21b6; padding: 1px 2px; border-radius: 3px; }
+
+/* Note Tag Styling */
+.tag-container {
+    padding: 0.75rem 1rem 0.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+.tag {
+    display: inline-block;
+    background-color: #eef2ff;
+    color: #4338ca;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #c7d2fe;
+    transition: all 150ms ease-in-out;
+}
+.tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+/* Folder Filter Tag Styling */
+.folder-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    color: #4b5563;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+    white-space: nowrap;
+}
+.folder-tag:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+.folder-tag.active {
+    background-color: #eef2ff;
+    color: #4338ca;
+    border-color: #a5b4fc;
+    font-weight: 600;
+}
+
+/* Hide scrollbar for folder tags container but keep it scrollable */
+#folder-tags-container::-webkit-scrollbar { display: none; }
+#folder-tags-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Styles for rendered Markdown content */
+.card-content-preview {
+    max-height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+.card-content-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, #FDFDFD);
+}
+
+.markdown-content > *:first-child { margin-top: 0; }
+.markdown-content > *:last-child { margin-bottom: 0; }
+.markdown-content h1 { font-size: 1.5em; font-weight: 600; margin: 1em 0 0.5em; }
+.markdown-content h2 { font-size: 1.25em; font-weight: 600; margin: 1em 0 0.5em; }
+.markdown-content h3 { font-size: 1.1em; font-weight: 600; margin: 1em 0 0.5em; }
+.markdown-content p { margin-bottom: 0.75em; line-height: 1.6; }
+.markdown-content ul { margin-bottom: 0.75em; list-style-position: inside; padding-left: 1em; }
+.markdown-content ul.contains-task-list { list-style-type: none; padding-left: 0; }
+.markdown-content li.task-list-item { margin-bottom: 0.5em; display: flex; align-items: flex-start; }
+
+.markdown-content input[type="checkbox"] {
+    -webkit-appearance: none; appearance: none; background-color: transparent; margin: 0;
+    flex-shrink: 0; margin-right: 0.75rem; margin-top: 0.25rem; width: 1rem; height: 1rem;
+    border: 2px solid #d1d5db; border-radius: 4px; position: relative; cursor: pointer; transition: all 150ms;
+}
+.markdown-content input[type="checkbox"]:hover { border-color: #a5b4fc; }
+.markdown-content input[type="checkbox"]:checked { background-color: #8B5CF6; border-color: #8B5CF6; }
+.markdown-content input[type="checkbox"]:checked::after {
+    content: ''; position: absolute; top: 45%; left: 50%; width: 0.3rem; height: 0.6rem;
+    border: solid white; border-width: 0 2px 2px 0; transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.markdown-content blockquote { border-left: 3px solid #8B5CF6; margin: 1em 0; padding-left: 1em; color: #475569; }
+.markdown-content code { background-color: #f1f5f9; color: #dd1144; padding: 2px 5px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
+.markdown-content pre { background-color: #f1f5f9; border-radius: 6px; padding: 12px; overflow-x: auto; margin: 1em 0; }
+.markdown-content pre code { background: none; color: inherit; padding: 0; }
+.markdown-content a { color: #8B5CF6; text-decoration: none; }
+.markdown-content a:hover { text-decoration: underline; }
+
+.markdown-content img {
+    max-width: 30%; 
+    height: auto; 
+    display: block;
+    border-radius: 0.5rem; 
+    margin: 1rem auto;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.markdown-content a.internal-link {
+    color: #4338ca; text-decoration: none; border-bottom: 1px dashed #a5b4fc;
+    background-color: #eef2ff; padding: 1px 3px; border-radius: 3px;
+}
+.markdown-content a.internal-link:hover { background-color: #c7d2fe; border-bottom-style: solid; }
+
+/* --- Generic Media Embed Styling --- */
+.media-embed-container {
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    background-color: #f8fafc;
+}
+.media-embed-container video,
+.media-embed-container audio {
+    width: 100%;
+    display: block;
+}
+
+.video-embed-container {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;
+    background: #000; border-radius: 0.5rem; margin: 1rem 0;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.video-embed-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+.pdf-embed-simple {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    margin: 1rem 0;
+}
+
+.unknown-file-embed {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    color: #374151;
+    transition: background-color 150ms ease-in-out;
+}
+.unknown-file-embed:hover {
+    background-color: #f1f5f9;
+}
+
+/* Table Styling */
+.markdown-content table {
+    width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: 0.9em;
+    border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+.markdown-content thead tr { background-color: #f3f4f6; color: #374151; text-align: left; font-weight: 600; }
+.markdown-content th, .markdown-content td { padding: 12px 15px; }
+.markdown-content tbody tr { border-bottom: 1px solid #f3f4f6; }
+.markdown-content tbody tr:nth-of-type(even) { background-color: #f9fafb; }
+.markdown-content tbody tr:last-of-type { border-bottom: 2px solid #e5e7eb; }
+.markdown-content tbody tr:hover { background-color: #eef2ff; }
+
+/* Edit Mode Styling */
+#modal-body[contenteditable="true"] {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    background-color: #f9fafb; outline: 2px solid #6366f1; outline-offset: -2px;
+    border-radius: 6px; white-space: pre-wrap;
+}
+
+.line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* --- Styles for Media Modal --- */
+.media-modal-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #111827; /* Dark background */
+    border-radius: 0.75rem;
+    overflow: hidden;
+    color: #d1d5db;
+    display: flex;
+    flex-direction: column;
+}
+.media-modal-backdrop {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 60%;
+    background-size: cover;
+    background-position: center 20%;
+}
+.media-modal-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(17,24,39,0.2) 50%, #111827 100%);
+}
+.media-modal-body {
+    position: relative;
+    z-index: 10;
+    padding: 1.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.media-modal-header {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 15%; /* Push content down */
+}
+.media-modal-poster {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -2px rgb(0 0 0 / 0.2);
+}
+.media-modal-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+.media-modal-meta { display: flex; align-items: center; gap: 1rem; font-weight: 500; font-size: 0.9rem; }
+.media-modal-genres { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.media-modal-genre-tag { background-color: #374151; color: #e5e7eb; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; }
+.media-modal-overview { margin-top: 1.5rem; line-height: 1.6; max-width: 80ch; font-size: 0.95rem; }
+
+/* --- Styles for Audio Card --- */
+.audio-card {
+    position: relative;
+    overflow: hidden;
+    background-color: #1f2937; /* Dark blue-gray */
+    color: white;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.audio-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.audio-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent,
+        rgba(139, 92, 246, 0.2),
+        transparent 30%
+    );
+    animation: rotate 8s linear infinite;
+}
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+.audio-card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.audio-card-icon {
+    margin-bottom: auto;
+}
+.audio-card-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.3;
+}
+
+/* --- Styles and Animation for Audio Modal --- */
+#audio-modal.flex {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+#audio-modal.flex > div {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* --- Custom Audio Player Styles --- */
+#timeline-container {
+    padding: 5px 0;
+}
+#timeline {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: height 0.1s ease-in-out;
+}
+#timeline-container:hover #timeline {
+    height: 6px;
+}
+#timeline-progress {
+    background-color: #8B5CF6;
+    position: relative;
+    pointer-events: none;
+}
+#timeline-container:hover #timeline-progress::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: -3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+}
+#play-pause-btn {
+    transition: background-color 0.2s ease;
+}
+#play-pause-btn:hover {
+    background-color: #7c3aed;
+}
+
+/* ADDED: CD Animation Styles */
+#audio-modal-cd {
+    animation: spin 4s linear infinite;
+    animation-play-state: paused; /* Initially paused */
+    background: radial-gradient(circle, #2d3748 0%, #1a202c 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#audio-modal-cd.playing {
+    animation-play-state: running; /* Play animation when class is added */
+}
+.cd-inner-ring {
+    width: 45%;
+    height: 45%;
+    background: radial-gradient(circle, #a0aec0 0%, #718096 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+.cd-hole {
+    width: 20%;
+    height: 20%;
+    background-color: #1a202c; /* Matches the modal inner background */
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Search Help Modal Styling */
+#search-help-modal.flex {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+#search-help-modal.flex > div {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+
+/* --- ADDED: Styles for YouTube Card --- */
+.youtube-card {
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.youtube-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.youtube-thumbnail-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    background-color: #e5e7eb;
+}
+.youtube-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.youtube-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+.youtube-card:hover .youtube-play-icon {
+    background-color: #ff0000;
+}
+.youtube-card-content {
+    padding: 0.75rem;
+}
+.youtube-card-title {
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Limits title to 2 lines */
+}
+
+/* --- ADDED: Styles for YouTube Modal --- */
+#youtube-modal.flex {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+#youtube-modal.flex > div {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+
+/* --- ADDED: Sidebar Button Styles --- */
+aside nav a {
+    transition: all 150ms ease-in-out;
+}
+aside nav a:hover {
+    background-color: #f3f4f6; /* gray-100 */
+    color: #1f2937; /* gray-800 */
+}
+#add-note-btn {
+    background-color: #eef2ff; /* indigo-100 */
+    color: #4338ca; /* indigo-700 */
+    font-weight: 600;
+}
+#add-note-btn:hover {
+    background-color: #e0e7ff; /* indigo-200 */
+    color: #3730a3; /* indigo-800 */
+}
+
+/* --- MODIFIED: New Note Modal & Live Editor Styles --- */
+#new-note-modal {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    background-color: #f3f4f6;
+    background-image: linear-gradient(135deg, #f5eef8 0%, #f0f2fb 50%, #e8f5fe 100%);
+}
+#new-note-modal.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+#new-note-title {
+    color: #5a5278;
+}
+#new-note-title::placeholder {
+    color: #a8a2c2;
+}
+#new-note-content {
+    color: #374151; /* gray-700 */
+    /* ADDED: Hide the scrollbar across all browsers */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* ADDED: Hide scrollbar for Webkit browsers (Chrome, Safari) */
+#new-note-content::-webkit-scrollbar {
+    display: none;
+}
+#new-note-content:focus {
+    outline: none;
+}
+/* CORRECTED: Use ::placeholder for the textarea's placeholder text */
+#new-note-content::placeholder {
+    color: #b0aec2; /* Matching the soft placeholder theme */
+}
+
+/* Live Editor Element Styles (kept from previous version) */
+#new-note-content h1,
+#new-note-content h2,
+#new-note-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin: 1.25em 0 0.5em;
+}
+#new-note-content h1 { font-size: 2em; }
+#new-note-content h2 { font-size: 1.6em; }
+#new-note-content h3 { font-size: 1.3em; }
+
+#new-note-content .task-list-item {
+    display: flex;
+    align-items: flex-start;
+    margin: 0.5em 0;
+}
+#new-note-content .task-list-item input[type="checkbox"] {
+    -webkit-appearance: none; appearance: none; background-color: transparent; margin: 0;
+    flex-shrink: 0; margin-right: 0.75rem; margin-top: 0.3rem; width: 1.1rem; height: 1.1rem;
+    border: 2px solid #d1d5db; border-radius: 4px; position: relative; cursor: pointer;
+}
+#new-note-content .task-list-item input[type="checkbox"]:checked {
+    background-color: #8B5CF6; border-color: #8B5CF6;
+}
+#new-note-content .task-list-item input[type="checkbox"]:checked::after {
+    content: ''; position: absolute; top: 45%; left: 50%; width: 0.3rem; height: 0.6rem;
+    border: solid white; border-width: 0 2px 2px 0; transform: translate(-50%, -50%) rotate(45deg);
+}
+#new-note-content .task-list-item-text {
+    flex-grow: 1;
+}
+#new-note-content hr {
+    border: none;
+    height: 2px;
+    background-color: #e5e7eb; /* gray-200 */
+    margin: 2em auto;
+    width: 80%;
+}
+
+/* --- ADDED: Shortcuts Popup Styles --- */
+.shortcuts-popup {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 0.75rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    padding: 0.5rem;
+    width: 280px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+.shortcut-item span {
+    font-weight: 500;
+}
+.shortcuts-popup kbd {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-bottom-width: 2px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    color: #374151;
+    font-weight: 500;
+}
