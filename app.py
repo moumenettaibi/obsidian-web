@@ -82,6 +82,7 @@ def get_notes_from_disk(root_path):
 
     letterboxd_pattern = re.compile(r'https?://letterboxd\.com/film/([^/]+)/?')
     serializd_pattern = re.compile(r'https?://www\.serializd\.com/show/([^/]+)/?')
+    wikipedia_pattern = re.compile(r'[a-z]{2}\.wikipedia\.org/wiki/([^/\s]+)')
 
     logging.info(f"Scanning for notes and media in: {root_path}")
     for dirpath, dirnames, filenames in os.walk(root_path, topdown=True):
@@ -121,6 +122,7 @@ def get_notes_from_disk(root_path):
 
                     letterboxd_match = letterboxd_pattern.search(raw_content)
                     serializd_match = serializd_pattern.search(raw_content)
+                    wikipedia_match = wikipedia_pattern.search(raw_content)
 
                     if letterboxd_match:
                         note_data.update({'isMediaNote': True, 'media_type': 'movie', 'title_slug': letterboxd_match.group(1)})
@@ -128,6 +130,9 @@ def get_notes_from_disk(root_path):
                         slug_with_id = serializd_match.group(1)
                         title_slug = re.sub(r'-\d+$', '', slug_with_id)
                         note_data.update({'isMediaNote': True, 'media_type': 'tv', 'title_slug': title_slug})
+                    elif wikipedia_match:
+                        title_slug = wikipedia_match.group(1).replace('_', ' ')
+                        note_data.update({'isMediaNote': True, 'media_type': 'wikipedia', 'title_slug': title_slug})
 
                     all_notes.append(note_data)
                 else:
@@ -180,6 +185,69 @@ def api_tmdb_details():
     
     logging.warning(f"Could not find or fetch TMDb data for slug '{title_slug}'")
     return jsonify({"error": "Media not found on TMDb"}), 404
+
+@app.route("/api/wikipedia_details")
+def api_wikipedia_details():
+    """
+    Fetches Wikipedia data for a single article based on title slug.
+    This is called by the frontend after the initial notes have loaded.
+    """
+    title_slug = request.args.get('slug')
+    logging.info(f"Received Wikipedia detail request for slug='{title_slug}'")
+
+    if not title_slug:
+        return jsonify({"error": "Missing slug parameter"}), 400
+
+    try:
+        import wikipedia
+        wikipedia.set_lang('en')
+        
+        # Search for the article
+        search_results = wikipedia.search(title_slug, results=1)
+        if not search_results:
+            logging.warning(f"Could not find Wikipedia article for slug '{title_slug}'")
+            return jsonify({"error": "Wikipedia article not found"}), 404
+        
+        # Get the page
+        page = wikipedia.page(search_results[0])
+        
+        # Get summary
+        summary = wikipedia.summary(search_results[0], sentences=3)
+        
+        # Get featured image if available
+        featured_image = None
+        try:
+            # Try to get the first image from the page
+            images = page.images
+            for img in images:
+                if any(ext in img.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp']):
+                    featured_image = img
+                    break
+        except Exception as e:
+            logging.warning(f"Could not fetch images for Wikipedia article '{title_slug}': {e}")
+        
+        wikipedia_data = {
+            'title': page.title,
+            'summary': summary,
+            'url': page.url,
+            'featured_image': featured_image,
+            'categories': page.categories[:5] if page.categories else [],  # Limit to first 5 categories
+            'page_id': page.pageid
+        }
+        
+        logging.info(f"Successfully fetched Wikipedia data for '{title_slug}'")
+        return jsonify(wikipedia_data)
+        
+    except wikipedia.exceptions.DisambiguationError as e:
+        # Handle disambiguation pages
+        logging.warning(f"Wikipedia disambiguation for '{title_slug}': {e}")
+        return jsonify({"error": "Wikipedia disambiguation page"}), 404
+    except wikipedia.exceptions.PageError as e:
+        logging.warning(f"Wikipedia page not found for '{title_slug}': {e}")
+        return jsonify({"error": "Wikipedia page not found"}), 404
+    except Exception as e:
+        logging.error(f"Error fetching Wikipedia data for '{title_slug}': {e}")
+        return jsonify({"error": "Failed to fetch Wikipedia data"}), 500
 
 @app.route("/api/media/<path:filepath>")
 def serve_media(filepath):

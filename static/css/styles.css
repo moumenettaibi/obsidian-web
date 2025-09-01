@@ -476,6 +476,29 @@ body {
     animation: scaleIn 0.3s ease-out forwards;
 }
 
+/* --- ADDED: Styles for Wikipedia Modal --- */
+#wikipedia-modal.flex {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+#wikipedia-modal.flex > div {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+
+#wikipedia-iframe {
+    border: none;
+    background-color: white;
+    min-height: 600px;
+}
+
+.wikipedia-logo {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.wikipedia-logo:hover {
+    opacity: 1;
+}
+
 /* --- ADDED: Sidebar Button Styles --- */
 aside nav a {
     transition: all 150ms ease-in-out;
@@ -609,4 +632,8 @@ aside nav a:hover {
     font-size: 0.8rem;
     color: #374151;
     font-weight: 500;
+}
+
+#wikipedia-modal-body {
+    height: 100%;
 }

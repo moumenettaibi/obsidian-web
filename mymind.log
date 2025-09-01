@@ -1,0 +1,18 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
+Error fetching Wikipedia data for title 'Currency symbol': 403 Client Error: Forbidden for url: https://en.wikipedia.org/api/rest_v1/page/summary/Currency%20symbol
+Error fetching Wikipedia data for title 'Currency symbol': 403 Client Error: Forbidden for url: https://en.wikipedia.org/api/rest_v1/page/summary/Currency%20symbol
+Error fetching Wikipedia data for title 'Currency symbol': 403 Client Error: Forbidden for url: https://en.wikipedia.org/api/rest_v1/page/summary/Currency%20symbol
+Error fetching Wikipedia data for title 'Currency symbol': 403 Client Error: Forbidden for url: https://en.wikipedia.org/api/rest_v1/page/summary/Currency%20symbol
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on

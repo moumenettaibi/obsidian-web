@@ -274,6 +274,40 @@
         </div>
     </div>
 
+    <div id="wikipedia-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div id="wikipedia-modal-content" class="relative bg-white rounded-lg shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+                <div class="flex-1 min-w-0">
+                    <h2 id="wikipedia-modal-title" class="text-sm font-semibold text-gray-600 truncate pr-2"></h2>
+                    <input type="text" id="wikipedia-modal-title-input" class="hidden text-sm font-semibold text-gray-800 border border-gray-300 rounded-md w-full p-1 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="flex items-center ml-4 space-x-2">
+                    <button id="wikipedia-modal-edit-btn" class="text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i data-lucide="file-pen-line" class="h-5 w-5"></i>
+                    </button>
+                    <button id="wikipedia-modal-delete-btn" class="text-gray-500 hover:text-red-600 hover:bg-red-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                         <i data-lucide="trash-2" class="h-5 w-5"></i>
+                    </button>
+                    <button id="wikipedia-modal-close-btn" class="text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="wikipedia-modal-tags" class="p-4 border-b hidden flex-shrink-0"></div>
+            
+            <div class="flex-1 overflow-y-auto">
+                <div id="wikipedia-modal-body" class="p-6">
+                    <iframe id="wikipedia-iframe" class="w-full h-full border-0" style="width: 100%; height: 100%;"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div id="new-note-modal" class="fixed inset-0 z-[60] hidden flex-col p-8">        
         <div class="absolute top-5 right-5">

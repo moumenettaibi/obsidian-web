@@ -48,6 +48,17 @@ const audioModalTitle = document.getElementById('audio-modal-title');
 const audioModalArtist = document.getElementById('audio-modal-artist');
 const audioModalPlayer = document.getElementById('audio-modal-player');
 
+// Wikipedia Modal Elements
+const wikipediaModal = document.getElementById('wikipedia-modal');
+const wikipediaModalCloseBtn = document.getElementById('wikipedia-modal-close-btn');
+const wikipediaModalDeleteBtn = document.getElementById('wikipedia-modal-delete-btn');
+const wikipediaModalEditBtn = document.getElementById('wikipedia-modal-edit-btn');
+const wikipediaModalTitle = document.getElementById('wikipedia-modal-title');
+const wikipediaModalTitleInput = document.getElementById('wikipedia-modal-title-input');
+const wikipediaModalBody = document.getElementById('wikipedia-modal-body');
+const wikipediaModalTags = document.getElementById('wikipedia-modal-tags');
+const wikipediaIframe = document.getElementById('wikipedia-iframe');
+
 // Custom Player Elements
 const playPauseBtn = document.getElementById('play-pause-btn');
 const timelineContainer = document.getElementById('timeline-container');
@@ -68,7 +79,9 @@ let isDataLoaded = false;
 let currentNoteInModal = null;
 let currentMediaNoteInModal = null;
 let currentAudioNoteInModal = null;
+let currentWikipediaNoteInModal = null;
 let isEditMode = false;
+let isWikipediaEditMode = false;
 let autoSaveTimer = null;
 let syncInterval = null;
 let cardObserver = null;
@@ -132,6 +145,26 @@ const api = {
             return null;
         }
         if (!response.ok) throw new Error(`Failed to fetch TMDb data for ${type}/${slug}`);
+
+        const data = await response.json();
+        cache.set(cacheKey, data);
+        return data;
+    },
+    async getWikipediaDetails(slug) {
+        const cacheKey = `wikipedia_${slug}`;
+        const cachedData = cache.get(cacheKey);
+        if (cachedData) {
+            console.log(`[CACHE HIT] Found Wikipedia data for ${cacheKey}`);
+            return cachedData;
+        }
+
+        console.log(`[CACHE MISS] Fetching Wikipedia data for ${cacheKey} from API`);
+        const response = await fetch(`/api/wikipedia_details?slug=${encodeURIComponent(slug)}`);
+        if (response.status === 404) {
+            console.warn(`Wikipedia details not found for ${slug}`);
+            return null;
+        }
+        if (!response.ok) throw new Error(`Failed to fetch Wikipedia data for ${slug}`);
 
         const data = await response.json();
         cache.set(cacheKey, data);
@@ -495,12 +528,29 @@ function renderCards(notesToRender) {
 
                 if (note.isMediaNote && !note.tmdb_data) {
                     try {
-                        const data = await api.getTMDbDetails(note.media_type, note.title_slug);
-                        if (data) {
-                            note.tmdb_data = data;
+                        if (note.media_type === 'wikipedia') {
+                            // Extract Wikipedia URL from the note content (including different language versions)
+                            const wikipediaUrlMatch = note.rawContent.match(/https?:\/\/(?:www\.)?[a-z]{2}\.wikipedia\.org\/wiki\/[^\s\n]+/g);
+                            if (wikipediaUrlMatch && wikipediaUrlMatch.length > 0) {
+                                const wikipediaUrl = wikipediaUrlMatch[wikipediaUrlMatch.length - 1]; // Get the last URL
+                                const urlMatch = wikipediaUrl.match(/[a-z]{2}\.wikipedia\.org\/wiki\/([^/\s?#]+)/);
+                                if (urlMatch) {
+                                    const articleSlug = urlMatch[1].replace(/_/g, ' ');
+                                    const data = await api.getWikipediaDetails(articleSlug);
+                                    if (data) {
+                                        note.tmdb_data = data;
+                                        note.wikipediaUrl = wikipediaUrl; // Store the actual URL
+                                    }
+                                }
+                            }
+                        } else {
+                            const data = await api.getTMDbDetails(note.media_type, note.title_slug);
+                            if (data) {
+                                note.tmdb_data = data;
+                            }
                         }
                     } catch (error) {
-                        console.error(`Failed to lazy-load TMDb data for ${note.path}`, error);
+                        console.error(`Failed to lazy-load data for ${note.path}`, error);
                     }
                 }
 
@@ -545,6 +595,51 @@ function createCardElement(note, highlightTerm) {
                         </div>
                     </div>
                 `;
+        return div;
+    }
+
+    if (note.isMediaNote && note.media_type === 'wikipedia') {
+        div.className = 'card bg-white border border-gray-200/80 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden relative aspect-[2/3]';
+        
+        // Extract Wikipedia URL and article title from the note content (including different language versions)
+        const wikipediaUrlMatch = note.rawContent.match(/https?:\/\/(?:www\.)?[a-z]{2}\.wikipedia\.org\/wiki\/[^\s\n]+/g);
+        let articleTitle = 'Wikipedia Article';
+        
+        if (wikipediaUrlMatch && wikipediaUrlMatch.length > 0) {
+            const wikipediaUrl = wikipediaUrlMatch[wikipediaUrlMatch.length - 1]; // Get the last URL
+            const urlMatch = wikipediaUrl.match(/[a-z]{2}\.wikipedia\.org\/wiki\/([^/\s?#]+)/);
+            if (urlMatch) {
+                articleTitle = urlMatch[1].replace(/_/g, ' ');
+            }
+        }
+        
+        if (note.tmdb_data) {
+            const data = note.tmdb_data;
+            const title = (data.title || articleTitle) + ' - Wikipedia';
+            
+            div.innerHTML = `
+                        <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100"></div>
+                        <div class="absolute top-4 left-4 wikipedia-logo">
+                            <img src="https://img.icons8.com/?size=512&id=gDi80jDvhca2&format=png" alt="Wikipedia" width="32" height="32">
+                        </div>
+                        <div class="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                            <h3 class="text-gray-800 text-xl font-serif-display font-bold leading-tight mb-4" title="${title}">${title}</h3>
+                            <div class="text-gray-500 text-sm font-medium">Wikipedia</div>
+                        </div>`;
+        } else {
+            // Fallback for when Wikipedia data hasn't been loaded yet
+            const title = articleTitle;
+            
+            div.innerHTML = `
+                        <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100"></div>
+                        <div class="absolute top-4 left-4 wikipedia-logo">
+                            <img src="https://img.icons8.com/?size=512&id=gDi80jDvhca2&format=png" alt="Wikipedia" width="32" height="32">
+                        </div>
+                        <div class="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                            <h3 class="text-gray-800 text-xl font-serif-display font-bold leading-tight mb-4" title="${title}">${title}</h3>
+                            <div class="text-gray-500 text-sm font-medium">Wikipedia</div>
+                        </div>`;
+        }
         return div;
     }
 
@@ -1045,6 +1140,113 @@ async function deleteAudioNote() {
     }
 }
 
+// --- Wikipedia Modal Functions ---
+function showWikipediaModal(note) {
+    currentWikipediaNoteInModal = note;
+    const data = note.tmdb_data;
+    
+    // Extract Wikipedia URL from the note content (including different language versions)
+    const wikipediaUrlMatch = note.rawContent.match(/https?:\/\/(?:www\.)?[a-z]{2}\.wikipedia\.org\/wiki\/[^\s\n]+/g);
+    let wikipediaUrl = null;
+    
+    if (wikipediaUrlMatch && wikipediaUrlMatch.length > 0) {
+        wikipediaUrl = wikipediaUrlMatch[wikipediaUrlMatch.length - 1]; // Get the last URL
+    } else if (data && data.url) {
+        wikipediaUrl = data.url; // Fallback to API data
+    }
+    
+    if (!wikipediaUrl) return;
+
+    // Set the title
+    if (data && data.title) {
+        wikipediaModalTitle.textContent = data.title + ' - Wikipedia';
+    } else {
+        // Extract title from URL if no API data
+        const urlMatch = wikipediaUrl.match(/[a-z]{2}\.wikipedia\.org\/wiki\/([^/\s?#]+)/);
+        if (urlMatch) {
+            const title = urlMatch[1].replace(/_/g, ' ');
+            wikipediaModalTitle.textContent = title + ' - Wikipedia';
+        }
+    }
+
+    // Show tags if available
+    if (note.tags && note.tags.length > 0) {
+        wikipediaModalTags.innerHTML = note.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        wikipediaModalTags.classList.remove('hidden');
+    } else {
+        wikipediaModalTags.classList.add('hidden');
+    }
+
+    // Clear the iframe first to prevent caching issues
+    wikipediaIframe.src = '';
+    
+    // Load the Wikipedia article in the iframe using the actual URL from the note
+    setTimeout(() => {
+        wikipediaIframe.src = wikipediaUrl;
+    }, 100);
+
+    // Switch to view mode
+    switchToWikipediaViewMode();
+
+    wikipediaModal.classList.remove('hidden');
+    wikipediaModal.classList.add('flex');
+    lucide.createIcons();
+}
+
+function switchToWikipediaViewMode() {
+    if (!currentWikipediaNoteInModal) return;
+    isWikipediaEditMode = false;
+
+    wikipediaModalTitle.classList.remove('hidden');
+    wikipediaModalTitleInput.classList.add('hidden');
+    wikipediaModalEditBtn.innerHTML = '<i data-lucide="file-pen-line" class="h-5 w-5"></i>';
+    lucide.createIcons({
+        nodes: [wikipediaModalEditBtn]
+    });
+}
+
+function switchToWikipediaEditMode() {
+    if (!currentWikipediaNoteInModal) return;
+    isWikipediaEditMode = true;
+
+    wikipediaModalTitle.classList.add('hidden');
+    wikipediaModalTitleInput.classList.remove('hidden');
+    wikipediaModalTitleInput.value = currentWikipediaNoteInModal.path;
+
+    wikipediaModalEditBtn.innerHTML = '<i data-lucide="eye" class="h-5 w-5"></i>';
+    lucide.createIcons({
+        nodes: [wikipediaModalEditBtn]
+    });
+    wikipediaModalTitleInput.focus();
+}
+
+function hideWikipediaModal() {
+    if (isWikipediaEditMode) switchToWikipediaViewMode();
+    wikipediaModal.classList.add('hidden');
+    wikipediaModal.classList.remove('flex');
+    // Clear the iframe to prevent caching issues
+    wikipediaIframe.src = '';
+    currentWikipediaNoteInModal = null;
+    isWikipediaEditMode = false;
+}
+
+async function deleteWikipediaNote() {
+    if (!currentWikipediaNoteInModal) return;
+
+    if (window.confirm(`Are you sure you want to delete "${currentWikipediaNoteInModal.path}"?`)) {
+        try {
+            await api.deleteNote(currentWikipediaNoteInModal.path);
+            updateNoteInState({
+                path: currentWikipediaNoteInModal.path
+            }, 'delete');
+            hideWikipediaModal();
+        } catch (error) {
+            console.error(`Error deleting file: ${currentWikipediaNoteInModal.path}`, error);
+            alert("Failed to delete note. See console for details.");
+        }
+    }
+}
+
 // --- Custom Audio Player Logic ---
 function initializeCustomPlayer() {
     playPauseBtn.addEventListener('click', () => {
@@ -1181,6 +1383,15 @@ audioModal.addEventListener('click', (e) => {
     if (e.target === audioModal) hideAudioModal();
 });
 
+wikipediaModalCloseBtn.addEventListener('click', hideWikipediaModal);
+wikipediaModalDeleteBtn.addEventListener('click', deleteWikipediaNote);
+wikipediaModalEditBtn.addEventListener('click', () => {
+    isWikipediaEditMode ? switchToWikipediaViewMode() : switchToWikipediaEditMode();
+});
+wikipediaModal.addEventListener('click', (e) => {
+    if (e.target === wikipediaModal) hideWikipediaModal();
+});
+
 folderTagsContainer.addEventListener('click', (e) => {
     const clickedTag = e.target.closest('.folder-tag');
     if (!clickedTag) return;
@@ -1218,8 +1429,11 @@ function handleInternalLinkClick(e) {
             hideModal();
             hideMediaModal();
             hideAudioModal();
+            hideWikipediaModal();
             if (targetNote.isAudioNote) {
                 showAudioModal(targetNote);
+            } else if (targetNote.isMediaNote && targetNote.media_type === 'wikipedia') {
+                showWikipediaModal(targetNote);
             } else if (targetNote.isMediaNote && targetNote.tmdb_data) {
                 showMediaModal(targetNote);
             } else {
@@ -1231,6 +1445,7 @@ function handleInternalLinkClick(e) {
             hideModal();
             hideMediaModal();
             hideAudioModal();
+            hideWikipediaModal();
         }
     }
 }
@@ -1245,6 +1460,8 @@ cardContainer.addEventListener('click', (e) => {
 
         if (noteData.isAudioNote) {
             showAudioModal(noteData);
+        } else if (noteData.isMediaNote && noteData.media_type === 'wikipedia') {
+            showWikipediaModal(noteData);
         } else if (noteData.isMediaNote && noteData.tmdb_data) {
             showMediaModal(noteData);
         } else if (!noteData.isMediaNote) {
@@ -1304,6 +1521,7 @@ document.addEventListener('keydown', (e) => {
         hideModal();
         hideMediaModal();
         hideAudioModal();
+        hideWikipediaModal();
     }
 });
 
