@@ -11739,3 +11739,698 @@ SyntaxError: unterminated string literal (detected at line 136)
 2025-09-01 17:29:51,251 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
 2025-09-01 17:29:52,423 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
 2025-09-01 17:29:52,493 - INFO - 127.0.0.1 - - [01/Sep/2025 17:29:52] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:32:51,757 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:32:51,848 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:32:53,063 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:32:53,099 - INFO - 127.0.0.1 - - [01/Sep/2025 17:32:53] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:32:54,685 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:32:54,686 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:32:54,948 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:32:54,977 - INFO - 127.0.0.1 - - [01/Sep/2025 17:32:54] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:32:59,671 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:32:59,671 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:32:59,960 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:32:59,999 - INFO - 127.0.0.1 - - [01/Sep/2025 17:32:59] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:34:59,595 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:34:59,602 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:35:00,427 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:35:00,458 - INFO - 127.0.0.1 - - [01/Sep/2025 17:35:00] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:35:00,460 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:35:00,461 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:35:00,755 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:35:00,782 - INFO - 127.0.0.1 - - [01/Sep/2025 17:35:00] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:30,853 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:30,857 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:34,012 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:34,318 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:34] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:34,367 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:34,382 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:35,638 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:35,780 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:35] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:36,250 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:36,251 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:37,188 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:37,241 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:37] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:41,247 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:41,247 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:41,681 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:41,770 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:41] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:46,247 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:46,247 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:46,624 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:46,667 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:46] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:51,247 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:51,248 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:51,442 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:51,465 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:51] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:56,248 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:56,248 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:56,578 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:56,616 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:56] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:56,624 - INFO - API endpoint /api/note hit with method: POST
+2025-09-01 17:44:56,655 - INFO - Note created successfully at: huhdkjsnckjndjcjksn.md
+2025-09-01 17:44:56,656 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:56] "[35m[1mPOST /api/note HTTP/1.1[0m" 201 -
+2025-09-01 17:44:56,663 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:44:56,663 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:44:56,949 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:44:56,990 - INFO - 127.0.0.1 - - [01/Sep/2025 17:44:56] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:44:57,184 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 17:45:01,966 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 17:45:01,967 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:01] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 17:45:01,976 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 17:45:04,840 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 17:45:04,840 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:04] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 17:45:05,810 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:05,810 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:06,114 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:06,158 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:06] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:10,810 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:10,816 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:11,248 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:11,283 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:11] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:15,812 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:15,818 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:16,136 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:16,172 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:16] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:20,810 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:20,810 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:21,085 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:21,124 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:21] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:25,810 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:25,810 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:26,114 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:26,151 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:26] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:30,810 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:30,810 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:31,114 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:31,154 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:31] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:48,150 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 17:45:49,126 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:45:50,643 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:50,662 - WARNING -  * Debugger is active!
+2025-09-01 17:45:50,769 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 17:45:50,819 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:45:50,820 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:45:51,464 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:45:51,505 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:51] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:45:51,611 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 17:45:55,432 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 17:45:55,432 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:55] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 17:45:55,444 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 17:45:56,562 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 17:45:56,563 - INFO - 127.0.0.1 - - [01/Sep/2025 17:45:56] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 17:46:05,811 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:05,818 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:06,413 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:06,445 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:06] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:16,078 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:16,080 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:17,126 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:17,159 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:17] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:20,811 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:20,811 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:21,115 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:21,156 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:21] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:31,012 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:31,022 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:32,716 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:32] "GET /everything HTTP/1.1" 200 -
+2025-09-01 17:46:32,932 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:32] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-09-01 17:46:33,067 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:33] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-09-01 17:46:33,067 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:33] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:46:33,266 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:33,468 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:33] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:33,864 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:33,865 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:33,959 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:33] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:46:34,355 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:34,382 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:34] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:34,615 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 17:46:36,685 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 17:46:36,685 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:36] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 17:46:36,699 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 17:46:37,317 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 17:46:37,318 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:37] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 17:46:38,011 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:38] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:46:38,016 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:38] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:46:39,495 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:39,503 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:40,003 - INFO - Received Book detail request for slug='reviews'
+2025-09-01 17:46:40,518 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:40,677 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:40] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:41,246 - INFO - Successfully fetched Google Books data for 'reviews'
+2025-09-01 17:46:41,249 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:41] "GET /api/book_details?slug=reviews HTTP/1.1" 200 -
+2025-09-01 17:46:41,251 - INFO - Received Book detail request for slug='reviews'
+2025-09-01 17:46:42,642 - INFO - Successfully fetched Google Books data for 'reviews'
+2025-09-01 17:46:42,644 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:42] "GET /api/book_details?slug=reviews HTTP/1.1" 200 -
+2025-09-01 17:46:44,460 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:44,460 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:44,764 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:44,793 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:44] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:49,599 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:49,605 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:50,028 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:50,063 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:50] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:50,732 - INFO - Received TMDb detail request for type='movie', slug='materialists'
+2025-09-01 17:46:51,233 - INFO - TMDb search for 'materialists' found ID: 1136867
+2025-09-01 17:46:51,600 - INFO - Successfully fetched TMDb data for movie ID: 1136867
+2025-09-01 17:46:51,604 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:51] "GET /api/tmdb_details?type=movie&slug=materialists HTTP/1.1" 200 -
+2025-09-01 17:46:51,629 - INFO - Received TMDb detail request for type='movie', slug='scarface-1983'
+2025-09-01 17:46:52,040 - INFO - TMDb search for 'scarface 1983' found ID: 111
+2025-09-01 17:46:52,497 - INFO - Successfully fetched TMDb data for movie ID: 111
+2025-09-01 17:46:52,499 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:52] "GET /api/tmdb_details?type=movie&slug=scarface-1983 HTTP/1.1" 200 -
+2025-09-01 17:46:54,457 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:54,458 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:54,764 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:54,800 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:54] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:46:59,461 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:46:59,462 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:46:59,762 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:46:59,798 - INFO - 127.0.0.1 - - [01/Sep/2025 17:46:59] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:00,871 - INFO - Received TMDb detail request for type='movie', slug='goodfellas'
+2025-09-01 17:47:01,410 - INFO - TMDb search for 'goodfellas' found ID: 769
+2025-09-01 17:47:01,948 - INFO - Successfully fetched TMDb data for movie ID: 769
+2025-09-01 17:47:01,950 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:01] "GET /api/tmdb_details?type=movie&slug=goodfellas HTTP/1.1" 200 -
+2025-09-01 17:47:02,718 - INFO - Received TMDb detail request for type='movie', slug='inception'
+2025-09-01 17:47:02,832 - INFO - Received TMDb detail request for type='movie', slug='whiplash-2014'
+2025-09-01 17:47:03,099 - INFO - TMDb search for 'inception' found ID: 27205
+2025-09-01 17:47:03,208 - INFO - TMDb search for 'whiplash 2014' found ID: 244786
+2025-09-01 17:47:03,445 - INFO - Successfully fetched TMDb data for movie ID: 27205
+2025-09-01 17:47:03,448 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:03] "GET /api/tmdb_details?type=movie&slug=inception HTTP/1.1" 200 -
+2025-09-01 17:47:03,458 - INFO - Received TMDb detail request for type='tv', slug='Breaking-Bad'
+2025-09-01 17:47:03,551 - INFO - Successfully fetched TMDb data for movie ID: 244786
+2025-09-01 17:47:03,555 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:03] "GET /api/tmdb_details?type=movie&slug=whiplash-2014 HTTP/1.1" 200 -
+2025-09-01 17:47:03,582 - INFO - Received TMDb detail request for type='movie', slug='la-la-land'
+2025-09-01 17:47:03,850 - INFO - TMDb search for 'Breaking Bad' found ID: 1396
+2025-09-01 17:47:03,972 - INFO - TMDb search for 'la la land' found ID: 313369
+2025-09-01 17:47:04,220 - INFO - Successfully fetched TMDb data for tv ID: 1396
+2025-09-01 17:47:04,223 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:04] "GET /api/tmdb_details?type=tv&slug=Breaking-Bad HTTP/1.1" 200 -
+2025-09-01 17:47:04,238 - INFO - Received TMDb detail request for type='tv', slug='Better-Call-Saul'
+2025-09-01 17:47:04,317 - INFO - Successfully fetched TMDb data for movie ID: 313369
+2025-09-01 17:47:04,322 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:04] "GET /api/tmdb_details?type=movie&slug=la-la-land HTTP/1.1" 200 -
+2025-09-01 17:47:04,461 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:04,462 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:04,719 - INFO - Received TMDb detail request for type='movie', slug='crazy-stupid-love'
+2025-09-01 17:47:04,752 - INFO - TMDb search for 'Better Call Saul' found ID: 60059
+2025-09-01 17:47:05,434 - INFO - Successfully fetched TMDb data for tv ID: 60059
+2025-09-01 17:47:05,459 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:05] "GET /api/tmdb_details?type=tv&slug=Better-Call-Saul HTTP/1.1" 200 -
+2025-09-01 17:47:05,512 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:05,598 - INFO - TMDb search for 'crazy stupid love' found ID: 50646
+2025-09-01 17:47:05,710 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:05] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:06,084 - INFO - Successfully fetched TMDb data for movie ID: 50646
+2025-09-01 17:47:06,087 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:06] "GET /api/tmdb_details?type=movie&slug=crazy-stupid-love HTTP/1.1" 200 -
+2025-09-01 17:47:06,100 - INFO - Received TMDb detail request for type='movie', slug='interstellar'
+2025-09-01 17:47:06,454 - INFO - TMDb search for 'interstellar' found ID: 157336
+2025-09-01 17:47:06,859 - INFO - Successfully fetched TMDb data for movie ID: 157336
+2025-09-01 17:47:06,861 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:06] "GET /api/tmdb_details?type=movie&slug=interstellar HTTP/1.1" 200 -
+2025-09-01 17:47:06,870 - INFO - Received TMDb detail request for type='movie', slug='the-wolf-of-wall-street'
+2025-09-01 17:47:07,218 - INFO - TMDb search for 'the wolf of wall street' found ID: 106646
+2025-09-01 17:47:07,581 - INFO - Successfully fetched TMDb data for movie ID: 106646
+2025-09-01 17:47:07,583 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:07] "GET /api/tmdb_details?type=movie&slug=the-wolf-of-wall-street HTTP/1.1" 200 -
+2025-09-01 17:47:07,592 - INFO - Received TMDb detail request for type='movie', slug='the-dark-knight'
+2025-09-01 17:47:07,931 - INFO - TMDb search for 'the dark knight' found ID: 155
+2025-09-01 17:47:08,300 - INFO - Successfully fetched TMDb data for movie ID: 155
+2025-09-01 17:47:08,302 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:08] "GET /api/tmdb_details?type=movie&slug=the-dark-knight HTTP/1.1" 200 -
+2025-09-01 17:47:09,458 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:09,458 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:09,776 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:09,814 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:09] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:14,459 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:14,459 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:14,661 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:14,686 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:14] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:17,008 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:17] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:47:19,459 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:19,460 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:19,769 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:19,805 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:19] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:44,647 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:44,674 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:45,162 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:45,216 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:45] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:49,459 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:49,459 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:49,784 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:49,820 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:49] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:54,460 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:54,460 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:54,769 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:54,804 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:54] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:47:57,401 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 17:47:57,841 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:47:58,984 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:58,997 - WARNING -  * Debugger is active!
+2025-09-01 17:47:59,081 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 17:47:59,461 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:47:59,462 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:47:59,782 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:47:59,822 - INFO - 127.0.0.1 - - [01/Sep/2025 17:47:59] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:04,460 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:04,466 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:05,705 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:05,731 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:05] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:09,833 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:09,834 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:10,167 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:10,204 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:10] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:11,329 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:11] "GET /everything HTTP/1.1" 200 -
+2025-09-01 17:48:11,694 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:11] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:48:11,695 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:11] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-09-01 17:48:11,701 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:11] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-09-01 17:48:12,130 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:12,131 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:12,237 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:12] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:48:12,471 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:12,507 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:12] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:12,655 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 17:48:13,997 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:13] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:48:13,999 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:13] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:48:15,795 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 17:48:15,797 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:15] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 17:48:15,862 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 17:48:16,821 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 17:48:16,822 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:16] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 17:48:17,584 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:17,590 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:18,195 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:18,229 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:18] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:28,832 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 17:48:29,349 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:48:30,544 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:30,564 - WARNING -  * Debugger is active!
+2025-09-01 17:48:30,709 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 17:48:52,590 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:52,592 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:53,319 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:53,366 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:53] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:53,698 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:53,698 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:54,062 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:54,197 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:54] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:54,206 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:54,206 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:54,572 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:54,607 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:54] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:54,611 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:54,612 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:54,904 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:54,938 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:54] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:54,941 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:54,942 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:55,053 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:55] "GET /everything HTTP/1.1" 200 -
+2025-09-01 17:48:55,213 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:55] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-09-01 17:48:55,214 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:55] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:48:55,253 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:55] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-09-01 17:48:55,554 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:55,555 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:55,618 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:55] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:48:55,910 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:55,951 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:55] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:56,152 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:56,189 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:56] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:56,323 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 17:48:56,786 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:56,787 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:57,086 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:57,122 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:57] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:57,527 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:57,527 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:57,829 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:57,864 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:57] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:57,866 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:48:57,866 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:48:58,179 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:48:58,217 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:58] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:48:58,722 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 17:48:58,722 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:58] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 17:48:58,731 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 17:48:59,538 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 17:48:59,539 - INFO - 127.0.0.1 - - [01/Sep/2025 17:48:59] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 17:49:00,583 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:00,583 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:00,873 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:00,910 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:00] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:01,125 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:01] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:49:01,127 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:01] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:49:01,514 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:01,514 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:02,433 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:02,491 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:02] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:06,261 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:06,262 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:06,593 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:06,629 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:06] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:07,558 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-09-01 17:49:07,561 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:07] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-09-01 17:49:11,269 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:11,275 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:11,579 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:11,617 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:11] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:16,261 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:16,261 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:16,567 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:16,603 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:16] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:21,262 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:21,262 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:21,559 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:21,595 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:21] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:26,291 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:49:26,291 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:49:26,794 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:49:26,849 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:26] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:49:59,135 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:59] "GET /everything HTTP/1.1" 200 -
+2025-09-01 17:49:59,248 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:59] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-09-01 17:49:59,374 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:59] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-09-01 17:49:59,444 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:59] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:49:59,456 - INFO - 127.0.0.1 - - [01/Sep/2025 17:49:59] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-09-01 17:50:00,228 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:50:00,228 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:00,316 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:00] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 17:50:01,058 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:50:01,093 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:01] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:50:01,242 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 17:50:03,745 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 17:50:03,745 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:03] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 17:50:03,767 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 17:50:04,403 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 17:50:04,403 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:04] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 17:50:06,176 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:50:06,176 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:06,493 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:50:06,523 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:06] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:50:07,331 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:07] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:50:07,676 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:07] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 17:50:11,176 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:50:11,177 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:11,525 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:50:11,562 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:11] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:50:16,177 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:50:16,177 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:16,501 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:50:16,536 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:16] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:50:21,178 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:50:21,178 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:21,498 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:50:21,533 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:21] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:50:26,176 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 17:50:26,177 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:26,501 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 17:50:26,538 - INFO - 127.0.0.1 - - [01/Sep/2025 17:50:26] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 17:50:41,559 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 17:50:42,347 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:50:43,739 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:50:43,762 - WARNING -  * Debugger is active!
+2025-09-01 17:50:43,905 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 17:54:10,786 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/api.py', reloading
+2025-09-01 17:54:11,236 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:54:12,063 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:54:12,077 - WARNING -  * Debugger is active!
+2025-09-01 17:54:12,213 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 17:54:18,831 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 17:54:19,704 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:54:20,539 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:54:20,551 - WARNING -  * Debugger is active!
+2025-09-01 17:54:20,664 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 17:54:26,677 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 17:54:27,225 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 17:54:27,972 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 17:54:27,991 - WARNING -  * Debugger is active!
+2025-09-01 17:54:28,113 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 18:13:30,044 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:13:30,098 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:13:30,922 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,923 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,938 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,946 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,951 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,954 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,964 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,971 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,977 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:30,995 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,060 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:13:31,081 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:31] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:13:31,262 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:13:31,262 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:13:31,692 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:31] "GET /everything HTTP/1.1" 200 -
+2025-09-01 18:13:31,885 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:31] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-09-01 18:13:31,898 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,901 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,914 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,920 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:31] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-09-01 18:13:31,921 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:31] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 18:13:31,922 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:31] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-09-01 18:13:31,931 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,938 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,940 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,946 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,950 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,955 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:31,967 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:32,007 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:13:32,030 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:32] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:13:32,943 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:13:32,943 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:13:33,001 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:33] "[36mGET /static/obsidian-logo.png HTTP/1.1[0m" 304 -
+2025-09-01 18:13:33,212 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,214 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,225 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,230 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,235 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,239 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,260 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,275 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,289 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,311 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:33,348 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:13:33,405 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:33] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:13:33,593 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 18:13:35,857 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 18:13:35,858 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:35] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 18:13:35,866 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 18:13:36,569 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 18:13:36,570 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:36] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 18:13:38,488 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:13:38,488 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:13:38,648 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,648 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,655 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,658 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,661 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,663 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,667 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,670 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,674 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,842 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:38,932 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:13:38,955 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:38] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:13:39,160 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:39] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 18:13:39,173 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:39] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 18:13:42,029 - INFO - Received TMDb detail request for type='tv', slug='Prison-Break'
+2025-09-01 18:13:43,489 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:13:43,489 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:13:44,072 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,073 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,101 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,108 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,115 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,120 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,128 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,137 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,148 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,173 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:13:44,245 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:13:44,366 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:44] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:13:51,796 - INFO - TMDb search for 'Prison Break' found ID: 2288
+2025-09-01 18:13:52,142 - INFO - Successfully fetched TMDb data for tv ID: 2288
+2025-09-01 18:13:52,145 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:52] "GET /api/tmdb_details?type=tv&slug=Prison-Break HTTP/1.1" 200 -
+2025-09-01 18:13:53,766 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:53] "GET /api/media/Archive%2FAssets%2F1944b1cbe77.90a03896d4592966.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:53,788 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:53] "GET /api/media/00-%20Inbox%2FPasted%20image%2020250822184011.png HTTP/1.1" 200 -
+2025-09-01 18:13:54,952 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:13:54,952 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:13:55,428 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:55] "GET /api/media/Archive%2FAssets%2F1989aaecada.a9e113eac2dbd0ff.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:55,434 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:55] "GET /api/media/Archive%2FAssets%2F1986bf45b2b.9d55897f6e23b80d.png HTTP/1.1" 200 -
+2025-09-01 18:13:55,440 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:55] "GET /api/media/Archive%2FAssets%2F198613497c9.a81b305e9a367099.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:55,451 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:55] "GET /api/media/Archive%2FAssets%2F19861349801.925ca45911f5ed0c.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:55,462 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:55] "GET /api/media/Archive%2FAssets%2F19866c260f8.90beeca90bc5a575.png HTTP/1.1" 200 -
+2025-09-01 18:13:56,002 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:56] "GET /api/media/Archive%2FAssets%2F1986134983c.bf0d09e19e0d3cea.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:56,068 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:56] "GET /api/media/Archive%2FAssets%2F1986134985e.880946b85bd10133.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:56,367 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:56] "GET /api/media/Archive%2FAssets%2F19857ff26e2.92b1e45831d9b62a.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:56,603 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:56] "GET /api/media/Archive%2FAssets%2F19857ff26c2.b25580583f07476d.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:56,760 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:56] "GET /api/media/Archive%2FAssets%2F19861349878.ad11d14c492f3648.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:57,253 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:57] "GET /api/media/Archive%2FAssets%2F19861349890.b394a84bc27b883b.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:57,362 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:57] "GET /api/media/Archive%2FAssets%2F198613498a9.829b48299d1c5a38.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:57,368 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:57] "GET /api/media/Archive%2FAssets%2F198613498c0.963ce56a0b489395.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:57,594 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:57] "GET /api/media/Archive%2FAssets%2F198613498d8.a4a930ccf6d026dc.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:57,785 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:57] "GET /api/media/Archive%2FAssets%2F198613498ee.ae565dbc6ba36414.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:58,303 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:58] "GET /api/media/Archive%2FAssets%2F19861349905.aec2de5a4cd1e294.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:58,378 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:58] "GET /api/media/Archive%2FAssets%2F1986134995b.8dca4d8fffc3bf7e.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:58,388 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:58] "GET /api/media/Archive%2FAssets%2F19861349942.abd8deb4fe1f0ce5.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:58,503 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:58] "GET /api/media/Archive%2FAssets%2F19861349972.8e1843e698e7e471.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:58,631 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:58] "GET /api/media/Archive%2FAssets%2F1986134998b.9985b2c2580d6217.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:59,459 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:59] "GET /api/media/Archive%2FAssets%2F198613499a2.9932c9fa5c5ee39b.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:59,498 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:59] "GET /api/media/Archive%2FAssets%2F198613499b7.8296b64cbec2e52b.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:59,508 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:59] "GET /api/media/Archive%2FAssets%2F198613499cd.92158f9ac64a6104.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:59,530 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:59] "GET /api/media/Archive%2FAssets%2F198613499e2.885d0b828c1d4e10.jpg HTTP/1.1" 200 -
+2025-09-01 18:13:59,816 - INFO - 127.0.0.1 - - [01/Sep/2025 18:13:59] "GET /api/media/Archive%2FAssets%2F198613499f9.ae4ce1b02f9ef689.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:00,473 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:00] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 18:14:00,475 - INFO - Received Wikipedia detail request for slug='Tasmanische Riesenkrabbe'
+2025-09-01 18:14:00,643 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:00] "GET /api/media/Archive%2FAssets%2F19861349a0f.884deedd06cd16ca.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:00,653 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:00] "GET /api/media/Archive%2FAssets%2F19861349a24.93ccdfd8057c3f7e.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:00,697 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:00] "GET /api/media/Archive%2FAssets%2F19861349a3b.b30e721e16ec093d.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:01,145 - WARNING - Could not find Wikipedia article for slug 'Tasmanische Riesenkrabbe'
+2025-09-01 18:14:01,145 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:01] "[33mGET /api/wikipedia_details?slug=Tasmanische%20Riesenkrabbe HTTP/1.1[0m" 404 -
+2025-09-01 18:14:01,162 - INFO - Received Wikipedia detail request for slug='Carapax'
+2025-09-01 18:14:01,185 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:01] "GET /api/media/Archive%2FAssets%2F19861349a52.ac26c514916ec9e9.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:01,491 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:01] "GET /api/media/Archive%2FAssets%2F19861349a69.8161261b414478c3.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:01,580 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:01] "GET /api/media/Archive%2FAssets%2F19861349a84.9b79f6723c798bfc.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:02,038 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:02] "GET /api/media/Archive%2FAssets%2F19861349aa2.8bf294fad62ee68a.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:02,346 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:02] "GET /api/media/Archive%2FAssets%2F19861349ab9.87fc42637bb23370.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:02,357 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:02] "GET /api/media/Archive%2FAssets%2F19861349adf.a133eba3bd9d1416.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:02,964 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:02] "GET /api/media/Archive%2FAssets%2F19861349b00.a27f5ab456b8c8cd.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:03,048 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:03] "GET /api/media/Archive%2FAssets%2F19861349b26.9785fff9795bde20.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:03,383 - WARNING - Wikipedia page not found for 'Carapax': Page id "list of dc comics characters d" does not match any pages. Try another id!
+2025-09-01 18:14:03,392 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:03] "[33mGET /api/wikipedia_details?slug=Carapax HTTP/1.1[0m" 404 -
+2025-09-01 18:14:03,394 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:03] "GET /api/media/Archive%2FAssets%2F19861349b4e.b3c67919d9bf88ba.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:03,493 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:03] "GET /api/media/Archive%2FAssets%2F19861349b79.88665ff7efe9fd26.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:04,314 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:04] "GET /api/media/Archive%2FAssets%2F19861349b9f.a50629e5c819b360.jpg HTTP/1.1" 200 -
+2025-09-01 18:14:04,347 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:04] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 18:14:05,159 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,166 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,260 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,348 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,360 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,370 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,405 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,418 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,435 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,456 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,579 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:05,606 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:05] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:05,608 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:05,608 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:05,857 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,858 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,868 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,872 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,875 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,877 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,884 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,888 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,893 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,909 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:05,957 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:06,012 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:06] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:06,016 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:06,017 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:06,494 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,495 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,517 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,526 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,530 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,535 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,542 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,549 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,554 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,566 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:06,608 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:06,637 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:06] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:09,953 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:09,953 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:10,164 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,164 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,172 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,176 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,179 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,182 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,187 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,190 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,194 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,203 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:10,228 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:10,248 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:10] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:17,246 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:17,252 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:17,497 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,499 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,509 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,515 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,522 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,525 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,535 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,540 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,623 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,708 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:17,854 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:17,899 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:17] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:22,247 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:22,247 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:22,459 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,459 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,468 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,477 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,483 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,488 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,500 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,519 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,525 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,542 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:22,583 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:22,613 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:22] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:27,339 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:27] "[36mGET /api/media/Noor-Book.com%20%20الداء%20والدواء.pdf HTTP/1.1[0m" 304 -
+2025-09-01 18:14:27,344 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:27] "[36mGET /api/media/8270460.pdf HTTP/1.1[0m" 304 -
+2025-09-01 18:14:27,375 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:27,376 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:27,771 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,772 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,780 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,789 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,794 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,799 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,807 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,812 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,817 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,832 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:27,887 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:27,923 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:27] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:32,248 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:32,248 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:32,468 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,468 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,479 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,485 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,490 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,493 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,501 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,506 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,512 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,527 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:32,555 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:32,575 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:32] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:14:37,246 - INFO - API endpoint /api/notes hit. Fetching notes and media files.
+2025-09-01 18:14:37,246 - INFO - Scanning for notes and media in: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:14:37,381 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Elon Musk Tesla, SpaceX, and the Quest for a Fantastic….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,381 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Steve Jobs.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,388 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Rich Dad, Poor Dad.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,391 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/How to Win Friends & Influence People.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,394 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,396 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The Lean Startup.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,400 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 48 Laws of Power 1.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,403 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The First Days (As the World Dies, 1).md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,407 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/Zero to One Notes on Startups, or How to Build the Fut….md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,415 - ERROR - Error processing file /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian/ReadItLater Inbox/The 4-Hour Workweek.md: name 'extract_isbn_from_goodreads_url' is not defined
+2025-09-01 18:14:37,446 - INFO - Notes have been sorted by 'createdTime' in descending (new to old) order.
+2025-09-01 18:14:37,465 - INFO - 127.0.0.1 - - [01/Sep/2025 18:14:37] "GET /api/notes HTTP/1.1" 200 -
+2025-09-01 18:15:08,706 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/api.py', reloading
+2025-09-01 18:15:08,714 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/api.py', reloading
+2025-09-01 18:15:08,715 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/api.py', reloading
+2025-09-01 18:15:09,240 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 18:15:10,444 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:15:10,463 - WARNING -  * Debugger is active!
+2025-09-01 18:15:10,581 - INFO -  * Debugger PIN: 126-055-641
+2025-09-01 18:15:11,948 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 18:15:11,949 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 18:15:11,950 - INFO -  * Detected change in '/Users/moumanet-taibi/Desktop/mymind/app.py', reloading
+2025-09-01 18:15:12,872 - INFO -  * Restarting with watchdog (fsevents)
+2025-09-01 18:15:13,557 - INFO - Serving notes from: /Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian
+2025-09-01 18:15:13,578 - WARNING -  * Debugger is active!
+2025-09-01 18:15:13,738 - INFO -  * Debugger PIN: 126-055-641
