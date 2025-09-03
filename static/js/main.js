@@ -67,6 +67,11 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const chatSendBtn = document.getElementById('chat-send-btn');
 
+// Search Help Modal Elements
+const searchHelpBtn = document.getElementById('search-help-btn');
+const searchHelpModal = document.getElementById('search-help-modal');
+const searchHelpCloseBtn = document.getElementById('search-help-close-btn');
+
 // Custom Player Elements
 const playPauseBtn = document.getElementById('play-pause-btn');
 const timelineContainer = document.getElementById('timeline-container');
@@ -225,7 +230,7 @@ const api = {
 // --- Utility Functions ---
 function debounce(func, delay) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, args), delay);
     };
@@ -262,7 +267,8 @@ async function loadNotesFromServer() {
                 tags,
                 contentWithoutTags
             } = parseNoteContent(note.rawContent);
-            const processedNote = { ...note,
+            const processedNote = {
+                ...note,
                 tags,
                 contentWithoutTags,
                 isAudioNote: false
@@ -404,6 +410,412 @@ async function createNewNoteFromModal() {
 }
 
 
+// --- Table Action Functions ---
+function wrapTablesWithActions(htmlContent) {
+    // Create a temporary div to parse HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+
+    // Find all tables and wrap them
+    const tables = tempDiv.querySelectorAll('table');
+    tables.forEach((table, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'table-container';
+        wrapper.dataset.tableIndex = index;
+
+        const actions = document.createElement('div');
+        actions.className = 'table-actions';
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'table-action-btn copy-btn';
+        copyBtn.title = 'Copy as Markdown';
+        copyBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i>';
+        copyBtn.dataset.action = 'copy';
+        copyBtn.dataset.tableIndex = index;
+
+        const downloadBtn = document.createElement('button');
+        downloadBtn.className = 'table-action-btn download-btn';
+        downloadBtn.title = 'Download as CSV';
+        downloadBtn.innerHTML = '<i data-lucide="download" class="w-4 h-4"></i>';
+        downloadBtn.dataset.action = 'download';
+        downloadBtn.dataset.tableIndex = index;
+
+        actions.appendChild(copyBtn);
+        actions.appendChild(downloadBtn);
+
+        // Insert wrapper before table
+        table.parentNode.insertBefore(wrapper, table);
+        // Move table into wrapper
+        wrapper.appendChild(table);
+        // Add actions to wrapper
+        wrapper.appendChild(actions);
+    });
+
+    return tempDiv.innerHTML;
+}
+
+function copyTableAsMarkdown(table) {
+    const rows = Array.from(table.querySelectorAll('tr'));
+    let markdown = '';
+
+    rows.forEach((row, rowIndex) => {
+        const cells = Array.from(row.querySelectorAll('th, td'));
+        const cellTexts = cells.map(cell => cell.textContent.trim());
+
+        // Add table row
+        markdown += '| ' + cellTexts.join(' | ') + ' |\n';
+
+        // Add separator after header row
+        if (rowIndex === 0 && row.querySelector('th')) {
+            markdown += '| ' + cells.map(() => '---').join(' | ') + ' |\n';
+        }
+    });
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(markdown).then(() => {
+        showCopyFeedback(table);
+    }).catch(err => {
+        console.error('Failed to copy table:', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = markdown;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showCopyFeedback(table);
+    });
+}
+
+function downloadTableAsCSV(table) {
+    const rows = Array.from(table.querySelectorAll('tr'));
+    let csv = '';
+
+    rows.forEach(row => {
+        const cells = Array.from(row.querySelectorAll('th, td'));
+        const cellTexts = cells.map(cell => {
+            let text = cell.textContent.trim();
+            // Escape quotes and wrap in quotes if contains comma or quote
+            if (text.includes(',') || text.includes('"') || text.includes('\n')) {
+                text = '"' + text.replace(/"/g, '""') + '"';
+            }
+            return text;
+        });
+        csv += cellTexts.join(',') + '\n';
+    });
+
+    // Create and download file
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `table-${Date.now()}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function showCopyFeedback(table) {
+    const wrapper = table.closest('.table-container');
+    const copyBtn = wrapper.querySelector('.copy-btn');
+
+    copyBtn.classList.add('copied');
+    copyBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i>';
+
+    setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        copyBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i>';
+        lucide.createIcons({ nodes: [copyBtn] });
+    }, 2000);
+}
+
+// Function to initialize table action icons after content is rendered
+function initializeTableIcons(container) {
+    const tableContainers = container.querySelectorAll('.table-container');
+    tableContainers.forEach(tableContainer => {
+        lucide.createIcons({ nodes: [tableContainer] });
+    });
+}
+
+// --- Code Block Enhancement Functions ---
+function enhanceCodeBlocks(htmlContent) {
+    // Create a temporary div to parse HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+
+    // Find all pre > code elements (code blocks)
+    const codeBlocks = tempDiv.querySelectorAll('pre > code');
+    codeBlocks.forEach((codeElement, index) => {
+        const preElement = codeElement.parentElement;
+
+        // Extract language from class (e.g., "language-javascript")
+        let language = 'text';
+        const classList = Array.from(codeElement.classList);
+        const languageClass = classList.find(cls => cls.startsWith('language-'));
+        if (languageClass) {
+            language = languageClass.replace('language-', '');
+        }
+
+        // Get the code content
+        const codeContent = codeElement.textContent;
+
+        // Create enhanced code block container
+        const container = document.createElement('div');
+        container.className = 'code-block-container';
+        container.dataset.codeIndex = index;
+
+        // Store the original code content for copying (without HTML)
+        container.dataset.originalCode = codeContent;
+
+        // Create header with language and copy button
+        const header = document.createElement('div');
+        header.className = 'code-block-header';
+
+        const languageLabel = document.createElement('div');
+        languageLabel.className = 'code-block-language';
+        languageLabel.textContent = language || 'text';
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'code-copy-btn';
+        copyBtn.innerHTML = '<i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>';
+        copyBtn.dataset.action = 'copy-code';
+        copyBtn.dataset.codeIndex = index;
+
+        header.appendChild(languageLabel);
+        header.appendChild(copyBtn);
+
+        // Create content wrapper
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'code-block-content';
+
+        // Apply syntax highlighting
+        const highlightedCode = applySyntaxHighlighting(codeContent, language);
+
+        // Create new pre and code elements
+        const newPre = document.createElement('pre');
+        const newCode = document.createElement('code');
+        newCode.innerHTML = highlightedCode;
+        newPre.appendChild(newCode);
+        contentWrapper.appendChild(newPre);
+
+        // Assemble the enhanced code block
+        container.appendChild(header);
+        container.appendChild(contentWrapper);
+
+        // Replace the original pre element
+        preElement.parentNode.insertBefore(container, preElement);
+        preElement.remove();
+    });
+
+    return tempDiv.innerHTML;
+}
+
+function applySyntaxHighlighting(code, language) {
+    // Simple, reliable syntax highlighting
+    const lines = code.split('\n');
+    const highlightedLines = lines.map(line => highlightLine(line, language));
+    return highlightedLines.join('\n');
+}
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function highlightLine(line, language) {
+    // Escape HTML first
+    let result = escapeHtml(line);
+
+    // Apply simple highlighting based on language
+    switch (language.toLowerCase()) {
+        case 'python':
+        case 'py':
+            return highlightPythonLine(result);
+        case 'javascript':
+        case 'js':
+            return highlightJavaScriptLine(result);
+        case 'css':
+            return highlightCSSLine(result);
+        case 'html':
+            return highlightHTMLLine(result);
+        case 'json':
+            return highlightJSONLine(result);
+        case 'bash':
+        case 'shell':
+        case 'sh':
+            return highlightBashLine(result);
+        default:
+            return result;
+    }
+}
+
+function highlightPythonLine(line) {
+    // Keywords
+    line = line.replace(/\b(def|class|if|elif|else|for|while|try|except|finally|with|as|import|from|return|yield|break|continue|pass|lambda|and|or|not|in|is|None|True|False|self|cls)\b/g, '<span class="token keyword">$1</span>');
+
+    // Strings
+    line = line.replace(/(&quot;)([^&]*?)(&quot;)/g, '<span class="token string">$1$2$3</span>');
+    line = line.replace(/(&#39;)([^&]*?)(&#39;)/g, '<span class="token string">$1$2$3</span>');
+
+    // Numbers
+    line = line.replace(/\b(\d+\.?\d*)\b/g, '<span class="token number">$1</span>');
+
+    // Comments
+    line = line.replace(/(#.*$)/g, '<span class="token comment">$1</span>');
+
+    return line;
+}
+
+function highlightJavaScriptLine(line) {
+    // Keywords
+    line = line.replace(/\b(const|let|var|function|return|if|else|for|while|do|break|continue|switch|case|default|try|catch|finally|throw|class|extends|import|export|from|async|await|new|this|super|static|get|set|typeof|instanceof|in|of|delete|void|null|undefined|true|false)\b/g, '<span class="token keyword">$1</span>');
+
+    // Strings
+    line = line.replace(/(&quot;)([^&]*?)(&quot;)/g, '<span class="token string">$1$2$3</span>');
+    line = line.replace(/(&#39;)([^&]*?)(&#39;)/g, '<span class="token string">$1$2$3</span>');
+
+    // Numbers
+    line = line.replace(/\b(\d+\.?\d*)\b/g, '<span class="token number">$1</span>');
+
+    // Comments
+    line = line.replace(/(\/\/.*$)/g, '<span class="token comment">$1</span>');
+
+    return line;
+}
+
+function highlightCSSLine(line) {
+    // Properties (simple pattern)
+    line = line.replace(/([a-zA-Z-]+)(\s*:)/g, '<span class="token property">$1</span>$2');
+
+    // Comments
+    line = line.replace(/(\/\*.*?\*\/)/g, '<span class="token comment">$1</span>');
+
+    return line;
+}
+
+function highlightHTMLLine(line) {
+    // Only highlight angle brackets, keep tag names normal
+    line = line.replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9]*)/g, '<span class="token punctuation">$1</span>$2');
+    line = line.replace(/(&gt;)/g, '<span class="token punctuation">$1</span>');
+
+    // Attributes
+    line = line.replace(/([a-zA-Z-]+)(=)(&quot;[^&]*?&quot;)/g, '<span class="token attr-name">$1</span><span class="token punctuation">$2</span><span class="token attr-value">$3</span>');
+
+    return line;
+}
+
+function highlightJSONLine(line) {
+    // Strings
+    line = line.replace(/(&quot;)([^&]*?)(&quot;)/g, '<span class="token string">$1$2$3</span>');
+
+    // Numbers
+    line = line.replace(/:\s*(\d+\.?\d*)/g, ': <span class="token number">$1</span>');
+
+    // Booleans and null
+    line = line.replace(/\b(true|false|null)\b/g, '<span class="token boolean">$1</span>');
+
+    return line;
+}
+
+function highlightBashLine(line) {
+    // Commands starting with $
+    line = line.replace(/^(\$\s*)([a-zA-Z-]+)/g, '$1<span class="token function">$2</span>');
+
+    // Flags
+    line = line.replace(/(\s)(--?[a-zA-Z-]+)/g, '$1<span class="token property">$2</span>');
+
+    // Comments
+    line = line.replace(/(#.*$)/g, '<span class="token comment">$1</span>');
+
+    return line;
+}
+
+function copyCodeToClipboard(codeIndex) {
+    const container = document.querySelector(`[data-code-index="${codeIndex}"]`);
+    if (!container) return;
+
+    // Get the original code content (stored as data attribute)
+    const codeText = container.dataset.originalCode;
+    if (!codeText) return;
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(codeText).then(() => {
+        showCodeCopyFeedback(container);
+    }).catch(err => {
+        console.error('Failed to copy code:', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = codeText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showCodeCopyFeedback(container);
+    });
+}
+
+function showCodeCopyFeedback(container) {
+    const copyBtn = container.querySelector('.code-copy-btn');
+    if (!copyBtn) {
+        console.log('Copy button not found');
+        return;
+    }
+
+    console.log('Showing copy feedback, adding copied class');
+    console.log('Button element:', copyBtn);
+    console.log('Current computed styles:', window.getComputedStyle(copyBtn).background);
+
+    // Store original styles
+    const originalBackground = copyBtn.style.background;
+    const originalBorderColor = copyBtn.style.borderColor;
+    const originalColor = copyBtn.style.color;
+
+    // Add copied state with green styling using setAttribute for maximum compatibility
+    copyBtn.classList.add('copied');
+    copyBtn.innerHTML = '<i data-lucide="check" class="w-3 h-3"></i><span>Copied!</span>';
+
+    // Force styles with !important using cssText
+    copyBtn.style.cssText += `
+        background: #10b981 !important;
+        border-color: #059669 !important;
+        color: #ffffff !important;
+        transform: translateY(-1px) !important;
+    `;
+
+    console.log('After styling:', window.getComputedStyle(copyBtn).background);
+
+    // Initialize the check icon
+    lucide.createIcons({ nodes: [copyBtn] });
+
+    // Reset after 2.5 seconds
+    setTimeout(() => {
+        console.log('Resetting copy button');
+        copyBtn.classList.remove('copied');
+        copyBtn.innerHTML = '<i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>';
+
+        // Reset to original styles
+        copyBtn.style.background = originalBackground;
+        copyBtn.style.borderColor = originalBorderColor;
+        copyBtn.style.color = originalColor;
+        copyBtn.style.transform = '';
+
+        lucide.createIcons({ nodes: [copyBtn] });
+    }, 2500);
+}
+
+// Function to initialize code block icons after content is rendered
+function initializeCodeBlockIcons(container) {
+    const codeContainers = container.querySelectorAll('.code-block-container');
+    codeContainers.forEach(codeContainer => {
+        lucide.createIcons({ nodes: [codeContainer] });
+    });
+}
+
 function renderRichContent(content, lazyImages = false) {
     let processedContent = content;
 
@@ -500,7 +912,24 @@ function renderRichContent(content, lazyImages = false) {
         return `<a href="#" class="internal-link" data-link-name="${linkName.trim()}">${linkName.trim()}</a>`;
     });
 
-    return marked.parse(processedContent);
+    // Process hex colors - match #followed by 3 or 6 hex digits
+    processedContent = processedContent.replace(/#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})\b/g, (match, hexValue) => {
+        // Normalize 3-digit hex to 6-digit
+        const normalizedHex = hexValue.length === 3
+            ? hexValue.split('').map(char => char + char).join('')
+            : hexValue;
+
+        return `<span class="hex-color-preview">
+            <span class="hex-color-swatch" style="background-color: #${normalizedHex};"></span>
+            <span class="hex-color-text">#${hexValue.toUpperCase()}</span>
+        </span>`;
+    });
+
+    const parsedContent = marked.parse(processedContent);
+
+    // Wrap tables with action buttons and enhance code blocks after parsing
+    const contentWithTables = wrapTablesWithActions(parsedContent);
+    return enhanceCodeBlocks(contentWithTables);
 }
 
 // --- UI Rendering ---
@@ -608,11 +1037,11 @@ function createCardElement(note, highlightTerm) {
 
     if (note.isMediaNote && note.media_type === 'wikipedia') {
         div.className = 'card bg-white border border-gray-200/80 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden relative aspect-[2/3]';
-        
+
         // Extract Wikipedia URL and article title from the note content (including different language versions)
         const wikipediaUrlMatch = note.rawContent.match(/https?:\/\/(?:www\.)?[a-z]{2}\.wikipedia\.org\/wiki\/[^\s\n]+/g);
         let articleTitle = 'Wikipedia Article';
-        
+
         if (wikipediaUrlMatch && wikipediaUrlMatch.length > 0) {
             const wikipediaUrl = wikipediaUrlMatch[wikipediaUrlMatch.length - 1]; // Get the last URL
             const urlMatch = wikipediaUrl.match(/[a-z]{2}\.wikipedia\.org\/wiki\/([^/\s?#]+)/);
@@ -620,11 +1049,11 @@ function createCardElement(note, highlightTerm) {
                 articleTitle = urlMatch[1].replace(/_/g, ' ');
             }
         }
-        
+
         if (note.tmdb_data) {
             const data = note.tmdb_data;
             const title = (data.title || articleTitle) + ' - Wikipedia';
-            
+
             div.innerHTML = `
                         <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100"></div>
                         <div class="absolute top-4 left-4 wikipedia-logo">
@@ -637,7 +1066,7 @@ function createCardElement(note, highlightTerm) {
         } else {
             // Fallback for when Wikipedia data hasn't been loaded yet
             const title = articleTitle;
-            
+
             div.innerHTML = `
                         <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100"></div>
                         <div class="absolute top-4 left-4 wikipedia-logo">
@@ -707,6 +1136,8 @@ function createCardElement(note, highlightTerm) {
     lucide.createIcons({
         nodes: [div]
     });
+    // Initialize table action icons
+    initializeTableIcons(div);
 
     return div;
 }
@@ -761,7 +1192,7 @@ function applyFilters() {
     let match;
     // We need to create a new regex object for each search because of the stateful `g` flag
     const dateRegexForRemoval = new RegExp(dateRegex.source, 'g');
-    
+
     while ((match = dateRegex.exec(searchTerm)) !== null) {
         const [, keyword, dateStr] = match;
         // The date string is parsed in the user's local timezone.
@@ -771,7 +1202,7 @@ function applyFilters() {
             startOfDay.setHours(0, 0, 0, 0);
             const endOfDay = new Date(dateStr);
             endOfDay.setHours(23, 59, 59, 999);
-            notesToDisplay = notesToDisplay.filter(note => 
+            notesToDisplay = notesToDisplay.filter(note =>
                 note.lastModified >= startOfDay.getTime() && note.lastModified <= endOfDay.getTime()
             );
         } else if (keyword === 'before') {
@@ -842,7 +1273,8 @@ function updateNoteInState(noteData, action = 'update') {
                 tags,
                 contentWithoutTags
             } = parseNoteContent(noteData.rawContent);
-            const updatedNote = { ...allNotes[noteIndex],
+            const updatedNote = {
+                ...allNotes[noteIndex],
                 ...noteData,
                 tags,
                 contentWithoutTags
@@ -894,7 +1326,8 @@ async function checkForUpdates(force = false) {
         }
 
         if (changesMade) {
-            allNotes = serverNotes.map(note => ({ ...note,
+            allNotes = serverNotes.map(note => ({
+                ...note,
                 ...parseNoteContent(note.rawContent)
             }));
             fuse.setCollection(allNotes);
@@ -946,6 +1379,9 @@ function switchToViewMode() {
     lucide.createIcons({
         nodes: [modalBody]
     });
+    // Initialize table and code block action icons
+    initializeTableIcons(modalBody);
+    initializeCodeBlockIcons(modalBody);
 
     modalTitle.classList.remove('hidden');
     modalTitleInput.classList.add('hidden');
@@ -1152,17 +1588,17 @@ async function deleteAudioNote() {
 function showWikipediaModal(note) {
     currentWikipediaNoteInModal = note;
     const data = note.tmdb_data;
-    
+
     // Extract Wikipedia URL from the note content (including different language versions)
     const wikipediaUrlMatch = note.rawContent.match(/https?:\/\/(?:www\.)?[a-z]{2}\.wikipedia\.org\/wiki\/[^\s\n]+/g);
     let wikipediaUrl = null;
-    
+
     if (wikipediaUrlMatch && wikipediaUrlMatch.length > 0) {
         wikipediaUrl = wikipediaUrlMatch[wikipediaUrlMatch.length - 1]; // Get the last URL
     } else if (data && data.url) {
         wikipediaUrl = data.url; // Fallback to API data
     }
-    
+
     if (!wikipediaUrl) return;
 
     // Set the title
@@ -1187,7 +1623,7 @@ function showWikipediaModal(note) {
 
     // Clear the iframe first to prevent caching issues
     wikipediaIframe.src = '';
-    
+
     // Load the Wikipedia article in the iframe using the actual URL from the note
     setTimeout(() => {
         wikipediaIframe.src = wikipediaUrl;
@@ -1231,16 +1667,19 @@ async function sendChatMessage() {
     let assistantMessageDiv = appendMessage('', 'assistant');
     let messageContentDiv = assistantMessageDiv.querySelector('.chat-message-content');
 
-    eventSource.onmessage = function(event) {
+    eventSource.onmessage = function (event) {
         const data = JSON.parse(event.data);
 
         if (data.token) {
             messageContentDiv.innerHTML += data.token;
+            // Re-initialize icons for any new code blocks or tables that might have been completed
+            initializeTableIcons(messageContentDiv);
+            initializeCodeBlockIcons(messageContentDiv);
         }
         if (data.sources) {
             const sourcesDiv = document.createElement('div');
             sourcesDiv.className = 'chat-message-sources';
-            const sourcesHTML = data.sources.map(source => 
+            const sourcesHTML = data.sources.map(source =>
                 `<a href="#" class="source-link" data-path="${source}">${source}</a>`
             ).join(', ');
             sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
@@ -1257,7 +1696,7 @@ async function sendChatMessage() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 
-    eventSource.onerror = function(err) {
+    eventSource.onerror = function (err) {
         console.error("EventSource failed:", err);
         eventSource.close();
         chatInput.disabled = false;
@@ -1276,7 +1715,7 @@ function appendMessage(text, sender, sources = []) {
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'chat-message-content';
-    contentDiv.innerHTML = marked.parse(text);
+    contentDiv.innerHTML = enhanceCodeBlocks(wrapTablesWithActions(marked.parse(text)));
 
     messageDiv.appendChild(avatarDiv);
     messageDiv.appendChild(contentDiv);
@@ -1286,7 +1725,7 @@ function appendMessage(text, sender, sources = []) {
     if (sources.length > 0) {
         const sourcesDiv = document.createElement('div');
         sourcesDiv.className = 'chat-message-sources';
-        const sourcesHTML = sources.map(source => 
+        const sourcesHTML = sources.map(source =>
             `<a href="#" class="source-link" data-path="${source}">${source}</a>`
         ).join(', ');
         sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
@@ -1295,7 +1734,41 @@ function appendMessage(text, sender, sources = []) {
 
     chatMessages.scrollTop = chatMessages.scrollHeight;
     lucide.createIcons();
+    // Initialize table and code block icons for chat messages
+    initializeTableIcons(contentDiv);
+    initializeCodeBlockIcons(contentDiv);
     return messageDiv; // Return the message div so we can append to it
+}
+
+// --- Search Help Modal Functions ---
+function showSearchHelpModal() {
+    searchHelpModal.classList.remove('hidden');
+    searchHelpModal.classList.add('flex');
+}
+
+function hideSearchHelpModal() {
+    searchHelpModal.classList.add('hidden');
+    searchHelpModal.classList.remove('flex');
+}
+
+// --- New Note Modal Functions ---
+function showNewNoteModal() {
+    newNoteModal.classList.add('visible');
+    setTimeout(() => {
+        newNoteTitle.focus();
+    }, 100);
+}
+
+function hideNewNoteModal() {
+    newNoteModal.classList.remove('visible');
+    newNoteTitle.value = '';
+    newNoteContent.value = '';
+    updateNewNoteSaveButtonState();
+}
+
+function updateNewNoteSaveButtonState() {
+    const hasTitle = newNoteTitle.value.trim().length > 0;
+    newNoteSaveBtn.disabled = !hasTitle || !isDataLoaded;
 }
 
 
@@ -1494,6 +1967,40 @@ window.addEventListener('click', (e) => {
     }
 });
 
+// Search help modal listeners
+searchHelpBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    showSearchHelpModal();
+});
+
+searchHelpCloseBtn.addEventListener('click', hideSearchHelpModal);
+
+// Table action event delegation
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.table-action-btn')) {
+        const btn = e.target.closest('.table-action-btn');
+        const action = btn.dataset.action;
+        const tableIndex = btn.dataset.tableIndex;
+
+        // Find the table associated with this button
+        const tableContainer = btn.closest('.table-container');
+        const table = tableContainer.querySelector('table');
+
+        if (action === 'copy') {
+            copyTableAsMarkdown(table);
+        } else if (action === 'download') {
+            downloadTableAsCSV(table);
+        }
+    }
+
+    // Code copy event delegation
+    if (e.target.closest('.code-copy-btn')) {
+        const btn = e.target.closest('.code-copy-btn');
+        const codeIndex = btn.dataset.codeIndex;
+        copyCodeToClipboard(codeIndex);
+    }
+});
+
 
 modalEditBtn.addEventListener('click', () => {
     isEditMode ? switchToViewMode() : switchToEditMode();
@@ -1655,8 +2162,669 @@ document.addEventListener('keydown', (e) => {
         hideMediaModal();
         hideAudioModal();
         hideWikipediaModal();
+        hideSearchHelpModal();
     }
 });
 
 // --- Initial Load ---
 document.addEventListener('DOMContentLoaded', initialize);
+//
+// --- Add Note Modal Functions ---
+function showNewNoteModal() {
+    newNoteModal.classList.remove('hidden');
+    newNoteModal.classList.add('flex');
+    newNoteModal.classList.add('visible');
+    setTimeout(() => {
+        newNoteTitle.focus();
+    }, 100);
+    document.body.style.overflow = 'hidden';
+}
+
+function hideNewNoteModal() {
+    newNoteModal.classList.add('hidden');
+    newNoteModal.classList.remove('flex');
+    newNoteModal.classList.remove('visible');
+    newNoteTitle.value = '';
+    newNoteContent.value = '';
+    document.body.style.overflow = '';
+    updateNewNoteSaveButtonState();
+}
+
+function updateNewNoteSaveButtonState() {
+    if (newNoteSaveBtn && newNoteTitle) {
+        const hasTitle = newNoteTitle.value.trim().length > 0;
+        newNoteSaveBtn.disabled = !hasTitle || !isDataLoaded;
+    }
+}
+
+// --- Event Listeners Setup Function ---
+function setupEventListeners() {
+    console.log('Setting up event listeners...');
+
+    // Add Note Button
+    if (addNoteBtn) {
+        console.log('Add note button found, adding event listener');
+        addNoteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNewNoteModal();
+        });
+    } else {
+        console.error('Add note button not found!');
+    }
+
+    // New Note Modal Close Button
+    if (newNoteCloseBtn) {
+        newNoteCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideNewNoteModal();
+        });
+    }
+
+    // New Note Save Button
+    if (newNoteSaveBtn) {
+        newNoteSaveBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            createNewNoteFromModal();
+        });
+    }
+
+    // New Note Title Input - Update save button state
+    if (newNoteTitle) {
+        newNoteTitle.addEventListener('input', updateNewNoteSaveButtonState);
+    }
+
+    // Shortcuts Help Button
+    if (shortcutsHelpBtn) {
+        shortcutsHelpBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            shortcutsPopup.classList.toggle('hidden');
+        });
+    }
+
+    // Hide shortcuts popup when clicking outside
+    document.addEventListener('click', (e) => {
+        if (shortcutsPopup && !shortcutsPopup.contains(e.target) && !shortcutsHelpBtn.contains(e.target)) {
+            shortcutsPopup.classList.add('hidden');
+        }
+    });
+
+    // Chat Button
+    if (chatBtn) {
+        console.log('Chat button found, adding event listener');
+        chatBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Chat button clicked');
+            showChatModal();
+        });
+    } else {
+        console.error('Chat button not found!');
+    }
+
+    // Chat Modal Close Button
+    if (chatCloseBtn) {
+        chatCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideChatModal();
+        });
+    }
+
+    // Search Help Button
+    if (searchHelpBtn) {
+        searchHelpBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSearchHelpModal();
+        });
+    }
+
+    // Search Help Modal Close Button
+    if (searchHelpCloseBtn) {
+        searchHelpCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideSearchHelpModal();
+        });
+    }
+
+    // Import/Sync Button
+    if (importBtn) {
+        importBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await checkForUpdates(true);
+        });
+    }
+
+    // Modal Close Buttons
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideModal();
+        });
+    }
+
+    if (mediaModalCloseBtn) {
+        mediaModalCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideMediaModal();
+        });
+    }
+
+    if (audioModalCloseBtn) {
+        audioModalCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideAudioModal();
+        });
+    }
+
+    if (wikipediaModalCloseBtn) {
+        wikipediaModalCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideWikipediaModal();
+        });
+    }
+
+    // Modal Delete Buttons
+    if (modalDeleteBtn) {
+        modalDeleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteNote();
+        });
+    }
+
+    if (mediaModalDeleteBtn) {
+        mediaModalDeleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteMediaNote();
+        });
+    }
+
+    if (audioModalDeleteBtn) {
+        audioModalDeleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteAudioNote();
+        });
+    }
+
+    if (wikipediaModalDeleteBtn) {
+        wikipediaModalDeleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteWikipediaNote();
+        });
+    }
+
+    // Modal Edit Buttons
+    if (modalEditBtn) {
+        modalEditBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleEditMode();
+        });
+    }
+
+    if (wikipediaModalEditBtn) {
+        wikipediaModalEditBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleWikipediaEditMode();
+        });
+    }
+
+    // Chat functionality
+    if (chatSendBtn) {
+        chatSendBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            sendChatMessage();
+        });
+    }
+
+    if (chatInput) {
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+    }
+
+    // Global keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // N key for new note (when not in input fields)
+        if (e.key === 'n' || e.key === 'N') {
+            if (!e.target.matches('input, textarea, [contenteditable]') &&
+                !noteModal.classList.contains('flex') &&
+                !newNoteModal.classList.contains('visible') &&
+                !chatModal.classList.contains('flex')) {
+                e.preventDefault();
+                showNewNoteModal();
+            }
+        }
+
+        // Enter key to focus search
+        if (e.key === 'Enter' && !e.target.matches('input, textarea, [contenteditable], button')) {
+            e.preventDefault();
+            searchInput.focus();
+        }
+    });
+
+    // Table and code block event delegation
+    document.addEventListener('click', (e) => {
+        // Handle table actions
+        if (e.target.closest('.table-action-btn')) {
+            const btn = e.target.closest('.table-action-btn');
+            const action = btn.dataset.action;
+            const tableIndex = btn.dataset.tableIndex;
+            const container = document.querySelector(`[data-table-index="${tableIndex}"]`);
+
+            if (container) {
+                const table = container.querySelector('table');
+                if (action === 'copy' && table) {
+                    copyTableAsMarkdown(table);
+                } else if (action === 'download' && table) {
+                    downloadTableAsCSV(table);
+                }
+            }
+        }
+
+        // Handle code block copy actions
+        if (e.target.closest('.code-copy-btn')) {
+            const btn = e.target.closest('.code-copy-btn');
+            const codeIndex = btn.dataset.codeIndex;
+            copyCodeToClipboard(codeIndex);
+        }
+    });
+    // --- Missing Modal Functions ---
+
+    function showChatModal() {
+        console.log('showChatModal called');
+        if (chatModal) {
+            console.log('Chat modal found, showing it');
+            chatModal.classList.remove('hidden');
+            chatModal.classList.add('flex');
+            if (chatInput) {
+                chatInput.focus();
+            }
+            document.body.style.overflow = 'hidden';
+        } else {
+            console.error('Chat modal not found!');
+        }
+    }
+
+    function hideChatModal() {
+        chatModal.classList.add('hidden');
+        chatModal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    function showSearchHelpModal() {
+        searchHelpModal.classList.remove('hidden');
+        searchHelpModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideSearchHelpModal() {
+        searchHelpModal.classList.add('hidden');
+        searchHelpModal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    function deleteMediaNote() {
+        if (!currentMediaNoteInModal) return;
+
+        if (window.confirm(`Are you sure you want to delete "${currentMediaNoteInModal.path}"?`)) {
+            api.deleteNote(currentMediaNoteInModal.path).then(() => {
+                updateNoteInState({ path: currentMediaNoteInModal.path }, 'delete');
+                hideMediaModal();
+            }).catch(error => {
+                console.error(`Error deleting media note: ${currentMediaNoteInModal.path}`, error);
+                alert("Failed to delete note. See console for details.");
+            });
+        }
+    }
+
+    function deleteAudioNote() {
+        if (!currentAudioNoteInModal) return;
+
+        if (window.confirm(`Are you sure you want to delete "${currentAudioNoteInModal.path}"?`)) {
+            api.deleteNote(currentAudioNoteInModal.path).then(() => {
+                updateNoteInState({ path: currentAudioNoteInModal.path }, 'delete');
+                hideAudioModal();
+            }).catch(error => {
+                console.error(`Error deleting audio note: ${currentAudioNoteInModal.path}`, error);
+                alert("Failed to delete note. See console for details.");
+            });
+        }
+    }
+
+    function deleteWikipediaNote() {
+        if (!currentWikipediaNoteInModal) return;
+
+        if (window.confirm(`Are you sure you want to delete "${currentWikipediaNoteInModal.path}"?`)) {
+            api.deleteNote(currentWikipediaNoteInModal.path).then(() => {
+                updateNoteInState({ path: currentWikipediaNoteInModal.path }, 'delete');
+                hideWikipediaModal();
+            }).catch(error => {
+                console.error(`Error deleting Wikipedia note: ${currentWikipediaNoteInModal.path}`, error);
+                alert("Failed to delete note. See console for details.");
+            });
+        }
+    }
+
+    function toggleEditMode() {
+        // Implementation for standard note edit mode
+        console.log('Toggle edit mode for standard note');
+    }
+
+    function toggleWikipediaEditMode() {
+        // Implementation for Wikipedia note edit mode
+        console.log('Toggle edit mode for Wikipedia note');
+    }
+
+    async function sendChatMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Add user message to chat
+        addChatMessage('user', message);
+        chatInput.value = '';
+
+        // Add loading message
+        const loadingId = addChatMessage('assistant', 'Thinking...');
+
+        try {
+            const response = await fetch(`/api/chat?question=${encodeURIComponent(message)}`);
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            let assistantMessage = '';
+            let sources = [];
+
+            // Remove loading message
+            removeChatMessage(loadingId);
+            const assistantId = addChatMessage('assistant', '');
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value);
+                const lines = chunk.split('\n');
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        try {
+                            const data = JSON.parse(line.slice(6));
+                            if (data.token) {
+                                assistantMessage += data.token;
+                                updateChatMessage(assistantId, assistantMessage);
+                            } else if (data.sources) {
+                                sources = data.sources;
+                            } else if (data.error) {
+                                updateChatMessage(assistantId, `Error: ${data.error}`);
+                            }
+                        } catch (e) {
+                            // Ignore parsing errors
+                        }
+                    }
+                }
+            }
+
+            // Add sources if available
+            if (sources.length > 0) {
+                addChatSources(assistantId, sources);
+            }
+
+        } catch (error) {
+            console.error('Chat error:', error);
+            removeChatMessage(loadingId);
+            addChatMessage('assistant', 'Sorry, I encountered an error processing your request.');
+        }
+    }
+
+    function addChatMessage(role, content) {
+        const messageId = `msg-${Date.now()}-${Math.random()}`;
+        const messageDiv = document.createElement('div');
+        messageDiv.id = messageId;
+        messageDiv.className = `chat-message ${role}`;
+
+        if (role === 'user') {
+            messageDiv.innerHTML = `
+            <div class="flex justify-end">
+                <div class="bg-indigo-600 text-white rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
+                    ${content}
+                </div>
+            </div>
+        `;
+        } else {
+            messageDiv.innerHTML = `
+            <div class="flex justify-start">
+                <div class="bg-gray-100 text-gray-800 rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
+                    <div class="message-content">${content}</div>
+                </div>
+            </div>
+        `;
+        }
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        return messageId;
+    }
+
+    function updateChatMessage(messageId, content) {
+        const messageEl = document.getElementById(messageId);
+        if (messageEl) {
+            const contentEl = messageEl.querySelector('.message-content');
+            if (contentEl) {
+                contentEl.textContent = content;
+            }
+        }
+    }
+
+    function removeChatMessage(messageId) {
+        const messageEl = document.getElementById(messageId);
+        if (messageEl) {
+            messageEl.remove();
+        }
+    }
+
+    function addChatSources(messageId, sources) {
+        const messageEl = document.getElementById(messageId);
+        if (messageEl && sources.length > 0) {
+            const sourcesDiv = document.createElement('div');
+            sourcesDiv.className = 'mt-2 pt-2 border-t border-gray-200';
+            sourcesDiv.innerHTML = `
+            <div class="text-xs text-gray-500 mb-1">Sources:</div>
+            ${sources.map(source => `
+                <div class="text-xs text-indigo-600 cursor-pointer hover:underline" onclick="openNoteByPath('${source.path}')">
+                    📄 ${source.path}
+                </div>
+            `).join('')}
+        `;
+
+            const contentDiv = messageEl.querySelector('.bg-gray-100');
+            if (contentDiv) {
+                contentDiv.appendChild(sourcesDiv);
+            }
+        }
+    }
+
+    function openNoteByPath(path) {
+        const note = allNotes.find(n => n.path === path);
+        if (note) {
+            hideChatModal();
+            if (note.isAudioNote) {
+                showAudioModal(note);
+            } else if (note.isMediaNote && note.media_type === 'wikipedia') {
+                showWikipediaModal(note);
+            } else if (note.isMediaNote && note.tmdb_data) {
+                showMediaModal(note);
+            } else {
+                showStandardModal(note);
+            }
+        }
+    }
+
+    async function checkForUpdates(forceSync = false) {
+        if (forceSync) {
+            importBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i><span class="hidden lg:block ml-4">Syncing...</span>';
+            lucide.createIcons();
+        }
+
+        try {
+            await loadNotesFromServer();
+            if (forceSync) {
+                importBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Synced!</span>';
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Force Sync</span>';
+                    lucide.createIcons();
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error during sync:', error);
+            if (forceSync) {
+                importBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Sync Failed</span>';
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Force Sync</span>';
+                    lucide.createIcons();
+                }, 2000);
+            }
+        }
+    }
+
+    function startRealtimeSync() {
+        if (syncInterval) {
+            clearInterval(syncInterval);
+        }
+
+        // Check for updates every 30 seconds
+        syncInterval = setInterval(() => {
+            checkForUpdates(false);
+        }, 30000);
+    }
+}
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing application...');
+    initialize();
+    setupEventListeners();
+    console.log('Application initialization complete');
+});
+// No welcome messages - clean empty chat
+
+// Simple clean chat functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const chatBtn = document.getElementById('chat-btn');
+    const chatModal = document.getElementById('chat-modal');
+    const chatCloseBtn = document.getElementById('chat-close-btn');
+    const chatSendBtn = document.getElementById('chat-send-btn');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    // Send message function
+    function sendMessage() {
+        if (!chatInput || !chatMessages) return;
+        
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Add user message
+        const userMsg = document.createElement('div');
+        userMsg.className = 'chat-message user';
+        userMsg.innerHTML = `
+            <div class="chat-avatar">
+                <i data-lucide="user" class="w-5 h-5"></i>
+            </div>
+            <div class="chat-message-content">${message}</div>
+        `;
+        chatMessages.appendChild(userMsg);
+
+        // Add AI response
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'chat-message';
+        aiMsg.innerHTML = `
+            <div class="chat-avatar">
+                <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+            </div>
+            <div class="chat-message-content">I received your message: "${message}"</div>
+        `;
+        chatMessages.appendChild(aiMsg);
+
+        // Initialize icons
+        lucide.createIcons({ nodes: [chatMessages] });
+        
+        // Clear input and scroll
+        chatInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Open chat
+    if (chatBtn && chatModal) {
+        chatBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            chatModal.classList.remove('hidden');
+            chatModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            // Clear messages and focus input
+            if (chatMessages) chatMessages.innerHTML = '';
+            if (chatInput) setTimeout(() => chatInput.focus(), 100);
+        });
+    }
+
+    // Close chat
+    if (chatCloseBtn && chatModal) {
+        chatCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            chatModal.classList.add('hidden');
+            chatModal.classList.remove('flex');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Send button
+    if (chatSendBtn) {
+        chatSendBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            sendMessage();
+        });
+    }
+
+    // Enter key
+    if (chatInput) {
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
+});
+// My Mind button - scroll to top functionality
+setTimeout(() => {
+    const myMindButton = document.getElementById('my-mind-btn');
+
+    if (myMindButton) {
+        console.log('Setting up my mind button listener');
+        myMindButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('My mind button clicked - scrolling to top');
+
+            // Scroll to top smoothly
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Also scroll the main content area to top if it exists
+            const mainContent = document.querySelector('main .overflow-y-auto');
+            if (mainContent) {
+                mainContent.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    } else {
+        console.error('My mind button not found');
+    }
+}, 100);

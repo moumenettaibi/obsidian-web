@@ -179,5 +179,7 @@ def chat_with_mymind(question, context=None):
             source_files = [note['path'] for note in context]
             yield {"sources": source_files}
     except Exception as e:
+        import traceback
         print(f"Error calling Gemini API: {e}")
+        print(f"Full traceback: {traceback.format_exc()}")
         yield {"error": "Sorry, I encountered an error trying to generate a response."}

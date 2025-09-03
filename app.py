@@ -350,6 +350,49 @@ def handle_note():
             
     return jsonify({"error": "Unsupported method"}), 405
 
+def extract_search_terms(query):
+    """
+    Intelligently extract key search terms from natural language queries.
+    """
+    import re
+    
+    query_lower = query.lower().strip()
+    
+    # Common stop words and phrases to ignore
+    stop_words = {
+        'find', 'search', 'look', 'for', 'about', 'tell', 'me', 'what', 'do', 'you', 'know',
+        'show', 'get', 'give', 'information', 'details', 'on', 'my', 'notes', 'vault', 'in',
+        'the', 'a', 'an', 'and', 'or', 'but', 'is', 'are', 'was', 'were', 'have', 'has',
+        'had', 'will', 'would', 'could', 'should', 'can', 'may', 'might', 'must', 'shall',
+        'this', 'that', 'these', 'those', 'i', 'we', 'they', 'he', 'she', 'it', 'from',
+        'to', 'with', 'by', 'at', 'of', 'as', 'like', 'than', 'so', 'if', 'when', 'where',
+        'how', 'why', 'who', 'which', 'what', 'please', 'help', 'any', 'some', 'all'
+    }
+    
+    # Remove common question patterns and extract meaningful terms
+    patterns_to_remove = [
+        r'\b(find|search|look)\s+(for|about)\b',
+        r'\b(tell|show|give)\s+me\s+(about)?\b',
+        r'\b(what|how)\s+(do\s+you\s+know\s+about|about)\b',
+        r'\b(in\s+my\s+)(notes|vault|obsidian|files)\b',
+        r'\b(on\s+my\s+)(notes|vault|obsidian|files)\b',
+        r'\b(from\s+my\s+)(notes|vault|obsidian|files)\b'
+    ]
+    
+    cleaned_query = query_lower
+    for pattern in patterns_to_remove:
+        cleaned_query = re.sub(pattern, ' ', cleaned_query)
+    
+    # Split into words and filter out stop words
+    words = re.findall(r'\b\w+\b', cleaned_query)
+    meaningful_words = [word for word in words if word not in stop_words and len(word) > 2]
+    
+    # If no meaningful words found, fall back to original query words
+    if not meaningful_words:
+        meaningful_words = [word for word in re.findall(r'\b\w+\b', query_lower) if len(word) > 2]
+    
+    return meaningful_words
+
 def enhanced_search_for_chat(query, notes, max_results=8):
     """
     Enhanced search function that finds relevant notes for AI context.
@@ -361,9 +404,12 @@ def enhanced_search_for_chat(query, notes, max_results=8):
     if not query_lower:
         return []
     
+    # Extract meaningful search terms from the query
+    search_terms = extract_search_terms(query)
+    logging.info(f"Extracted search terms from '{query}': {search_terms}")
+    
     # Advanced search with multiple strategies
     scored_notes = []
-    query_words = query_lower.split()
     
     for note in notes:
         score = 0
@@ -382,25 +428,36 @@ def enhanced_search_for_chat(query, notes, max_results=8):
             (' '.join(tags).lower(), 15)        # Tags
         ]
         
-        # Check for exact phrase match first (highest priority)
+        # Check for exact phrase match first (highest priority) - use original query
         for field_content, weight in searchable_fields:
             if query_lower in field_content:
-                score += weight * 10  # Boost for exact matches
+                score += weight * 15  # Higher boost for exact phrase matches
         
-        # Check individual words
-        for word in query_words:
-            if len(word) < 1:
+        # Check extracted meaningful terms (main search logic)
+        for term in search_terms:
+            if len(term) < 2:
                 continue
                 
             for field_content, weight in searchable_fields:
-                word_count = field_content.count(word)
-                score += word_count * weight
+                # Count occurrences of the term
+                term_count = field_content.count(term)
+                if term_count > 0:
+                    # Higher score for more occurrences
+                    score += term_count * weight * 2
+                    
+                    # Extra boost if term appears in title/filename
+                    filename = path.split('/')[-1].lower() if '/' in path else path.lower()
+                    if term in filename:
+                        score += 100  # Very high boost for filename matches
         
-        # Special boost for filename matches
-        filename = path.split('/')[-1].lower() if '/' in path else path.lower()
-        for word in query_words:
-            if word in filename:
-                score += 50  # High boost for filename matches
+        # Fallback: also check original query words if no meaningful terms found good matches
+        if score == 0:
+            query_words = query_lower.split()
+            for word in query_words:
+                if len(word) > 2:
+                    for field_content, weight in searchable_fields:
+                        word_count = field_content.count(word)
+                        score += word_count * weight
         
         # Add note if it has any relevance
         if score > 0:
