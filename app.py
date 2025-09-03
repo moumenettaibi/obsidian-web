@@ -1,11 +1,12 @@
 import os
 import re
-from flask import Flask, render_template, redirect, jsonify, request, send_from_directory, abort
+from flask import Flask, render_template, redirect, jsonify, request, send_from_directory, abort, Response
 from pathlib import Path
 import logging
 from datetime import datetime
 import requests
 from urllib.parse import quote
+from api import chat_with_mymind
 
 # Configure logging to show timestamps and log levels in the console output.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -15,6 +16,9 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 # --- Configuration ---
 NOTES_DIRECTORY = '/Volumes/Ohne Titel - Daten/Users/mac/Downloads/Obsidian'
 Path(NOTES_DIRECTORY).mkdir(parents=True, exist_ok=True)
+
+# --- Global Variables for Chat ---
+allNotes = []
 
 # --- TMDb API Configuration ---
 TMDB_API_KEY = 'f2d7ae9dee829174c475e32fe8f993dc'
@@ -154,11 +158,16 @@ def api_status():
 @app.route("/api/notes")
 def api_get_notes():
     """API endpoint to get all notes and a map of all available media files."""
+    global fuse, allNotes
+    
     logging.info("API endpoint /api/notes hit. Fetching notes and media files.")
     notes, folders, media_files = get_notes_from_disk(NOTES_DIRECTORY)
     
     notes.sort(key=lambda x: x['createdTime'], reverse=True)
     logging.info("Notes have been sorted by 'createdTime' in descending (new to old) order.")
+    
+    # Update global variables for chat functionality
+    allNotes = notes
     
     return jsonify({"notes": notes, "folders": folders, "media_files": media_files})
 
@@ -340,6 +349,138 @@ def handle_note():
             return jsonify({"error": str(e)}), 500
             
     return jsonify({"error": "Unsupported method"}), 405
+
+def enhanced_search_for_chat(query, notes, max_results=8):
+    """
+    Enhanced search function that finds relevant notes for AI context.
+    """
+    if not notes:
+        return []
+    
+    query_lower = query.lower().strip()
+    if not query_lower:
+        return []
+    
+    # Advanced search with multiple strategies
+    scored_notes = []
+    query_words = query_lower.split()
+    
+    for note in notes:
+        score = 0
+        
+        # Get searchable content
+        raw_content = note.get('rawContent', '')
+        content_without_tags = note.get('contentWithoutTags', '')
+        path = note.get('path', '')
+        tags = note.get('tags', [])
+        
+        # Search in different fields with different weights
+        searchable_fields = [
+            (raw_content.lower(), 10),           # Raw content
+            (content_without_tags.lower(), 12),  # Content without tags (slightly higher)
+            (path.lower(), 25),                  # File path (high importance)
+            (' '.join(tags).lower(), 15)        # Tags
+        ]
+        
+        # Check for exact phrase match first (highest priority)
+        for field_content, weight in searchable_fields:
+            if query_lower in field_content:
+                score += weight * 10  # Boost for exact matches
+        
+        # Check individual words
+        for word in query_words:
+            if len(word) < 1:
+                continue
+                
+            for field_content, weight in searchable_fields:
+                word_count = field_content.count(word)
+                score += word_count * weight
+        
+        # Special boost for filename matches
+        filename = path.split('/')[-1].lower() if '/' in path else path.lower()
+        for word in query_words:
+            if word in filename:
+                score += 50  # High boost for filename matches
+        
+        # Add note if it has any relevance
+        if score > 0:
+            scored_notes.append((score, note))
+    
+    # Sort by relevance and take top results
+    scored_notes.sort(key=lambda x: x[0], reverse=True)
+    
+    # Prepare context for AI
+    context_notes = []
+    for score, note in scored_notes[:max_results]:
+        # Use the best available content
+        content = note.get('contentWithoutTags') or note.get('rawContent', '')
+        
+        context_notes.append({
+            'path': note['path'],
+            'content': content,
+            'tags': note.get('tags', []),
+            'media_type': note.get('media_type'),
+            'is_media_note': note.get('isMediaNote', False),
+            'is_audio_note': note.get('isAudioNote', False),
+            'score': score  # Include score for debugging
+        })
+    
+    return context_notes
+
+@app.route("/api/chat")
+def api_chat():
+    """
+    Handles chat requests with streaming responses.
+    """
+    global allNotes
+    
+    question = request.args.get('question', '').strip()
+    if not question:
+        return jsonify({"error": "Question is required"}), 400
+
+    logging.info(f"Chat request received: {question}")
+
+    def generate_response():
+        global allNotes
+        import json
+        try:
+            # Ensure we have fresh notes data
+            if not allNotes:
+                notes, folders, media_files = get_notes_from_disk(NOTES_DIRECTORY)
+                allNotes = notes
+                logging.info(f"Loaded {len(allNotes)} notes for chat")
+            
+            # Use enhanced search to find relevant notes
+            context_notes = enhanced_search_for_chat(question, allNotes)
+            logging.info(f"Found {len(context_notes)} relevant notes for question: {question}")
+
+            # Generate response using the chat function from api.py
+            for chunk in chat_with_mymind(question, context_notes if context_notes else None):
+                if 'token' in chunk:
+                    yield f"data: {json.dumps({'token': chunk['token']})}\n\n"
+                elif 'sources' in chunk:
+                    yield f"data: {json.dumps({'sources': chunk['sources']})}\n\n"
+                elif 'error' in chunk:
+                    yield f"data: {json.dumps({'error': chunk['error']})}\n\n"
+                    break
+
+            yield f"data: {json.dumps({'done': True})}\n\n"
+
+        except Exception as e:
+            logging.error(f"Error in chat endpoint: {e}")
+            import traceback
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            yield f"data: {json.dumps({'error': 'Sorry, I encountered an error processing your request.'})}\n\n"
+
+    return Response(
+        generate_response(),
+        mimetype='text/event-stream',
+        headers={
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Access-Control-Allow-Origin': '*'
+        }
+    )
 
 
 # --- Frontend Routes ---

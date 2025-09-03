@@ -34,6 +34,10 @@
                     <i data-lucide="plus" class="w-5 h-5"></i>
                     <span class="hidden lg:block ml-4">Add Note</span>
                 </a>
+                <a href="#" id="chat-btn" class="flex items-center p-2 rounded-lg w-full">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    <span class="hidden lg:block ml-4">Chat</span>
+                </a>
                  <a href="#" id="import-btn" class="flex items-center p-2 text-gray-500 hover:text-gray-800 rounded-lg w-full cursor-pointer">
                     <i data-lucide="refresh-cw" class="w-5 h-5"></i>
                     <span class="hidden lg:block ml-4">Force Sync</span>
@@ -150,7 +154,7 @@
         </div>
     </div>
 
-    <div id="note-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div id="note-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[70] hidden items-center justify-center p-4">
         <div id="modal-content" class="relative bg-white rounded-lg shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col">
             <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
                 <div class="flex-1 min-w-0">
@@ -349,6 +353,27 @@
             <button id="new-note-save-btn" class="bg-white text-gray-500 px-5 py-2.5 rounded-full text-xs font-semibold shadow-md border border-gray-200 hover:border-gray-300 hover:text-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                 SAVE (⌘+ENTER)
             </button>
+        </div>
+    </div>
+
+    <div id="chat-modal" class="fixed inset-0 z-[60] hidden flex-col p-4 sm:p-6 md:p-8 bg-white text-gray-800">
+        <div class="absolute top-5 right-5">
+            <button id="chat-close-btn" class="text-gray-500 hover:text-gray-800 transition-colors p-2 rounded-full bg-gray-100 hover:bg-gray-200">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <div class="w-full max-w-4xl mx-auto h-full flex flex-col">
+            <div id="chat-messages" class="flex-1 overflow-y-auto space-y-6 py-8"></div>
+            <div class="py-4 flex-shrink-0">
+                <div class="flex items-center bg-gray-50 border border-gray-200 rounded-full p-2">
+                    <input type="text" id="chat-input" placeholder="Ask anything, or ask to search your notes..." 
+                           class="w-full bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none px-4 py-2">
+                    <button id="chat-send-btn" class="bg-indigo-600 text-white rounded-full p-3 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 transition-colors disabled:opacity-50">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 

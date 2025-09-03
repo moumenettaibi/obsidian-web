@@ -59,6 +59,14 @@ const wikipediaModalBody = document.getElementById('wikipedia-modal-body');
 const wikipediaModalTags = document.getElementById('wikipedia-modal-tags');
 const wikipediaIframe = document.getElementById('wikipedia-iframe');
 
+// Chat Modal Elements
+const chatBtn = document.getElementById('chat-btn');
+const chatModal = document.getElementById('chat-modal');
+const chatCloseBtn = document.getElementById('chat-close-btn');
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const chatSendBtn = document.getElementById('chat-send-btn');
+
 // Custom Player Elements
 const playPauseBtn = document.getElementById('play-pause-btn');
 const timelineContainer = document.getElementById('timeline-container');
@@ -1193,6 +1201,104 @@ function showWikipediaModal(note) {
     lucide.createIcons();
 }
 
+// --- Chat Modal Functions ---
+function showChatModal() {
+    chatModal.classList.remove('hidden');
+    setTimeout(() => {
+        chatModal.classList.add('visible');
+        chatInput.focus();
+    }, 10);
+}
+
+function hideChatModal() {
+    chatModal.classList.remove('visible');
+    setTimeout(() => {
+        chatModal.classList.add('hidden');
+    }, 300);
+}
+
+async function sendChatMessage() {
+    const question = chatInput.value.trim();
+    if (!question) return;
+
+    appendMessage(question, 'user');
+    chatInput.value = '';
+    chatInput.disabled = true;
+    chatSendBtn.disabled = true;
+
+    const eventSource = new EventSource(`/api/chat?question=${encodeURIComponent(question)}`);
+
+    let assistantMessageDiv = appendMessage('', 'assistant');
+    let messageContentDiv = assistantMessageDiv.querySelector('.chat-message-content');
+
+    eventSource.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+
+        if (data.token) {
+            messageContentDiv.innerHTML += data.token;
+        }
+        if (data.sources) {
+            const sourcesDiv = document.createElement('div');
+            sourcesDiv.className = 'chat-message-sources';
+            const sourcesHTML = data.sources.map(source => 
+                `<a href="#" class="source-link" data-path="${source}">${source}</a>`
+            ).join(', ');
+            sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
+            chatMessages.appendChild(sourcesDiv);
+            lucide.createIcons();
+        }
+        if (data.error) {
+            messageContentDiv.innerHTML = data.error;
+            eventSource.close();
+            chatInput.disabled = false;
+            chatSendBtn.disabled = false;
+            chatInput.focus();
+        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    eventSource.onerror = function(err) {
+        console.error("EventSource failed:", err);
+        eventSource.close();
+        chatInput.disabled = false;
+        chatSendBtn.disabled = false;
+        chatInput.focus();
+    };
+}
+
+function appendMessage(text, sender, sources = []) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${sender}`;
+
+    const avatarDiv = document.createElement('div');
+    avatarDiv.className = 'chat-avatar';
+    avatarDiv.innerHTML = `<i data-lucide="${sender === 'user' ? 'user' : 'brain-circuit'}" class="w-5 h-5"></i>`;
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'chat-message-content';
+    contentDiv.innerHTML = marked.parse(text);
+
+    messageDiv.appendChild(avatarDiv);
+    messageDiv.appendChild(contentDiv);
+
+    chatMessages.appendChild(messageDiv);
+
+    if (sources.length > 0) {
+        const sourcesDiv = document.createElement('div');
+        sourcesDiv.className = 'chat-message-sources';
+        const sourcesHTML = sources.map(source => 
+            `<a href="#" class="source-link" data-path="${source}">${source}</a>`
+        ).join(', ');
+        sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
+        chatMessages.appendChild(sourcesDiv);
+    }
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    lucide.createIcons();
+    return messageDiv; // Return the message div so we can append to it
+}
+
+
 function switchToWikipediaViewMode() {
     if (!currentWikipediaNoteInModal) return;
     isWikipediaEditMode = false;
@@ -1320,6 +1426,33 @@ addNoteBtn.addEventListener('click', (e) => {
 newNoteCloseBtn.addEventListener('click', hideNewNoteModal);
 newNoteSaveBtn.addEventListener('click', createNewNoteFromModal);
 newNoteTitle.addEventListener('input', updateNewNoteSaveButtonState);
+
+// Chat modal listeners
+chatBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    showChatModal();
+});
+
+chatCloseBtn.addEventListener('click', hideChatModal);
+chatSendBtn.addEventListener('click', sendChatMessage);
+chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        sendChatMessage();
+    }
+});
+
+chatMessages.addEventListener('click', (e) => {
+    const target = e.target.closest('.source-link');
+    if (target) {
+        e.preventDefault();
+        const notePath = target.dataset.path;
+        const note = allNotes.find(n => n.path.endsWith(notePath));
+        if (note) {
+            showStandardModal(note);
+        }
+    }
+});
 
 // Seamless editing logic
 newNoteTitle.addEventListener('keydown', (e) => {

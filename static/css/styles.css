@@ -637,3 +637,93 @@ aside nav a:hover {
 #wikipedia-modal-body {
     height: 100%;
 }
+
+#wikipedia-modal-body {
+    height: 100%;
+}
+
+/* --- Chat Modal Styles --- */
+#chat-modal {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+#chat-modal.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#chat-messages::-webkit-scrollbar { width: 8px; }
+#chat-messages::-webkit-scrollbar-track { background: #f1f5f9; } /* gray-100 */
+#chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; } /* gray-300 */
+#chat-messages::-webkit-scrollbar-thumb:hover { background: #94a3b8; } /* gray-400 */
+
+.chat-message {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.chat-message.user {
+    flex-direction: row-reverse;
+}
+
+.chat-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: #e2e8f0; /* gray-200 */
+    color: #475569; /* gray-600 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.chat-message.user .chat-avatar {
+    background-color: #4f46e5; /* indigo-600 */
+    color: white;
+}
+
+.chat-message-content {
+    max-width: 80%;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1rem;
+    line-height: 1.6;
+    background-color: #f1f5f9; /* gray-100 */
+    color: #1e293b; /* gray-800 */
+}
+
+.chat-message.user .chat-message-content {
+    background-color: #4f46e5; /* indigo-600 */
+    color: white;
+}
+
+.chat-message-sources {
+    font-size: 0.8rem;
+    color: #64748b; /* gray-500 */
+    margin-top: 0.75rem;
+    padding-left: 3.5rem; /* Align with message content */
+}
+
+.chat-message.user .chat-message-sources {
+    padding-left: 0;
+    padding-right: 3.5rem; /* Align with message content */
+    text-align: right;
+}
+
+.chat-message-sources .source-link {
+    color: #4338ca; 
+    text-decoration: none; 
+    border-bottom: 1px dashed #a5b4fc;
+    background-color: #eef2ff; 
+    padding: 1px 3px; 
+    border-radius: 3px;
+    margin-right: 0.25rem;
+    display: inline-block;
+}
+
+.chat-message-sources .source-link:hover { 
+    background-color: #c7d2fe; 
+    border-bottom-style: solid; 
+}
