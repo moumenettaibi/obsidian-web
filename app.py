@@ -27,6 +27,68 @@ TMDB_API_BASE_URL = 'https://api.themoviedb.org/3'
 
 # --- Helper Functions ---
 
+def extract_content_without_tags(content):
+    """
+    Removes markdown tags and formatting to get clean content for search.
+    """
+    import re
+    
+    # Remove markdown formatting
+    content = re.sub(r'#{1,6}\s+', '', content)  # Headers
+    content = re.sub(r'\*\*(.*?)\*\*', r'\1', content)  # Bold
+    content = re.sub(r'\*(.*?)\*', r'\1', content)  # Italic
+    content = re.sub(r'`(.*?)`', r'\1', content)  # Inline code
+    content = re.sub(r'```[\s\S]*?```', '', content)  # Code blocks
+    content = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', content)  # Links
+    content = re.sub(r'\[\[(.*?)\]\]', r'\1', content)  # Wikilinks
+    content = re.sub(r'==(.+?)==', r'\1', content)  # Highlights
+    content = re.sub(r'~~(.+?)~~', r'\1', content)  # Strikethrough
+    content = re.sub(r'- \[ \]', '', content)  # Unchecked tasks
+    content = re.sub(r'- \[x\]', '', content)  # Checked tasks
+    content = re.sub(r'^- ', '', content, flags=re.MULTILINE)  # List items
+    content = re.sub(r'^\d+\. ', '', content, flags=re.MULTILINE)  # Numbered lists
+    content = re.sub(r'---+', '', content)  # Horizontal rules
+    
+    # Clean up extra whitespace
+    content = re.sub(r'\n\s*\n', '\n\n', content)
+    content = content.strip()
+    
+    return content
+
+def extract_tags(content):
+    """
+    Extracts hashtags from content.
+    """
+    import re
+    tags = re.findall(r'#(\w+)', content)
+    return list(set(tags))  # Remove duplicates
+
+def detect_audio_note(content, filename):
+    """
+    Detects if a note is related to audio/music.
+    """
+    audio_indicators = [
+        'spotify.com', 'soundcloud.com', 'youtube.com/watch',
+        'apple.com/music', 'music.amazon.com', 'bandcamp.com',
+        'podcast', 'song', 'album', 'artist', 'track', 'playlist'
+    ]
+    
+    content_lower = content.lower()
+    filename_lower = filename.lower()
+    
+    # Check content for audio indicators
+    for indicator in audio_indicators:
+        if indicator in content_lower:
+            return True
+    
+    # Check filename for audio extensions or keywords
+    audio_keywords = ['music', 'song', 'album', 'podcast', 'audio']
+    for keyword in audio_keywords:
+        if keyword in filename_lower:
+            return True
+    
+    return False
+
 def search_tmdb_by_title(media_type, title):
     """
     Searches TMDb for a movie or TV show by its title and returns the ID of the first result.
@@ -116,12 +178,18 @@ def get_notes_from_disk(root_path):
                     wikilink_pattern = re.compile(r'\[\[(.*?)\]\]')
                     links = [match.group(1) for match in wikilink_pattern.finditer(raw_content)]
 
+                    # Enhanced content processing
+                    content_without_tags = extract_content_without_tags(raw_content)
+                    tags = extract_tags(raw_content)
+                    is_audio_note = detect_audio_note(raw_content, entry.name)
+                    
                     note_data = {
                         "id": rel_path, "path": rel_path, "name": entry.name,
-                        "rawContent": raw_content, "lastModified": file_stat.st_mtime * 1000,
+                        "rawContent": raw_content, "contentWithoutTags": content_without_tags,
+                        "lastModified": file_stat.st_mtime * 1000,
                         "createdTime": sort_time * 1000, "createdTimeReadable": human_readable_time,
-                        "links": links, "isMediaNote": False, "tmdb_data": None,
-                        "media_type": None, "title_slug": None
+                        "links": links, "tags": tags, "isMediaNote": False, "isAudioNote": is_audio_note,
+                        "tmdb_data": None, "media_type": None, "title_slug": None
                     }
 
                     letterboxd_match = letterboxd_pattern.search(raw_content)
@@ -395,7 +463,7 @@ def extract_search_terms(query):
 
 def enhanced_search_for_chat(query, notes, max_results=8):
     """
-    Enhanced search function that finds relevant notes for AI context.
+    Enhanced search function with temporal awareness and better intent understanding.
     """
     if not notes:
         return []
@@ -403,6 +471,23 @@ def enhanced_search_for_chat(query, notes, max_results=8):
     query_lower = query.lower().strip()
     if not query_lower:
         return []
+    
+    # Check for temporal queries
+    temporal_keywords = {
+        'latest': lambda notes: sorted(notes, key=lambda x: x.get('createdTime', 0), reverse=True),
+        'last': lambda notes: sorted(notes, key=lambda x: x.get('createdTime', 0), reverse=True),
+        'recent': lambda notes: sorted(notes, key=lambda x: x.get('createdTime', 0), reverse=True),
+        'newest': lambda notes: sorted(notes, key=lambda x: x.get('createdTime', 0), reverse=True),
+        'oldest': lambda notes: sorted(notes, key=lambda x: x.get('createdTime', 0)),
+        'first': lambda notes: sorted(notes, key=lambda x: x.get('createdTime', 0))
+    }
+    
+    # Check if this is a temporal query
+    is_temporal = any(keyword in query_lower for keyword in temporal_keywords.keys())
+    
+    if is_temporal:
+        # Handle temporal queries specially
+        return handle_temporal_query(query, query_lower, notes, temporal_keywords, max_results)
     
     # Extract meaningful search terms from the query
     search_terms = extract_search_terms(query)
@@ -467,20 +552,95 @@ def enhanced_search_for_chat(query, notes, max_results=8):
     scored_notes.sort(key=lambda x: x[0], reverse=True)
     
     # Prepare context for AI
+    return prepare_context_notes(scored_notes, max_results)
+
+def handle_temporal_query(query, query_lower, notes, temporal_keywords, max_results):
+    """
+    Handles temporal queries like 'latest movie', 'last book I added', etc.
+    """
+    # Determine the temporal sorting
+    sort_func = None
+    for keyword, func in temporal_keywords.items():
+        if keyword in query_lower:
+            sort_func = func
+            break
+    
+    if not sort_func:
+        sort_func = temporal_keywords['latest']  # Default to latest
+    
+    # Sort notes by time
+    sorted_notes = sort_func(notes)
+    
+    # Extract content type from query
+    content_types = {
+        'movie': lambda n: n.get('media_type') == 'movie',
+        'film': lambda n: n.get('media_type') == 'movie',
+        'show': lambda n: n.get('media_type') == 'tv',
+        'tv': lambda n: n.get('media_type') == 'tv',
+        'series': lambda n: n.get('media_type') == 'tv',
+        'book': lambda n: 'book' in n.get('rawContent', '').lower() or 'goodreads' in n.get('rawContent', '').lower(),
+        'audio': lambda n: n.get('isAudioNote', False),
+        'music': lambda n: n.get('isAudioNote', False),
+        'note': lambda n: not n.get('isMediaNote', False) and not n.get('isAudioNote', False),
+        'clip': lambda n: 'clip' in n.get('path', '').lower() or 'clipped' in n.get('rawContent', '').lower()
+    }
+    
+    # Filter by content type if specified
+    filtered_notes = sorted_notes
+    for content_type, filter_func in content_types.items():
+        if content_type in query_lower:
+            filtered_notes = [note for note in sorted_notes if filter_func(note)]
+            break
+    
+    # If no specific type found, but it's a temporal query, return recent notes
+    if not filtered_notes or len(filtered_notes) == len(sorted_notes):
+        filtered_notes = sorted_notes[:max_results * 2]  # Get more for temporal queries
+    
+    # Score based on temporal relevance and content match
+    scored_notes = []
+    for i, note in enumerate(filtered_notes[:max_results * 3]):  # Consider more notes for temporal queries
+        # Higher score for more recent notes (if latest/recent) or older notes (if oldest/first)
+        temporal_score = max_results * 3 - i
+        
+        # Add content relevance score
+        content_score = 0
+        search_terms = extract_search_terms(query)
+        for term in search_terms:
+            if term in note.get('rawContent', '').lower():
+                content_score += 10
+            if term in note.get('path', '').lower():
+                content_score += 20
+        
+        total_score = temporal_score * 10 + content_score
+        scored_notes.append((total_score, note))
+    
+    # Sort by combined score and take top results
+    scored_notes.sort(key=lambda x: x[0], reverse=True)
+    
+    return prepare_context_notes(scored_notes, max_results)
+
+def prepare_context_notes(scored_notes, max_results):
+    """
+    Prepares context notes for the AI with all necessary metadata.
+    """
     context_notes = []
     for score, note in scored_notes[:max_results]:
         # Use the best available content
         content = note.get('contentWithoutTags') or note.get('rawContent', '')
         
-        context_notes.append({
+        context_note = {
             'path': note['path'],
             'content': content,
             'tags': note.get('tags', []),
             'media_type': note.get('media_type'),
             'is_media_note': note.get('isMediaNote', False),
             'is_audio_note': note.get('isAudioNote', False),
-            'score': score  # Include score for debugging
-        })
+            'score': score,
+            'createdTime': note.get('createdTime'),
+            'createdTimeReadable': note.get('createdTimeReadable')
+        }
+        
+        context_notes.append(context_note)
     
     return context_notes
 
@@ -511,8 +671,8 @@ def api_chat():
             context_notes = enhanced_search_for_chat(question, allNotes)
             logging.info(f"Found {len(context_notes)} relevant notes for question: {question}")
 
-            # Generate response using the chat function from api.py
-            for chunk in chat_with_mymind(question, context_notes if context_notes else None):
+            # Generate response using the enhanced chat function from api.py
+            for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
                 if 'token' in chunk:
                     yield f"data: {json.dumps({'token': chunk['token']})}\n\n"
                 elif 'sources' in chunk:
@@ -552,4 +712,4 @@ def home():
 
 if __name__ == "__main__":
     logging.info(f"Serving notes from: {NOTES_DIRECTORY}")
-    app.run(host="0.0.0.0", port=6768, debug=True)
+    app.run(host="0.0.0.0", port=6769, debug=True)

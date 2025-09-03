@@ -1203,9 +1203,7 @@ aside nav a:hover {
     height: 2.5rem;
     border-radius: 50%;
     background-color: #e2e8f0;
-    /* gray-200 */
     color: #475569;
-    /* gray-600 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1214,7 +1212,6 @@ aside nav a:hover {
 
 .chat-message.user .chat-avatar {
     background-color: #4f46e5;
-    /* indigo-600 */
     color: white;
 }
 
@@ -1224,30 +1221,24 @@ aside nav a:hover {
     border-radius: 1rem;
     line-height: 1.6;
     background-color: #f1f5f9;
-    /* gray-100 */
     color: #1e293b;
-    /* gray-800 */
 }
 
 .chat-message.user .chat-message-content {
     background-color: #4f46e5;
-    /* indigo-600 */
     color: white;
 }
 
 .chat-message-sources {
     font-size: 0.8rem;
     color: #64748b;
-    /* gray-500 */
     margin-top: 0.75rem;
     padding-left: 3.5rem;
-    /* Align with message content */
 }
 
 .chat-message.user .chat-message-sources {
     padding-left: 0;
     padding-right: 3.5rem;
-    /* Align with message content */
     text-align: right;
 }
 
@@ -1265,6 +1256,30 @@ aside nav a:hover {
 .chat-message-sources .source-link:hover {
     background-color: #c7d2fe;
     border-bottom-style: solid;
+}
+
+/* Simple conversation suggestions */
+.conversation-suggestions {
+    margin: 1rem 0;
+    padding-left: 3.5rem;
+}
+
+.suggestion-btn {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 0.5rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.suggestion-btn:hover {
+    background-color: #e2e8f0;
+    border-color: #9ca3af;
 }
 
 /* Enh

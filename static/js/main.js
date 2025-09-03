@@ -1643,7 +1643,28 @@ function showChatModal() {
     setTimeout(() => {
         chatModal.classList.add('visible');
         chatInput.focus();
+        
+        // Show welcome message if chat is empty
+        if (chatMessages.children.length === 0) {
+            showWelcomeMessage();
+        }
     }, 10);
+}
+
+function showWelcomeMessage() {
+    const welcomeMessages = [
+        "Hey! I'm your personal AI assistant. I know everything about your notes and can help you find anything you're looking for. What's on your mind?",
+        "Hi there! I've got access to all your notes and I'm here to help. Want to search for something specific or just chat?",
+        "Hello! I'm here to help you navigate your knowledge base. I can find your latest notes, search for specific topics, or just have a conversation. What would you like to do?",
+        "Hey! Ready to explore your notes together? I can help you find that movie you saved, your latest book notes, or anything else you're looking for."
+    ];
+    
+    const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+    
+    setTimeout(() => {
+        appendMessage(randomMessage, 'assistant');
+        addConversationSuggestions();
+    }, 500);
 }
 
 function hideChatModal() {
@@ -1657,52 +1678,120 @@ async function sendChatMessage() {
     const question = chatInput.value.trim();
     if (!question) return;
 
+    // Enhanced user message with better styling
     appendMessage(question, 'user');
     chatInput.value = '';
     chatInput.disabled = true;
     chatSendBtn.disabled = true;
 
-    const eventSource = new EventSource(`/api/chat?question=${encodeURIComponent(question)}`);
+    // Show typing indicator
+    const typingIndicator = showTypingIndicator();
 
-    let assistantMessageDiv = appendMessage('', 'assistant');
-    let messageContentDiv = assistantMessageDiv.querySelector('.chat-message-content');
+    try {
+        const eventSource = new EventSource(`/api/chat?question=${encodeURIComponent(question)}`);
 
-    eventSource.onmessage = function (event) {
-        const data = JSON.parse(event.data);
+        let assistantMessageDiv = null;
+        let messageContentDiv = null;
+        let currentResponse = '';
 
-        if (data.token) {
-            messageContentDiv.innerHTML += data.token;
-            // Re-initialize icons for any new code blocks or tables that might have been completed
-            initializeTableIcons(messageContentDiv);
-            initializeCodeBlockIcons(messageContentDiv);
-        }
-        if (data.sources) {
-            const sourcesDiv = document.createElement('div');
-            sourcesDiv.className = 'chat-message-sources';
-            const sourcesHTML = data.sources.map(source =>
-                `<a href="#" class="source-link" data-path="${source}">${source}</a>`
-            ).join(', ');
-            sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
-            chatMessages.appendChild(sourcesDiv);
-            lucide.createIcons();
-        }
-        if (data.error) {
-            messageContentDiv.innerHTML = data.error;
+        eventSource.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+
+            if (data.token) {
+                // Remove typing indicator when first token arrives
+                if (typingIndicator && typingIndicator.parentNode) {
+                    typingIndicator.remove();
+                }
+
+                // Create assistant message if it doesn't exist
+                if (!assistantMessageDiv) {
+                    assistantMessageDiv = appendMessage('', 'assistant');
+                    messageContentDiv = assistantMessageDiv.querySelector('.chat-message-content');
+                }
+
+                currentResponse += data.token;
+                
+                // Enhanced markdown rendering with better formatting
+                const renderedContent = enhanceCodeBlocks(wrapTablesWithActions(marked.parse(currentResponse)));
+                messageContentDiv.innerHTML = renderedContent;
+                
+                // Re-initialize icons for any new content
+                initializeTableIcons(messageContentDiv);
+                initializeCodeBlockIcons(messageContentDiv);
+                lucide.createIcons({ nodes: [messageContentDiv] });
+            }
+
+            if (data.sources && data.sources.length > 0) {
+                // Simple sources display
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.className = 'chat-message-sources';
+                
+                const sourcesHTML = data.sources.map(source => {
+                    const fileName = source.split('/').pop();
+                    return `<button class="source-link" data-path="${source}" onclick="openNoteFromChat('${source}', event)">${fileName}</button>`;
+                }).join(', ');
+                
+                sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
+                
+                chatMessages.appendChild(sourcesDiv);
+                lucide.createIcons({ nodes: [sourcesDiv] });
+            }
+
+            if (data.done) {
+                eventSource.close();
+                chatInput.disabled = false;
+                chatSendBtn.disabled = false;
+                chatInput.focus();
+                
+                // Add conversation suggestions
+                addConversationSuggestions();
+            }
+
+            if (data.error) {
+                if (typingIndicator && typingIndicator.parentNode) {
+                    typingIndicator.remove();
+                }
+                
+                const errorDiv = appendMessage(`Sorry, I encountered an error: ${data.error}`, 'assistant');
+                errorDiv.classList.add('error-message');
+                
+                eventSource.close();
+                chatInput.disabled = false;
+                chatSendBtn.disabled = false;
+                chatInput.focus();
+            }
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        eventSource.onerror = function (err) {
+            console.error("EventSource failed:", err);
+            
+            if (typingIndicator && typingIndicator.parentNode) {
+                typingIndicator.remove();
+            }
+            
+            appendMessage("Sorry, I'm having trouble connecting. Please try again.", 'assistant');
+            
             eventSource.close();
             chatInput.disabled = false;
             chatSendBtn.disabled = false;
             chatInput.focus();
-        }
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    };
+        };
 
-    eventSource.onerror = function (err) {
-        console.error("EventSource failed:", err);
-        eventSource.close();
+    } catch (error) {
+        console.error("Chat error:", error);
+        
+        if (typingIndicator && typingIndicator.parentNode) {
+            typingIndicator.remove();
+        }
+        
+        appendMessage("Sorry, something went wrong. Please try again.", 'assistant');
+        
         chatInput.disabled = false;
         chatSendBtn.disabled = false;
         chatInput.focus();
-    };
+    }
 }
 
 function appendMessage(text, sender, sources = []) {
@@ -1715,7 +1804,10 @@ function appendMessage(text, sender, sources = []) {
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'chat-message-content';
-    contentDiv.innerHTML = enhanceCodeBlocks(wrapTablesWithActions(marked.parse(text)));
+    
+    if (text) {
+        contentDiv.innerHTML = enhanceCodeBlocks(wrapTablesWithActions(marked.parse(text)));
+    }
 
     messageDiv.appendChild(avatarDiv);
     messageDiv.appendChild(contentDiv);
@@ -1725,9 +1817,10 @@ function appendMessage(text, sender, sources = []) {
     if (sources.length > 0) {
         const sourcesDiv = document.createElement('div');
         sourcesDiv.className = 'chat-message-sources';
-        const sourcesHTML = sources.map(source =>
-            `<a href="#" class="source-link" data-path="${source}">${source}</a>`
-        ).join(', ');
+        const sourcesHTML = sources.map(source => {
+            const fileName = source.split('/').pop();
+            return `<button class="source-link" data-path="${source}" onclick="openNoteFromChat('${source}', event)">${fileName}</button>`;
+        }).join(', ');
         sourcesDiv.innerHTML = `<strong>Sources:</strong> ${sourcesHTML}`;
         chatMessages.appendChild(sourcesDiv);
     }
@@ -1738,6 +1831,125 @@ function appendMessage(text, sender, sources = []) {
     initializeTableIcons(contentDiv);
     initializeCodeBlockIcons(contentDiv);
     return messageDiv; // Return the message div so we can append to it
+}
+
+function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message assistant';
+    typingDiv.id = 'typing-indicator';
+
+    const avatarDiv = document.createElement('div');
+    avatarDiv.className = 'chat-avatar';
+    avatarDiv.innerHTML = `<i data-lucide="brain-circuit" class="w-5 h-5"></i>`;
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'chat-message-content';
+    contentDiv.innerHTML = `
+        <div class="flex items-center space-x-1">
+            <div class="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+            <div class="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+            <div class="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+        </div>
+    `;
+
+    typingDiv.appendChild(avatarDiv);
+    typingDiv.appendChild(contentDiv);
+    chatMessages.appendChild(typingDiv);
+    
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    lucide.createIcons({ nodes: [typingDiv] });
+    
+    return typingDiv;
+}
+
+function addConversationSuggestions() {
+    // Only add suggestions if there aren't many messages yet
+    if (chatMessages.children.length > 10) return;
+
+    const suggestionsDiv = document.createElement('div');
+    suggestionsDiv.className = 'conversation-suggestions';
+    
+    const suggestions = [
+        "What's my latest note?",
+        "Show me my recent movies",
+        "Find notes about books",
+        "What did I clip yesterday?",
+        "Search my audio notes"
+    ];
+
+    const suggestionsHTML = suggestions.map(suggestion => 
+        `<button class="suggestion-btn" onclick="useSuggestion('${suggestion}')">${suggestion}</button>`
+    ).join('');
+
+    suggestionsDiv.innerHTML = `
+        <div class="text-xs text-gray-500 mb-2">Try asking:</div>
+        <div>${suggestionsHTML}</div>
+    `;
+
+    chatMessages.appendChild(suggestionsDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function useSuggestion(suggestion) {
+    chatInput.value = suggestion;
+    chatInput.focus();
+    // Remove suggestions after use
+    const suggestionsDiv = document.querySelector('.conversation-suggestions');
+    if (suggestionsDiv) {
+        suggestionsDiv.remove();
+    }
+}
+
+async function openNoteFromChat(notePath, event) {
+    // Prevent any event bubbling that might interfere
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    // Find the note in allNotes and open it
+    const note = allNotes.find(n => n.path === notePath);
+    
+    if (note) {
+        // If it's a media note without tmdb_data, load it first
+        if (note.isMediaNote && !note.tmdb_data && note.title_slug) {
+            try {
+                if (note.media_type === 'wikipedia') {
+                    // Handle Wikipedia notes
+                    const wikipediaMatch = note.rawContent.match(/[a-z]{2}\.wikipedia\.org\/wiki\/([^/\s]+)/);
+                    if (wikipediaMatch) {
+                        const articleSlug = wikipediaMatch[1];
+                        const data = await api.getWikipediaDetails(articleSlug);
+                        if (data) {
+                            note.tmdb_data = data;
+                        }
+                    }
+                } else {
+                    // Handle movie/TV show notes
+                    const data = await api.getTMDbDetails(note.media_type, note.title_slug);
+                    if (data) {
+                        note.tmdb_data = data;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading media data:', error);
+            }
+        }
+        
+        // Now use the same logic as the card click handler to determine which modal to show
+        if (note.isAudioNote) {
+            showAudioModal(note);
+        } else if (note.isMediaNote && note.media_type === 'wikipedia') {
+            showWikipediaModal(note);
+        } else if (note.isMediaNote && note.tmdb_data) {
+            showMediaModal(note);
+        } else if (!note.isMediaNote) {
+            showStandardModal(note);
+        } else if (note.isMediaNote && !note.tmdb_data) {
+            // Fallback to standard modal if we couldn't load media data
+            showStandardModal(note);
+        }
+    }
 }
 
 // --- Search Help Modal Functions ---
