@@ -357,17 +357,15 @@ function parseNoteContent(rawContent) {
 async function deleteNote() {
     if (!currentNoteInModal) return;
 
-    if (window.confirm(`Are you sure you want to delete "${currentNoteInModal.path}"?`)) {
-        try {
-            await api.deleteNote(currentNoteInModal.path);
-            updateNoteInState({
-                path: currentNoteInModal.path
-            }, 'delete');
-            hideModal();
-        } catch (error) {
-            console.error(`Error deleting file: ${currentNoteInModal.path}`, error);
-            alert("Failed to delete note. See console for details.");
-        }
+    try {
+        await api.deleteNote(currentNoteInModal.path);
+        updateNoteInState({
+            path: currentNoteInModal.path
+        }, 'delete');
+        hideModal();
+    } catch (error) {
+        console.error(`Error deleting file: ${currentNoteInModal.path}`, error);
+        alert("Failed to delete note. See console for details.");
     }
 }
 
@@ -1510,17 +1508,15 @@ function hideMediaModal() {
 async function deleteMediaNote() {
     if (!currentMediaNoteInModal) return;
 
-    if (window.confirm(`Are you sure you want to delete "${currentMediaNoteInModal.path}"?`)) {
-        try {
-            await api.deleteNote(currentMediaNoteInModal.path);
-            updateNoteInState({
-                path: currentMediaNoteInModal.path
-            }, 'delete');
-            hideMediaModal();
-        } catch (error) {
-            console.error(`Error deleting file: ${currentMediaNoteInModal.path}`, error);
-            alert("Failed to delete note. See console for details.");
-        }
+    try {
+        await api.deleteNote(currentMediaNoteInModal.path);
+        updateNoteInState({
+            path: currentMediaNoteInModal.path
+        }, 'delete');
+        hideMediaModal();
+    } catch (error) {
+        console.error(`Error deleting file: ${currentMediaNoteInModal.path}`, error);
+        alert("Failed to delete note. See console for details.");
     }
 }
 
@@ -1570,17 +1566,15 @@ function hideAudioModal() {
 async function deleteAudioNote() {
     if (!currentAudioNoteInModal) return;
 
-    if (window.confirm(`Are you sure you want to delete "${currentAudioNoteInModal.path}"?`)) {
-        try {
-            await api.deleteNote(currentAudioNoteInModal.path);
-            updateNoteInState({
-                path: currentAudioNoteInModal.path
-            }, 'delete');
-            hideAudioModal();
-        } catch (error) {
-            console.error(`Error deleting file: ${currentAudioNoteInModal.path}`, error);
-            alert("Failed to delete note. See console for details.");
-        }
+    try {
+        await api.deleteNote(currentAudioNoteInModal.path);
+        updateNoteInState({
+            path: currentAudioNoteInModal.path
+        }, 'delete');
+        hideAudioModal();
+    } catch (error) {
+        console.error(`Error deleting file: ${currentAudioNoteInModal.path}`, error);
+        alert("Failed to delete note. See console for details.");
     }
 }
 
@@ -2024,17 +2018,15 @@ function hideWikipediaModal() {
 async function deleteWikipediaNote() {
     if (!currentWikipediaNoteInModal) return;
 
-    if (window.confirm(`Are you sure you want to delete "${currentWikipediaNoteInModal.path}"?`)) {
-        try {
-            await api.deleteNote(currentWikipediaNoteInModal.path);
-            updateNoteInState({
-                path: currentWikipediaNoteInModal.path
-            }, 'delete');
-            hideWikipediaModal();
-        } catch (error) {
-            console.error(`Error deleting file: ${currentWikipediaNoteInModal.path}`, error);
-            alert("Failed to delete note. See console for details.");
-        }
+    try {
+        await api.deleteNote(currentWikipediaNoteInModal.path);
+        updateNoteInState({
+            path: currentWikipediaNoteInModal.path
+        }, 'delete');
+        hideWikipediaModal();
+    } catch (error) {
+        console.error(`Error deleting file: ${currentWikipediaNoteInModal.path}`, error);
+        alert("Failed to delete note. See console for details.");
     }
 }
 
@@ -2703,19 +2695,7 @@ function setupEventListeners() {
         }
     }
 
-    function deleteWikipediaNote() {
-        if (!currentWikipediaNoteInModal) return;
-
-        if (window.confirm(`Are you sure you want to delete "${currentWikipediaNoteInModal.path}"?`)) {
-            api.deleteNote(currentWikipediaNoteInModal.path).then(() => {
-                updateNoteInState({ path: currentWikipediaNoteInModal.path }, 'delete');
-                hideWikipediaModal();
-            }).catch(error => {
-                console.error(`Error deleting Wikipedia note: ${currentWikipediaNoteInModal.path}`, error);
-                alert("Failed to delete note. See console for details.");
-            });
-        }
-    }
+    
 
     function toggleEditMode() {
         // Implementation for standard note edit mode
