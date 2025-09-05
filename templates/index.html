@@ -17,30 +17,26 @@
 <body class="text-gray-800">
 
     <div class="flex h-screen bg-white">
-        <aside class="w-16 md:w-20 lg:w-64 flex flex-col items-center md:items-start p-4 bg-gray-50/80 border-r border-gray-200/80 transition-all duration-300">
-            <div class="flex items-center justify-center md:justify-start w-full mb-10 pt-2">
+        <aside class="w-16 flex flex-col items-center p-3 bg-gray-50/80 border-r border-gray-200/80 transition-all duration-300">
+            <div class="flex items-center justify-center w-full mb-8 pt-2">
                 <img src="{{ url_for('static', filename='obsidian-logo.png') }}" alt="Obsidian Logo" class="w-10 h-10 rounded-full">
-                <div class="hidden lg:block ml-3">
-                    <h1 class="text-xl font-bold text-gray-800 leading-tight">Obsidian</h1>
-                    <p class="text-sm text-gray-500 leading-tight">my mind</p>
-                </div>
             </div>
-            <nav class="flex flex-col items-center md:items-start space-y-4 w-full">
-                <a href="#" id="my-mind-btn" class="flex items-center p-2 text-gray-700 font-semibold bg-gray-100 hover:bg-gray-200 rounded-lg w-full transition-colors cursor-pointer">
-                    <i data-lucide="brain-circuit" class="w-5 h-5"></i>
-                    <span class="hidden lg:block ml-4">my mind</span>
+            <nav class="flex flex-col items-center space-y-3 w-full">
+                <a href="#" id="my-mind-btn" class="flex items-center justify-center p-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg w-full transition-colors cursor-pointer">
+                    <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                    <span class="sr-only">my mind</span>
                 </a>
-                <a href="#" id="add-note-btn" class="flex items-center p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg w-full transition-colors cursor-pointer">
-                    <i data-lucide="plus" class="w-5 h-5"></i>
-                    <span class="hidden lg:block ml-4">Add Note</span>
+                <a href="#" id="add-note-btn" class="flex items-center justify-center p-3 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg w-full transition-colors cursor-pointer">
+                    <i data-lucide="plus" class="w-6 h-6"></i>
+                    <span class="sr-only">Add Note</span>
                 </a>
-                <a href="#" id="chat-btn" class="flex items-center p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg w-full transition-colors cursor-pointer">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i>
-                    <span class="hidden lg:block ml-4">Chat</span>
+                <a href="#" id="chat-btn" class="flex items-center justify-center p-3 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg w-full transition-colors cursor-pointer">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    <span class="sr-only">Chat</span>
                 </a>
-                 <a href="#" id="import-btn" class="flex items-center p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg w-full cursor-pointer transition-colors">
-                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-                    <span class="hidden lg:block ml-4">Force Sync</span>
+                <a href="#" id="import-btn" class="flex items-center justify-center p-3 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg w-full cursor-pointer transition-colors">
+                    <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+                    <span class="sr-only">Sync</span>
                 </a>
             </nav>
         </aside>
@@ -154,6 +150,32 @@
         </div>
     </div>
 
+    <!-- Custom Folder Tag Modal -->
+    <div id="folder-tag-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-md">
+            <div class="flex items-center justify-between p-4 border-b">
+                <h2 class="text-lg font-bold text-gray-800">Add Folder Tag</h2>
+                <button id="folder-tag-cancel-btn" class="text-gray-500 hover:text-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-4 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Folder Tag Name</label>
+                    <input id="folder-tag-name" type="text" class="w-full border border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Reading, Coding, Work" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
+                    <input id="folder-tag-tags" type="text" class="w-full border border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., book, reading, literature" />
+                    <p class="text-xs text-gray-500 mt-1">Notes with any of these tags will show under this folder tag.</p>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 p-4 border-t">
+                <button id="folder-tag-cancel-btn2" class="px-4 py-2 rounded-md border text-gray-600 hover:bg-gray-50">Cancel</button>
+                <button id="folder-tag-save-btn" class="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700">Save</button>
+            </div>
+        </div>
+    </div>
     <div id="note-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[80] hidden items-center justify-center p-4">
         <div id="modal-content" class="relative bg-white rounded-lg shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col">
             <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
@@ -313,10 +335,10 @@
     </div>
 
 
-    <div id="new-note-modal" class="fixed inset-0 z-[60] hidden flex-col p-8">        
+    <div id="new-note-modal" class="fixed inset-y-0 left-16 right-0 z-[60] hidden flex-col p-8">
         <div class="absolute top-5 right-5">
             <button id="new-note-close-btn" class="text-gray-400 hover:text-gray-800 transition-colors p-2 rounded-full bg-black/5 hover:bg-black/10">
-                <i data-lucide="x" class="w-6 h-6"></i>
+                <i data-lucide="x" class="w-7 h-7"></i>
             </button>
         </div>
 
@@ -344,7 +366,7 @@
                     <div class="shortcut-item"><span>Divider</span><kbd>---</kbd></div>
                 </div>
                 <button id="shortcuts-help-btn" class="text-gray-500 font-semibold text-xs tracking-widest flex items-center gap-2 cursor-pointer hover:text-gray-800 transition-colors">
-                    <i data-lucide="keyboard" class="w-4 h-4"></i> SHORTCUTS
+                    <i data-lucide="keyboard" class="w-5 h-5"></i> SHORTCUTS
                 </button>
             </div>
         </div>
@@ -356,10 +378,10 @@
         </div>
     </div>
 
-    <div id="chat-modal" class="fixed inset-0 z-[60] hidden flex-col p-4 sm:p-6 md:p-8 bg-white text-gray-800">
+    <div id="chat-modal" class="fixed inset-y-0 left-16 right-0 z-[60] hidden flex-col p-4 sm:p-6 md:p-8 bg-white text-gray-800">
         <div class="absolute top-5 right-5">
             <button id="chat-close-btn" class="text-gray-500 hover:text-gray-800 transition-colors p-2 rounded-full bg-gray-100 hover:bg-gray-200">
-                <i data-lucide="x" class="w-6 h-6"></i>
+                <i data-lucide="x" class="w-7 h-7"></i>
             </button>
         </div>
 
@@ -370,7 +392,7 @@
                     <input type="text" id="chat-input" placeholder="Ask anything, or ask to search your notes..." 
                            class="w-full bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none px-4 py-2">
                     <button id="chat-send-btn" class="bg-indigo-600 text-white rounded-full p-3 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 transition-colors disabled:opacity-50">
-                        <i data-lucide="send" class="w-5 h-5"></i>
+                        <i data-lucide="send" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
@@ -378,5 +400,38 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Open all links in a new tab across the site, except internal anchors and Obsidian internal-links.
+        (function () {
+            function setTargets(root) {
+                const scope = root instanceof Element ? root : document;
+                scope.querySelectorAll('a[href]').forEach(a => {
+                    const href = a.getAttribute('href') || '';
+                    if (href && href !== '#' && !a.classList.contains('internal-link')) {
+                        a.setAttribute('target', '_blank');
+                        a.setAttribute('rel', 'noopener noreferrer');
+                    }
+                });
+            }
+
+            if (document.readyState !== 'loading') {
+                setTargets(document);
+            } else {
+                document.addEventListener('DOMContentLoaded', () => setTargets(document));
+            }
+
+            // Keep applying for dynamically injected content
+            const mo = new MutationObserver(mutations => {
+                for (const m of mutations) {
+                    for (const n of m.addedNodes) {
+                        if (n.nodeType === 1) { // ELEMENT_NODE
+                            setTargets(n);
+                        }
+                    }
+                }
+            });
+            mo.observe(document.body, { childList: true, subtree: true });
+        })();
+    </script>
 </body>
 </html>

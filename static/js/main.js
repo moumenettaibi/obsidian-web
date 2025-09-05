@@ -87,6 +87,9 @@ let fuse;
 let topLevelFolders = new Set();
 let activeFolderFilter = null;
 let isDataLoaded = false;
+let activeCustomFilterTags = null;
+let activeSpecialFilter = 'today';
+const CUSTOM_FOLDER_TAGS_KEY = 'custom_folder_tags_v1';
 
 // Modal and Sync state
 let currentNoteInModal = null;
@@ -263,14 +266,12 @@ async function loadNotesFromServer() {
         const data = await api.getNotes();
 
         allNotes = data.notes.map(note => {
-            const {
-                tags,
-                contentWithoutTags
-            } = parseNoteContent(note.rawContent);
+            const parsed = parseNoteContent(note.rawContent);
+            const mergedTags = Array.from(new Set([...(note.tags || []), ...(parsed.tags || [])]));
             const processedNote = {
                 ...note,
-                tags,
-                contentWithoutTags,
+                tags: mergedTags,
+                contentWithoutTags: parsed.contentWithoutTags,
                 isAudioNote: false
             };
 
@@ -362,10 +363,14 @@ async function deleteNote() {
         updateNoteInState({
             path: currentNoteInModal.path
         }, 'delete');
-        hideModal();
     } catch (error) {
-        console.error(`Error deleting file: ${currentNoteInModal.path}`, error);
-        alert("Failed to delete note. See console for details.");
+        console.warn(`Non-blocking delete error for: ${currentNoteInModal && currentNoteInModal.path}`, error);
+        // Treat as deleted even if server responds with an error (e.g., already deleted)
+        updateNoteInState({
+            path: currentNoteInModal.path
+        }, 'delete');
+    } finally {
+        hideModal();
     }
 }
 
@@ -1137,28 +1142,84 @@ function createCardElement(note, highlightTerm) {
     // Initialize table action icons
     initializeTableIcons(div);
 
+    // Ensure all external links open in a new tab (skip internal obsidian links)
+    div.querySelectorAll('a[href]').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        if (!a.classList.contains('internal-link') && href && !href.startsWith('#')) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+        }
+    });
+
     return div;
 }
 
 function renderFolderTags() {
     folderTagsContainer.innerHTML = '';
-    if (topLevelFolders.size > 0) {
-        const allButton = document.createElement('button');
-        allButton.className = 'folder-tag active';
-        allButton.dataset.folder = 'all';
-        allButton.innerHTML = `<i data-lucide="inbox"></i>All`;
-        folderTagsContainer.appendChild(allButton);
 
-        const sortedFolders = [...topLevelFolders].sort();
-        sortedFolders.forEach(folder => {
+    const isTodayActive = activeSpecialFilter === 'today';
+    const isAllActive = !isTodayActive && !activeFolderFilter && !(activeCustomFilterTags && activeCustomFilterTags.length > 0);
+
+    // "All" button
+    const allButton = document.createElement('button');
+    allButton.className = 'folder-tag' + (isAllActive ? ' active' : '');
+    allButton.dataset.folder = 'all';
+    allButton.innerHTML = `<i data-lucide="inbox"></i>All`;
+    folderTagsContainer.appendChild(allButton);
+
+    // "Today" button (auto, after All)
+    const todayButton = document.createElement('button');
+    todayButton.className = 'folder-tag' + (isTodayActive ? ' active' : '');
+    todayButton.dataset.today = 'true';
+    todayButton.innerHTML = `<i data-lucide="calendar"></i>Today`;
+    folderTagsContainer.appendChild(todayButton);
+
+    // Real filesystem folders
+    const sortedFolders = [...topLevelFolders].sort();
+    sortedFolders.forEach(folder => {
+        const button = document.createElement('button');
+        button.className = 'folder-tag';
+        button.dataset.folder = folder;
+        button.innerHTML = `<i data-lucide="folder"></i>${folder}`;
+        folderTagsContainer.appendChild(button);
+    });
+
+    // Custom "folder tags" from localStorage
+    let customs = [];
+    try {
+        const raw = localStorage.getItem(CUSTOM_FOLDER_TAGS_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed)) {
+            customs = parsed.filter(x => x && x.name && Array.isArray(x.tags));
+        }
+    } catch (e) {
+        console.warn('Failed to parse custom folder tags from storage', e);
+    }
+
+    if (customs.length > 0) {
+        const spacer = document.createElement('div');
+        spacer.style.width = '8px';
+        folderTagsContainer.appendChild(spacer);
+
+        customs.forEach(cf => {
             const button = document.createElement('button');
             button.className = 'folder-tag';
-            button.dataset.folder = folder;
-            button.innerHTML = `<i data-lucide="folder"></i>${folder}`;
+            button.dataset.custom = 'true';
+            button.dataset.name = cf.name;
+            button.dataset.tags = JSON.stringify(cf.tags);
+            button.innerHTML = `<i data-lucide="tags"></i>${cf.name}`;
             folderTagsContainer.appendChild(button);
         });
-        lucide.createIcons();
     }
+
+    // "Add new" button
+    const addBtn = document.createElement('button');
+    addBtn.className = 'folder-tag';
+    addBtn.id = 'open-folder-tag-modal-btn';
+    addBtn.innerHTML = `<i data-lucide="folder-plus"></i>New`;
+    folderTagsContainer.appendChild(addBtn);
+
+    lucide.createIcons();
 }
 
 // MODIFIED: Manages the save button state based on the title field
@@ -1175,10 +1236,34 @@ function updateNewNoteSaveButtonState() {
 function applyFilters() {
     if (!isDataLoaded) return;
     let notesToDisplay = [...allNotes];
+    const hadAnyFilter = Boolean(
+        (activeFolderFilter && activeFolderFilter !== 'all') ||
+        (activeCustomFilterTags && activeCustomFilterTags.length > 0) ||
+        activeSpecialFilter
+    );
 
     // 1. Apply folder filter first
     if (activeFolderFilter && activeFolderFilter !== 'all') {
         notesToDisplay = notesToDisplay.filter(note => note.path.startsWith(`${activeFolderFilter}/`));
+    }
+
+    // 1a. Apply special date filters (e.g., Today)
+    if (activeSpecialFilter === 'today') {
+        const now = new Date();
+        const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+        notesToDisplay = notesToDisplay.filter(note => {
+            const ct = Number(note.createdTime || 0);
+            return ct >= startOfDay.getTime() && ct <= endOfDay.getTime();
+        });
+    }
+
+    // 1b. Apply custom folder tags filter (matches ANY of the tags)
+    if (activeCustomFilterTags && activeCustomFilterTags.length > 0) {
+        notesToDisplay = notesToDisplay.filter(note => {
+            const ntags = Array.isArray(note.tags) ? note.tags.map(t => String(t).toLowerCase()) : [];
+            return activeCustomFilterTags.some(t => ntags.includes(String(t).toLowerCase()));
+        });
     }
 
     const searchTerm = searchInput.value.trim().toLowerCase();
@@ -1245,11 +1330,35 @@ function applyFilters() {
         finalNotes = notesToDisplay;
     }
 
+    // Fallback to "All" if searching in a filtered view returns no results
+    if (finalNotes.length === 0 && searchTerm && hadAnyFilter) {
+        // Reset filters
+        activeFolderFilter = null;
+        activeCustomFilterTags = null;
+        activeSpecialFilter = null;
+
+        // Update UI chips to reflect All as active
+        try {
+            const allChip = folderTagsContainer.querySelector('.folder-tag[data-folder="all"]');
+            if (allChip) {
+                folderTagsContainer.querySelectorAll('.folder-tag').forEach(tag => tag.classList.remove('active'));
+                allChip.classList.add('active');
+            }
+        } catch (e) {
+            // no-op
+        }
+
+        // Re-run search across all
+        applyFilters();
+        return;
+    }
+
     // 4. Render the results
     renderCards(finalNotes);
 
     if (finalNotes.length === 0 && allNotes.length > 0) {
-        loadingIndicator.innerHTML = `<p class="text-gray-500">No notes match your filters.</p>`;
+        const emptyMsg = activeSpecialFilter === 'today' ? 'No notes for today.' : 'No notes match your filters.';
+        loadingIndicator.innerHTML = `<p class="text-gray-500">${emptyMsg}</p>`;
         loadingIndicator.style.display = 'block';
     } else if (allNotes.length > 0) {
         loadingIndicator.style.display = 'none';
@@ -1301,6 +1410,12 @@ function stopRealtimeSync() {
 }
 
 async function checkForUpdates(force = false) {
+    if (force) {
+        // Icon-only: loading spinner
+        importBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>';
+        lucide.createIcons();
+    }
+
     if (!isDataLoaded || (isEditMode && !force) || (document.hidden && !force)) return;
 
     try {
@@ -1332,8 +1447,28 @@ async function checkForUpdates(force = false) {
             applyFilters();
         }
 
+        if (force) {
+            // Icon-only: success check
+            importBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
+            lucide.createIcons();
+            setTimeout(() => {
+                // Revert to initial sync icon (no text)
+                importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            }, 2000);
+        }
     } catch (error) {
         console.warn("Sync check failed:", error.message);
+        if (force) {
+            // Icon-only: error X
+            importBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+            lucide.createIcons();
+            setTimeout(() => {
+                // Revert to initial sync icon (no text)
+                importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            }, 2000);
+        }
     }
 }
 
@@ -1513,10 +1648,13 @@ async function deleteMediaNote() {
         updateNoteInState({
             path: currentMediaNoteInModal.path
         }, 'delete');
-        hideMediaModal();
     } catch (error) {
-        console.error(`Error deleting file: ${currentMediaNoteInModal.path}`, error);
-        alert("Failed to delete note. See console for details.");
+        console.warn(`Non-blocking delete error for: ${currentMediaNoteInModal && currentMediaNoteInModal.path}`, error);
+        updateNoteInState({
+            path: currentMediaNoteInModal.path
+        }, 'delete');
+    } finally {
+        hideMediaModal();
     }
 }
 
@@ -1571,10 +1709,13 @@ async function deleteAudioNote() {
         updateNoteInState({
             path: currentAudioNoteInModal.path
         }, 'delete');
-        hideAudioModal();
     } catch (error) {
-        console.error(`Error deleting file: ${currentAudioNoteInModal.path}`, error);
-        alert("Failed to delete note. See console for details.");
+        console.warn(`Non-blocking delete error for: ${currentAudioNoteInModal && currentAudioNoteInModal.path}`, error);
+        updateNoteInState({
+            path: currentAudioNoteInModal.path
+        }, 'delete');
+    } finally {
+        hideAudioModal();
     }
 }
 
@@ -1634,15 +1775,14 @@ function showWikipediaModal(note) {
 // --- Chat Modal Functions ---
 function showChatModal() {
     chatModal.classList.remove('hidden');
-    setTimeout(() => {
-        chatModal.classList.add('visible');
-        chatInput.focus();
-        
-        // Show welcome message if chat is empty
-        if (chatMessages.children.length === 0) {
-            showWelcomeMessage();
-        }
-    }, 10);
+    chatModal.classList.add('flex'); // ensure display flex
+    chatModal.classList.add('visible');
+    if (chatInput) chatInput.focus();
+
+    // Show welcome message if chat is empty
+    if (chatMessages && chatMessages.children.length === 0) {
+        showWelcomeMessage();
+    }
 }
 
 function showWelcomeMessage() {
@@ -1663,9 +1803,9 @@ function showWelcomeMessage() {
 
 function hideChatModal() {
     chatModal.classList.remove('visible');
-    setTimeout(() => {
-        chatModal.classList.add('hidden');
-    }, 300);
+    chatModal.classList.remove('flex');
+    chatModal.classList.add('hidden');
+    document.body.style.overflow = '';
 }
 
 async function sendChatMessage() {
@@ -2023,11 +2163,46 @@ async function deleteWikipediaNote() {
         updateNoteInState({
             path: currentWikipediaNoteInModal.path
         }, 'delete');
-        hideWikipediaModal();
     } catch (error) {
-        console.error(`Error deleting file: ${currentWikipediaNoteInModal.path}`, error);
-        alert("Failed to delete note. See console for details.");
+        console.warn(`Non-blocking delete error for: ${currentWikipediaNoteInModal && currentWikipediaNoteInModal.path}`, error);
+        updateNoteInState({
+            path: currentWikipediaNoteInModal.path
+        }, 'delete');
+    } finally {
+        hideWikipediaModal();
     }
+}
+
+// --- Overlay Coordination ---
+function closeAllOverlays() {
+    const forceHide = (el) => {
+        if (!el) return;
+        el.classList.remove('visible');
+        el.classList.remove('flex');
+        el.classList.add('hidden');
+    };
+
+    // Force hide known overlays to avoid race conditions with timed hide() functions
+    forceHide(newNoteModal);
+    forceHide(chatModal);
+    forceHide(noteModal);
+    forceHide(mediaModal);
+    forceHide(audioModal);
+    forceHide(wikipediaModal);
+    forceHide(searchHelpModal);
+
+    // Folder tag modal
+    forceHide(document.getElementById('folder-tag-modal'));
+    // YouTube modal
+    forceHide(document.getElementById('youtube-modal'));
+
+    // Shortcuts popup
+    if (typeof shortcutsPopup !== 'undefined' && shortcutsPopup) {
+        shortcutsPopup.classList.add('hidden');
+    }
+
+    // Restore body scroll
+    document.body.style.overflow = '';
 }
 
 // --- Custom Audio Player Logic ---
@@ -2098,6 +2273,7 @@ searchInput.addEventListener('input', debounce(applyFilters, 300));
 // MODIFIED: New note modal listeners for seamless editing
 addNoteBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    closeAllOverlays();
     showNewNoteModal();
 });
 newNoteCloseBtn.addEventListener('click', hideNewNoteModal);
@@ -2107,6 +2283,7 @@ newNoteTitle.addEventListener('input', updateNewNoteSaveButtonState);
 // Chat modal listeners
 chatBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    closeAllOverlays();
     showChatModal();
 });
 
@@ -2174,6 +2351,7 @@ window.addEventListener('click', (e) => {
 // Search help modal listeners
 searchHelpBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    closeAllOverlays();
     showSearchHelpModal();
 });
 
@@ -2202,6 +2380,65 @@ document.addEventListener('click', (e) => {
         const btn = e.target.closest('.code-copy-btn');
         const codeIndex = btn.dataset.codeIndex;
         copyCodeToClipboard(codeIndex);
+    }
+
+    // Custom Folder Tags: Save
+    const saveBtn = e.target.closest('#folder-tag-save-btn');
+    if (saveBtn) {
+        const modal = document.getElementById('folder-tag-modal');
+        const nameInput = document.getElementById('folder-tag-name');
+        const tagsInput = document.getElementById('folder-tag-tags');
+
+        const name = (nameInput && nameInput.value || '').trim();
+        const rawTags = (tagsInput && tagsInput.value || '').split(',').map(t => t.trim()).filter(Boolean);
+        const tags = Array.from(new Set(rawTags.map(t => t.toLowerCase())));
+
+        if (!name || tags.length === 0) {
+            alert('Please enter a folder tag name and at least one tag.');
+            return;
+        }
+
+        // Load existing
+        let existing = [];
+        try {
+            const raw = localStorage.getItem(CUSTOM_FOLDER_TAGS_KEY);
+            existing = raw ? JSON.parse(raw) : [];
+            if (!Array.isArray(existing)) existing = [];
+        } catch { existing = []; }
+
+        const idx = existing.findIndex(x => x && x.name && x.name.toLowerCase() === name.toLowerCase());
+        if (idx >= 0) existing[idx] = { name, tags };
+        else existing.push({ name, tags });
+
+        try { localStorage.setItem(CUSTOM_FOLDER_TAGS_KEY, JSON.stringify(existing)); } catch {}
+
+        // Close modal
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Re-render and activate
+        renderFolderTags();
+        const newBtn = Array.from(folderTagsContainer.querySelectorAll('.folder-tag'))
+            .find(btn => btn.dataset.custom === 'true' && (btn.dataset.name || '').toLowerCase() === name.toLowerCase());
+        if (newBtn) {
+            folderTagsContainer.querySelectorAll('.folder-tag').forEach(tag => tag.classList.remove('active'));
+            newBtn.classList.add('active');
+            activeFolderFilter = null;
+            activeCustomFilterTags = tags;
+            applyFilters();
+        }
+    }
+
+    // Custom Folder Tags: Cancel (both close buttons)
+    const cancelBtn = e.target.closest('#folder-tag-cancel-btn, #folder-tag-cancel-btn2');
+    if (cancelBtn) {
+        const modal = document.getElementById('folder-tag-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
     }
 });
 
@@ -2240,11 +2477,45 @@ folderTagsContainer.addEventListener('click', (e) => {
     const clickedTag = e.target.closest('.folder-tag');
     if (!clickedTag) return;
 
+    // Open the "Add Folder Tag" modal
+    if (clickedTag.id === 'open-folder-tag-modal-btn') {
+        closeAllOverlays();
+        const modal = document.getElementById('folder-tag-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            const nameInput = document.getElementById('folder-tag-name');
+            if (nameInput) setTimeout(() => nameInput.focus(), 0);
+        }
+        return;
+    }
+
+    // Mark active
     folderTagsContainer.querySelectorAll('.folder-tag').forEach(tag => tag.classList.remove('active'));
     clickedTag.classList.add('active');
 
-    const folderName = clickedTag.dataset.folder;
-    activeFolderFilter = (folderName === 'all') ? null : folderName;
+    // Handle built-in vs custom filters
+    if (clickedTag.dataset.today === 'true') {
+        activeSpecialFilter = 'today';
+        activeCustomFilterTags = null;
+        activeFolderFilter = null;
+    } else if (clickedTag.dataset.custom === 'true') {
+        let tags = [];
+        try {
+            tags = JSON.parse(clickedTag.dataset.tags || '[]');
+        } catch {
+            const raw = clickedTag.dataset.tags || '';
+            tags = raw.split(',').map(s => s.trim()).filter(Boolean);
+        }
+        activeSpecialFilter = null;
+        activeCustomFilterTags = tags;
+        activeFolderFilter = null;
+    } else {
+        activeCustomFilterTags = null;
+        activeSpecialFilter = null;
+        const folderName = clickedTag.dataset.folder;
+        activeFolderFilter = (folderName === 'all') ? null : folderName;
+    }
 
     applyFilters();
 });
@@ -2301,6 +2572,8 @@ cardContainer.addEventListener('click', (e) => {
         const noteData = allNotes.find(n => n.id === noteId);
 
         if (!noteData) return;
+
+        closeAllOverlays();
 
         if (noteData.isAudioNote) {
             showAudioModal(noteData);
@@ -2410,6 +2683,7 @@ function setupEventListeners() {
         console.log('Add note button found, adding event listener');
         addNoteBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            closeAllOverlays();
             showNewNoteModal();
         });
     } else {
@@ -2458,6 +2732,7 @@ function setupEventListeners() {
         chatBtn.addEventListener('click', (e) => {
             e.preventDefault();
             console.log('Chat button clicked');
+            closeAllOverlays();
             showChatModal();
         });
     } else {
@@ -2476,6 +2751,7 @@ function setupEventListeners() {
     if (searchHelpBtn) {
         searchHelpBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            closeAllOverlays();
             showSearchHelpModal();
         });
     }
@@ -2525,34 +2801,7 @@ function setupEventListeners() {
         });
     }
 
-    // Modal Delete Buttons
-    if (modalDeleteBtn) {
-        modalDeleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            deleteNote();
-        });
-    }
-
-    if (mediaModalDeleteBtn) {
-        mediaModalDeleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            deleteMediaNote();
-        });
-    }
-
-    if (audioModalDeleteBtn) {
-        audioModalDeleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            deleteAudioNote();
-        });
-    }
-
-    if (wikipediaModalDeleteBtn) {
-        wikipediaModalDeleteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            deleteWikipediaNote();
-        });
-    }
+    // Modal Delete Buttons are bound at top-level to avoid duplicate handlers here.
 
     // Modal Edit Buttons
     if (modalEditBtn) {
@@ -2667,33 +2916,9 @@ function setupEventListeners() {
         document.body.style.overflow = '';
     }
 
-    function deleteMediaNote() {
-        if (!currentMediaNoteInModal) return;
+    // Removed duplicate deleteMediaNote in setupEventListeners (handled globally).
 
-        if (window.confirm(`Are you sure you want to delete "${currentMediaNoteInModal.path}"?`)) {
-            api.deleteNote(currentMediaNoteInModal.path).then(() => {
-                updateNoteInState({ path: currentMediaNoteInModal.path }, 'delete');
-                hideMediaModal();
-            }).catch(error => {
-                console.error(`Error deleting media note: ${currentMediaNoteInModal.path}`, error);
-                alert("Failed to delete note. See console for details.");
-            });
-        }
-    }
-
-    function deleteAudioNote() {
-        if (!currentAudioNoteInModal) return;
-
-        if (window.confirm(`Are you sure you want to delete "${currentAudioNoteInModal.path}"?`)) {
-            api.deleteNote(currentAudioNoteInModal.path).then(() => {
-                updateNoteInState({ path: currentAudioNoteInModal.path }, 'delete');
-                hideAudioModal();
-            }).catch(error => {
-                console.error(`Error deleting audio note: ${currentAudioNoteInModal.path}`, error);
-                alert("Failed to delete note. See console for details.");
-            });
-        }
-    }
+    // Removed duplicate deleteAudioNote in setupEventListeners (handled globally).
 
     
 
@@ -2823,7 +3048,7 @@ function setupEventListeners() {
             sourcesDiv.innerHTML = `
             <div class="text-xs text-gray-500 mb-1">Sources:</div>
             ${sources.map(source => `
-                <div class="text-xs text-indigo-600 cursor-pointer hover:underline" onclick="openNoteByPath('${source.path}')">
+                <div class="text-xs text-indigo-600 cursor-pointer hover:underline" onclick="openNoteByPath('${source.path}', { keepChatOpen: true })">
                     📄 ${source.path}
                 </div>
             `).join('')}
@@ -2836,10 +3061,13 @@ function setupEventListeners() {
         }
     }
 
-    function openNoteByPath(path) {
+    function openNoteByPath(path, options = {}) {
         const note = allNotes.find(n => n.path === path);
         if (note) {
-            hideChatModal();
+            const keepChatOpen = options.keepChatOpen !== undefined ? options.keepChatOpen : true;
+            if (!keepChatOpen) {
+                hideChatModal();
+            }
             if (note.isAudioNote) {
                 showAudioModal(note);
             } else if (note.isMediaNote && note.media_type === 'wikipedia') {
@@ -2854,29 +3082,34 @@ function setupEventListeners() {
 
     async function checkForUpdates(forceSync = false) {
         if (forceSync) {
-            importBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i><span class="hidden lg:block ml-4">Syncing...</span>';
+            // Icon-only: loading spinner
+            importBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>';
             lucide.createIcons();
         }
 
         try {
             await loadNotesFromServer();
             if (forceSync) {
-                importBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Synced!</span>';
+                // Icon-only: success check
+                importBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i>';
                 lucide.createIcons();
 
                 setTimeout(() => {
-                    importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Force Sync</span>';
+                    // Revert to initial sync icon (no text)
+                    importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i>';
                     lucide.createIcons();
                 }, 2000);
             }
         } catch (error) {
             console.error('Error during sync:', error);
             if (forceSync) {
-                importBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Sync Failed</span>';
+                // Icon-only: error X
+                importBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
                 lucide.createIcons();
 
                 setTimeout(() => {
-                    importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i><span class="hidden lg:block ml-4">Force Sync</span>';
+                    // Revert to initial sync icon (no text)
+                    importBtn.innerHTML = '<i data-lucide="refresh-cw" class="w-5 h-5"></i>';
                     lucide.createIcons();
                 }, 2000);
             }
@@ -2953,13 +3186,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatBtn && chatModal) {
         chatBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            closeAllOverlays();
             chatModal.classList.remove('hidden');
             chatModal.classList.add('flex');
+            chatModal.classList.add('visible');
             document.body.style.overflow = 'hidden';
             
             // Clear messages and focus input
             if (chatMessages) chatMessages.innerHTML = '';
-            if (chatInput) setTimeout(() => chatInput.focus(), 100);
+            if (chatInput) chatInput.focus();
         });
     }
 
@@ -2999,7 +3234,10 @@ setTimeout(() => {
         console.log('Setting up my mind button listener');
         myMindButton.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('My mind button clicked - scrolling to top');
+            console.log('My mind button clicked - closing popups and scrolling to top');
+
+            // Close all overlays deterministically to avoid races
+            closeAllOverlays();
 
             // Scroll to top smoothly
             window.scrollTo({

@@ -1280,3 +1280,145 @@ google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quot
 
  * Serving Flask app 'app'
  * Debug mode: on
+Error calling Gemini API: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 38
+}
+]
+Full traceback: Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 309, in chat_with_mymind
+    response = model.generate_content(prompt, stream=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 240, in generate_content
+    iterator = self._client.stream_generate_content(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 852, in stream_generate_content
+    response = rpc(
+               ^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 174, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 38
+}
+]
+
+Error calling Gemini API: 503 The model is overloaded. Please try again later.
+Full traceback: Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 116, in __next__
+    return next(self._wrapped)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/grpc/_channel.py", line 543, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/grpc/_channel.py", line 952, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "The model is overloaded. Please try again later."
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:216.58.209.74:443 {grpc_message:"The model is overloaded. Please try again later.", grpc_status:14}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 310, in chat_with_mymind
+    for chunk in response:
+                 ^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/generativeai/types/generation_types.py", line 406, in __iter__
+    raise self._error
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/generativeai/types/generation_types.py", line 415, in __iter__
+    item = next(self._iterator)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 119, in __next__
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ServiceUnavailable: 503 The model is overloaded. Please try again later.
+
+Error calling Gemini API: 503 The model is overloaded. Please try again later.
+Full traceback: Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 116, in __next__
+    return next(self._wrapped)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/grpc/_channel.py", line 543, in __next__
+    return self._next()
+           ^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/grpc/_channel.py", line 969, in _next
+    raise self
+grpc._channel._MultiThreadedRendezvous: <_MultiThreadedRendezvous of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "The model is overloaded. Please try again later."
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:216.58.209.74:443 {grpc_status:14, grpc_message:"The model is overloaded. Please try again later."}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 310, in chat_with_mymind
+    for chunk in response:
+                 ^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/generativeai/types/generation_types.py", line 406, in __iter__
+    raise self._error
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/generativeai/types/generation_types.py", line 415, in __iter__
+    item = next(self._iterator)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 119, in __next__
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ServiceUnavailable: 503 The model is overloaded. Please try again later.
+
+Error calling Gemini API: 504 Deadline Exceeded
+Full traceback: Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 309, in chat_with_mymind
+    response = model.generate_content(prompt, stream=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 240, in generate_content
+    iterator = self._client.stream_generate_content(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 852, in stream_generate_content
+    response = rpc(
+               ^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 174, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.DeadlineExceeded: 504 Deadline Exceeded
+
