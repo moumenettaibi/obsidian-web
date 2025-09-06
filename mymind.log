@@ -1422,3 +1422,7 @@ Full traceback: Traceback (most recent call last):
     raise exceptions.from_grpc_error(exc) from exc
 google.api_core.exceptions.DeadlineExceeded: 504 Deadline Exceeded
 
+ * Serving Flask app 'app'
+ * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
