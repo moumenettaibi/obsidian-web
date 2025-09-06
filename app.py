@@ -712,4 +712,4 @@ def home():
 
 if __name__ == "__main__":
     logging.info(f"Serving notes from: {NOTES_DIRECTORY}")
-    app.run(host="0.0.0.0", port=6768, debug=True)
+    app.run(host="0.0.0.0", port=6769, debug=True)
