@@ -1466,3 +1466,80 @@ code:not(.code-block-content code) {
     color: #475569;
     font-weight: 500;
 }
+
+/* --- ADDED: Styles for Reddit Card --- */
+.reddit-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.reddit-card:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.reddit-card-header {
+    background-color: #FF4500; /* Reddit Orange */
+    padding: 1.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reddit-logo {
+    width: 48px;
+    height: 48px;
+}
+
+.reddit-card-body {
+    padding: 1rem;
+    flex-grow: 1;
+}
+
+.reddit-subreddit {
+    font-size: 0.75rem; /* 12px */
+    color: #FF4500; /* Reddit orange */
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.reddit-title {
+    font-weight: 600;
+    color: #1f2937; /* gray-800 */
+    line-height: 1.4;
+    text-align: center;
+    font-size: 1.25rem;
+    /* Clamp title to 3 lines with an ellipsis */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.reddit-card-footer {
+    padding: 1rem;
+    margin-top: auto; /* Pushes footer to the bottom */
+    text-align: center;
+}
+
+.reddit-view-button {
+    display: inline-block;
+    background-color: #FF4500; /* Light Reddit Orange */
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem; /* 14px */
+    padding: 0.6rem 1.25rem;
+    border-radius: 9999px; /* pill shape */
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.reddit-view-button:hover {
+    background-color: #e53f03; /* Slightly darker orange */
+}

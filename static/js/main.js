@@ -272,7 +272,8 @@ async function loadNotesFromServer() {
                 ...note,
                 tags: mergedTags,
                 contentWithoutTags: parsed.contentWithoutTags,
-                isAudioNote: false
+                isAudioNote: false,
+                isRedditNote: note.isRedditNote || false
             };
 
             const audioMatch = note.rawContent.match(/!\[\[\s*(.*?\.(mp3))\s*\]\]/i);
@@ -1017,6 +1018,27 @@ function createCardElement(note, highlightTerm) {
     const div = document.createElement('div');
     div.dataset.id = note.id;
 
+    if (note.isRedditNote) {
+        div.className = 'reddit-card card';
+        const title = note.name.replace(/\.md$/, '');
+        const previewLines = note.contentWithoutTags.split('\n').slice(0, 3).join(' ');
+        const previewText = previewLines.length > 100 ? previewLines.substring(0, 100) + '...' : previewLines;
+
+        div.innerHTML = `
+            <div class="reddit-card-header">
+                <img src="/static/Reddit_Logo.webp" alt="Reddit" class="reddit-logo">
+            </div>
+            <div class="reddit-card-body">
+                <div class="reddit-subreddit">reddit</div>
+                <h3 class="reddit-title" title="${title}">${title}</h3>
+            </div>
+            <div class="reddit-card-footer">
+                <a href="${note.redditUrl}" target="_blank" rel="noopener noreferrer" class="reddit-view-button">VIEW ON REDDIT</a>
+            </div>
+        `;
+        return div;
+    }
+
     if (note.isAudioNote) {
         div.className = 'audio-card';
         const formattedTitle = note.audioFileName
@@ -1318,6 +1340,9 @@ function applyFilters() {
     } else if (searchWithoutKeywords.includes('audios') || searchWithoutKeywords.includes('audio')) {
         notesToDisplay = notesToDisplay.filter(note => note.isAudioNote);
         searchWithoutKeywords = searchWithoutKeywords.replace(/audios|audio/g, '').trim();
+    } else if (searchWithoutKeywords.toLowerCase().includes('site: reddit.com')) {
+        notesToDisplay = notesToDisplay.filter(note => note.isRedditNote);
+        searchWithoutKeywords = searchWithoutKeywords.replace(/site: reddit\.com/g, 'site: reddit.com', 'i').trim();
     }
 
     let finalNotes;
@@ -2566,6 +2591,10 @@ function handleInternalLinkClick(e) {
 }
 
 cardContainer.addEventListener('click', (e) => {
+    if (e.target.closest('.reddit-view-button')) {
+        return; // Prevent opening note popup when clicking the VIEW ON REDDIT button
+    }
+
     const cardElement = e.target.closest('.card, .card-placeholder, .audio-card');
     if (cardElement && !e.target.classList.contains('internal-link')) {
         const noteId = cardElement.dataset.id;
@@ -2581,6 +2610,8 @@ cardContainer.addEventListener('click', (e) => {
             showWikipediaModal(noteData);
         } else if (noteData.isMediaNote && noteData.tmdb_data) {
             showMediaModal(noteData);
+        } else if (noteData.isRedditNote) {
+            showStandardModal(noteData);
         } else if (!noteData.isMediaNote) {
             showStandardModal(noteData);
         } else if (noteData.isMediaNote && !noteData.tmdb_data) {

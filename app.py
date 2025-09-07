@@ -149,6 +149,7 @@ def get_notes_from_disk(root_path):
     letterboxd_pattern = re.compile(r'https?://letterboxd\.com/film/([^/]+)/?')
     serializd_pattern = re.compile(r'https?://www\.serializd\.com/show/([^/]+)/?')
     wikipedia_pattern = re.compile(r'[a-z]{2}\.wikipedia\.org/wiki/([^/\s]+)')
+    reddit_pattern = re.compile(r'https?://(?:www\.)?reddit\.com/r/[^\s]+/comments/[^\s]+/[^\s]+/?')
 
     logging.info(f"Scanning for notes and media in: {root_path}")
     for dirpath, dirnames, filenames in os.walk(root_path, topdown=True):
@@ -188,8 +189,8 @@ def get_notes_from_disk(root_path):
                         "rawContent": raw_content, "contentWithoutTags": content_without_tags,
                         "lastModified": file_stat.st_mtime * 1000,
                         "createdTime": sort_time * 1000, "createdTimeReadable": human_readable_time,
-                        "links": links, "tags": tags, "isMediaNote": False, "isAudioNote": is_audio_note,
-                        "tmdb_data": None, "media_type": None, "title_slug": None
+                        "links": links, "tags": tags, "isMediaNote": False, "isRedditNote": False, "isAudioNote": is_audio_note,
+                        "tmdb_data": None, "media_type": None, "title_slug": None, "redditUrl": None
                     }
 
                     letterboxd_match = letterboxd_pattern.search(raw_content)
@@ -205,6 +206,10 @@ def get_notes_from_disk(root_path):
                     elif wikipedia_match:
                         title_slug = wikipedia_match.group(1).replace('_', ' ')
                         note_data.update({'isMediaNote': True, 'media_type': 'wikipedia', 'title_slug': title_slug})
+                    reddit_matches = reddit_pattern.findall(raw_content)
+                    if reddit_matches and not note_data.get('isMediaNote', False):
+                        last_url = reddit_matches[-1].rstrip(')/')
+                        note_data.update({'isRedditNote': True, 'redditUrl': last_url})
 
                     all_notes.append(note_data)
                 else:
