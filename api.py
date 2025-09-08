@@ -368,7 +368,7 @@ def chat_with_mymind(question, context=None, all_notes=None):
         ]
         
         stream = client.chat.completions.create(
-            model="anthropic/claude-3-haiku",
+            model="openrouter/sonoma-sky-alpha",
             messages=messages,
             max_tokens=3000,
             stream=True,
