@@ -466,9 +466,10 @@ def extract_search_terms(query):
     
     return meaningful_words
 
-def enhanced_search_for_chat(query, notes, max_results=8):
+def enhanced_search_for_chat(query, notes, max_results=8, date_filter=None):
     """
     Enhanced search function with temporal awareness and better intent understanding.
+    If date_filter is provided (e.g., {'type': 'today'}), filters notes to that date first.
     """
     if not notes:
         return []
@@ -476,6 +477,25 @@ def enhanced_search_for_chat(query, notes, max_results=8):
     query_lower = query.lower().strip()
     if not query_lower:
         return []
+    
+    # Apply date filter first if specified
+    if date_filter and date_filter.get('type'):
+        from datetime import datetime, date, timedelta
+        filter_type = date_filter.get('type')
+        now = datetime.now()
+        
+        if filter_type == 'today':
+            today = date.today()
+            notes = [note for note in notes if note.get('createdTime') and
+                     datetime.fromtimestamp(note['createdTime'] / 1000).date() == today]
+        elif filter_type == 'yesterday':
+            yesterday = now.date() - timedelta(days=1)
+            notes = [note for note in notes if note.get('createdTime') and
+                     datetime.fromtimestamp(note['createdTime'] / 1000).date() == yesterday]
+        elif filter_type == 'this_week':
+            week_start = now - timedelta(days=now.weekday())
+            notes = [note for note in notes if note.get('createdTime') and
+                     datetime.fromtimestamp(note['createdTime'] / 1000) >= week_start]
     
     # Check for temporal queries
     temporal_keywords = {
@@ -491,8 +511,11 @@ def enhanced_search_for_chat(query, notes, max_results=8):
     is_temporal = any(keyword in query_lower for keyword in temporal_keywords.keys())
     
     if is_temporal:
-        # Handle temporal queries specially
-        return handle_temporal_query(query, query_lower, notes, temporal_keywords, max_results)
+        # Handle temporal queries specially, pass date_filter
+        from api import analyze_user_intent
+        intent = analyze_user_intent(query)
+        date_filter = intent.get('date_filter')
+        return handle_temporal_query(query, query_lower, notes, temporal_keywords, max_results, date_filter)
     
     # Extract meaningful search terms from the query
     search_terms = extract_search_terms(query)
@@ -559,9 +582,10 @@ def enhanced_search_for_chat(query, notes, max_results=8):
     # Prepare context for AI
     return prepare_context_notes(scored_notes, max_results)
 
-def handle_temporal_query(query, query_lower, notes, temporal_keywords, max_results):
+def handle_temporal_query(query, query_lower, notes, temporal_keywords, max_results, date_filter=None):
     """
     Handles temporal queries like 'latest movie', 'last book I added', etc.
+    If date_filter is provided, prioritizes date filtering over content type.
     """
     # Determine the temporal sorting
     sort_func = None
@@ -576,30 +600,39 @@ def handle_temporal_query(query, query_lower, notes, temporal_keywords, max_resu
     # Sort notes by time
     sorted_notes = sort_func(notes)
     
-    # Extract content type from query
-    content_types = {
-        'movie': lambda n: n.get('media_type') == 'movie',
-        'film': lambda n: n.get('media_type') == 'movie',
-        'show': lambda n: n.get('media_type') == 'tv',
-        'tv': lambda n: n.get('media_type') == 'tv',
-        'series': lambda n: n.get('media_type') == 'tv',
-        'book': lambda n: 'book' in n.get('rawContent', '').lower() or 'goodreads' in n.get('rawContent', '').lower(),
-        'audio': lambda n: n.get('isAudioNote', False),
-        'music': lambda n: n.get('isAudioNote', False),
-        'note': lambda n: not n.get('isMediaNote', False) and not n.get('isAudioNote', False),
-        'clip': lambda n: 'clip' in n.get('path', '').lower() or 'clipped' in n.get('rawContent', '').lower()
-    }
-    
-    # Filter by content type if specified
-    filtered_notes = sorted_notes
-    for content_type, filter_func in content_types.items():
-        if content_type in query_lower:
-            filtered_notes = [note for note in sorted_notes if filter_func(note)]
-            break
-    
-    # If no specific type found, but it's a temporal query, return recent notes
-    if not filtered_notes or len(filtered_notes) == len(sorted_notes):
-        filtered_notes = sorted_notes[:max_results * 2]  # Get more for temporal queries
+    # If date_filter is specified, use only those notes (prioritize over content type)
+    if date_filter and date_filter.get('type') == 'today':
+        from datetime import datetime, date
+        today = date.today()
+        sorted_notes = [note for note in sorted_notes if note.get('createdTime') and
+                        datetime.fromtimestamp(note['createdTime'] / 1000).date() == today]
+        # For today filter, use all today's notes without further content filtering
+        filtered_notes = sorted_notes[:max_results * 2]
+    else:
+        # Extract content type from query (original logic)
+        content_types = {
+            'movie': lambda n: n.get('media_type') == 'movie',
+            'film': lambda n: n.get('media_type') == 'movie',
+            'show': lambda n: n.get('media_type') == 'tv',
+            'tv': lambda n: n.get('media_type') == 'tv',
+            'series': lambda n: n.get('media_type') == 'tv',
+            'book': lambda n: 'book' in n.get('rawContent', '').lower() or 'goodreads' in n.get('rawContent', '').lower(),
+            'audio': lambda n: n.get('isAudioNote', False),
+            'music': lambda n: n.get('isAudioNote', False),
+            'note': lambda n: not n.get('isMediaNote', False) and not n.get('isAudioNote', False),
+            'clip': lambda n: 'clip' in n.get('path', '').lower() or 'clipped' in n.get('rawContent', '').lower()
+        }
+        
+        # Filter by content type if specified
+        filtered_notes = sorted_notes
+        for content_type, filter_func in content_types.items():
+            if content_type in query_lower:
+                filtered_notes = [note for note in sorted_notes if filter_func(note)]
+                break
+        
+        # If no specific type found, but it's a temporal query, return recent notes
+        if not filtered_notes or len(filtered_notes) == len(sorted_notes):
+            filtered_notes = sorted_notes[:max_results * 2]  # Get more for temporal queries
     
     # Score based on temporal relevance and content match
     scored_notes = []
@@ -666,16 +699,25 @@ def api_chat():
         global allNotes
         import json
         try:
+            print(f"DEBUG - Starting chat generation for question: '{question}'")
             # Ensure we have fresh notes data
             if not allNotes:
                 notes, folders, media_files = get_notes_from_disk(NOTES_DIRECTORY)
                 allNotes = notes
-                logging.info(f"Loaded {len(allNotes)} notes for chat")
+                print(f"DEBUG - Loaded {len(allNotes)} notes for chat")
             
-            # Use enhanced search to find relevant notes
-            context_notes = enhanced_search_for_chat(question, allNotes)
-            logging.info(f"Found {len(context_notes)} relevant notes for question: {question}")
-
+            # Analyze intent to get date_filter
+            from api import analyze_user_intent
+            intent = analyze_user_intent(question)
+            date_filter = intent.get('date_filter')
+            print(f"DEBUG - Intent: {intent}")
+            print(f"DEBUG - Date filter: {date_filter}")
+            
+            # Use enhanced search to find relevant notes, pass date_filter
+            context_notes = enhanced_search_for_chat(question, allNotes, date_filter=date_filter)
+            print(f"DEBUG - Found {len(context_notes)} relevant notes")
+            
+            print("DEBUG - Calling chat_with_mymind")
             # Generate response using the enhanced chat function from api.py
             for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
                 if 'token' in chunk:
@@ -689,9 +731,13 @@ def api_chat():
             yield f"data: {json.dumps({'done': True})}\n\n"
 
         except Exception as e:
-            logging.error(f"Error in chat endpoint: {e}")
             import traceback
-            logging.error(f"Traceback: {traceback.format_exc()}")
+            error_msg = f"Error in chat endpoint: {e}"
+            full_trace = traceback.format_exc()
+            print(f"DEBUG - {error_msg}")
+            print(f"DEBUG - Full traceback:\n{full_trace}")
+            logging.error(error_msg)
+            logging.error(full_trace)
             yield f"data: {json.dumps({'error': 'Sorry, I encountered an error processing your request.'})}\n\n"
 
     return Response(

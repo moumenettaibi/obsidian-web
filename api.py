@@ -4,13 +4,17 @@ import json
 import os
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-import google.generativeai as genai
+from openai import OpenAI
 
 load_dotenv()
 
-# Configure the Gemini API
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-1.5-flash')
+# Configure the OpenRouter API (OpenAI compatible)
+client = OpenAI(
+  base_url="https://openrouter.ai/api/v1",
+  api_key=os.getenv("OPENROUTER_API_KEY"),
+)
+print(f"DEBUG - OpenRouter API key loaded: {'Yes' if os.getenv('OPENROUTER_API_KEY') else 'No'}")
+print(f"DEBUG - Client base_url: {client.base_url}")
 
 
 def extract_book_title_from_url(url):
@@ -128,7 +132,7 @@ def get_wikipedia_data(title):
 def analyze_user_intent(question):
     """
     Analyzes user intent to determine if they want to search notes or just chat.
-    Returns: {'type': 'search'|'chat', 'temporal_query': bool, 'search_terms': list}
+    Returns: {'type': 'search'|'chat', 'temporal_query': bool, 'search_terms': list, 'date_filter': dict or None}
     """
     question_lower = question.lower().strip()
     
@@ -136,7 +140,8 @@ def analyze_user_intent(question):
     temporal_keywords = [
         'last', 'latest', 'recent', 'yesterday', 'today', 'this week', 'last week',
         'this month', 'last month', 'ago', 'when did', 'what time', 'recently',
-        'new', 'newest', 'oldest', 'first', 'before', 'after', 'since'
+        'new', 'newest', 'oldest', 'first', 'before', 'after', 'since',
+        'clipped today', 'clip today'
     ]
     
     # Search intent keywords
@@ -156,6 +161,15 @@ def analyze_user_intent(question):
     # Check for temporal queries
     has_temporal = any(keyword in question_lower for keyword in temporal_keywords)
     
+    # Check for specific date filters
+    date_filter = {}
+    if 'today' in question_lower or 'clipped today' in question_lower or 'clip today' in question_lower:
+        date_filter = {'type': 'today'}
+    elif 'yesterday' in question_lower or 'clipped yesterday' in question_lower:
+        date_filter = {'type': 'yesterday'}
+    elif 'last week' in question_lower or 'clipped last week' in question_lower or 'this week' in question_lower:
+        date_filter = {'type': 'this_week'}
+    
     # Check for search intent
     has_search_intent = any(keyword in question_lower for keyword in search_keywords)
     
@@ -174,12 +188,14 @@ def analyze_user_intent(question):
     return {
         'type': intent_type,
         'temporal_query': has_temporal,
-        'search_terms': question.split()
+        'search_terms': question.split(),
+        'date_filter': date_filter
     }
 
-def get_temporal_context(notes, query_lower):
+def get_temporal_context(notes, query_lower, specific_filter=None):
     """
     Provides temporal context about notes based on the query.
+    If specific_filter is provided (e.g., 'today'), returns filtered_notes with only those notes.
     """
     now = datetime.now()
     
@@ -190,7 +206,9 @@ def get_temporal_context(notes, query_lower):
         'latest_notes': sorted_notes[:5],  # Last 5 notes
         'today_notes': [],
         'this_week_notes': [],
-        'this_month_notes': []
+        'yesterday_notes': [],
+        'this_month_notes': [],
+        'filtered_notes': sorted_notes  # Default to all sorted notes
     }
     
     for note in sorted_notes:
@@ -202,6 +220,11 @@ def get_temporal_context(notes, query_lower):
             if note_date.date() == now.date():
                 temporal_context['today_notes'].append(note)
             
+            # Yesterday's notes
+            yesterday = now.date() - timedelta(days=1)
+            if note_date.date() == yesterday:
+                temporal_context['yesterday_notes'].append(note)
+            
             # This week's notes
             week_start = now - timedelta(days=now.weekday())
             if note_date >= week_start:
@@ -210,6 +233,14 @@ def get_temporal_context(notes, query_lower):
             # This month's notes
             if note_date.month == now.month and note_date.year == now.year:
                 temporal_context['this_month_notes'].append(note)
+    
+    # Apply specific filter if provided
+    if specific_filter == 'today':
+        temporal_context['filtered_notes'] = temporal_context['today_notes']
+    elif specific_filter == 'yesterday':
+        temporal_context['filtered_notes'] = temporal_context['yesterday_notes']
+    elif specific_filter == 'this_week':
+        temporal_context['filtered_notes'] = temporal_context['this_week_notes']
     
     return temporal_context
 
@@ -295,21 +326,61 @@ def chat_with_mymind(question, context=None, all_notes=None):
     # Create user profile if we have all notes
     user_profile = create_user_profile(all_notes) if all_notes else {}
     
-    # Get temporal context if it's a temporal query
-    temporal_context = get_temporal_context(all_notes, question.lower()) if all_notes and intent['temporal_query'] else {}
+    # Get temporal context if it's a temporal query, pass date_filter if present
+    temporal_context = get_temporal_context(
+        all_notes,
+        question.lower(),
+        intent.get('date_filter', {}).get('type') if intent.get('date_filter') else None
+    ) if all_notes and intent['temporal_query'] else {}
     
-    if context or intent['type'] == 'search':
+    if intent['type'] == 'chat':
+        # This is a casual chat - always use chat prompt, ignore context
+        prompt = create_chat_prompt(question, user_profile)
+    else:
         # This is a search-based query
         prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
-    else:
-        # This is a casual chat
-        prompt = create_chat_prompt(question, user_profile)
     
     try:
-        response = model.generate_content(prompt, stream=True)
-        for chunk in response:
-            if chunk.text:
-                yield {"token": chunk.text}
+        # Build messages for OpenAI format
+        system_prompt = """You are an intelligent personal assistant with deep knowledge of the user's notes and interests."""
+        # Add more system instructions based on the original prompt structure
+        if context or intent['type'] == 'search':
+            system_prompt += f"\n\nCURRENT TIME: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            system_prompt += f"\n\nUSER PROFILE:\n- Total notes: {user_profile.get('total_notes', 0)}"
+            if temporal_context:
+                system_prompt += f"\n- Latest notes ({len(temporal_context.get('latest_notes', []))}): {', '.join([n['path'].split('/')[-1] for n in temporal_context.get('latest_notes', [])[:3]])}"
+                system_prompt += f"\n- Today's notes: {len(temporal_context.get('today_notes', []))}"
+            system_prompt += "\n\nINSTRUCTIONS:\n- Answer naturally and conversationally"
+            system_prompt += "\n- Use the notes to provide accurate information"
+            system_prompt += "\n- Always mention source note names when referencing specific information"
+            system_prompt += "\n- Be specific about dates when relevant"
+        
+        user_content = f"User Question: {question}"
+        if context:
+            user_content += "\n\nRelevant notes from your knowledge base:"
+            for i, note in enumerate(context, 1):
+                user_content += f"\n\nNote {i}: {note['path']} (Created: {note.get('createdTimeReadable', 'Unknown')})"
+                user_content += f"\nContent: {note['content'][:500]}..."  # Truncate for prompt length
+        
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content}
+        ]
+        
+        stream = client.chat.completions.create(
+            model="anthropic/claude-3-haiku",
+            messages=messages,
+            max_tokens=3000,
+            stream=True,
+            extra_headers={
+                "HTTP-Referer": "https://mymind.local",
+                "X-Title": "MyMind AI Assistant",
+            }
+        )
+        
+        for chunk in stream:
+            if chunk.choices[0].delta.content is not None:
+                yield {"token": chunk.choices[0].delta.content}
         
         # Add sources if we used context
         if context:
@@ -318,9 +389,23 @@ def chat_with_mymind(question, context=None, all_notes=None):
             
     except Exception as e:
         import traceback
-        print(f"Error calling Gemini API: {e}")
-        print(f"Full traceback: {traceback.format_exc()}")
-        yield {"error": "Sorry, I encountered an error trying to generate a response."}
+        error_msg = str(e)
+        full_trace = traceback.format_exc()
+        
+        # Log the error details
+        print(f"Error calling OpenRouter API: {error_msg}")
+        print(f"Full traceback: {full_trace}")
+        
+        # More specific error handling
+        if "invalid_request_error" in error_msg.lower() or "authentication_error" in error_msg.lower():
+            yield {"error": "Sorry, there was an authentication issue. Please check your API configuration."}
+        elif "rate_limit" in error_msg.lower() or "quota" in error_msg.lower():
+            yield {"error": "Sorry, the API rate limit has been reached. Please try again later."}
+        elif "network" in error_msg.lower() or "connection" in error_msg.lower():
+            yield {"error": "Sorry, there was a network issue. Please check your connection and try again."}
+        else:
+            # Generic but more informative error for other cases
+            yield {"error": "Sorry, I encountered an error trying to generate a response. Please try rephrasing your question."}
 
 def create_search_prompt(question, context, user_profile, temporal_context, intent):
     """
@@ -351,6 +436,14 @@ QUERY ANALYSIS:
 
 """
 
+    # Add date filter instructions if present
+    date_filter_type = intent.get('date_filter', {}).get('type')
+    if date_filter_type:
+        prompt += f"""DATE FILTER: {date_filter_type.upper()}
+IMPORTANT: Only use and reference notes from {date_filter_type}. Do not include or mention any notes created on other dates.
+All the relevant notes provided below are from {date_filter_type} - focus exclusively on these.
+"""
+    
     if context:
         prompt += "RELEVANT NOTES FOUND:\n"
         for i, note in enumerate(context, 1):
@@ -376,6 +469,10 @@ QUERY ANALYSIS:
             if note.get('tags'):
                 tags_info = f" (Tags: {', '.join(note['tags'])})"
             
+            # Special note for today queries
+            if date_filter_type == 'today':
+                created_time = f" (Clipped today{created_time and ': ' + created_time or ''})"
+            
             prompt += f"\n--- NOTE {i}: {note['path']}{note_type}{created_time}{tags_info} ---\n"
             prompt += f"{note['content']}\n"
         
@@ -387,10 +484,12 @@ QUERY ANALYSIS:
 - Answer naturally and conversationally, like you know the user well
 - Use the notes to provide accurate, personalized information
 - For temporal queries (latest, recent, last, etc.), pay special attention to creation dates
+- If a DATE FILTER is specified above, ONLY use notes from that specific date/time period. Do not reference or invent information from other dates.
 - Synthesize information across multiple notes when relevant
-- Always mention source note names when referencing specific information
+- Always mention source note names and their creation dates when referencing specific information
 - If asking about "last" or "latest" items, focus on the most recently created notes
-- Be specific about dates and times when relevant
+- Be specific about dates and times when relevant, especially for date-filtered queries
+- If no relevant notes found within the specified filter, clearly state that (e.g., "You didn't clip any notes today" for today queries)
 - If no relevant notes found, suggest what kind of notes might help answer similar questions in the future
 
 User Question: {question}

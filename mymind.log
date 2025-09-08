@@ -1430,3 +1430,397 @@ google.api_core.exceptions.DeadlineExceeded: 504 Deadline Exceeded
  * Debug mode: on
  * Serving Flask app 'app'
  * Debug mode: on
+ * Serving Flask app 'app'
+ * Debug mode: on
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'what i clipped today?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'today?'], 'date_filter': {'type': 'today'}}
+DEBUG - Date filter: {'type': 'today'}
+DEBUG - Found 2 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'show me my recent movies'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['show', 'me', 'my', 'recent', 'movies'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'what's my last reddit notes'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ["what's", 'my', 'last', 'reddit', 'notes'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'Show me my recent movies'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['Show', 'me', 'my', 'recent', 'movies'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'what i clipped today?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'today?'], 'date_filter': {'type': 'today'}}
+DEBUG - Date filter: {'type': 'today'}
+DEBUG - Found 2 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'how are you?'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['how', 'are', 'you?'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'what i clipped today?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'today?'], 'date_filter': {'type': 'today'}}
+DEBUG - Date filter: {'type': 'today'}
+DEBUG - Found 2 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'what i clipped yesterday?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'yesterday?'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'what i clippeed last week?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clippeed', 'last', 'week?'], 'date_filter': None}
+DEBUG - Date filter: None
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Error in chat endpoint: 'NoneType' object has no attribute 'get'
+DEBUG - Full traceback:
+Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/app.py", line 710, in generate_response
+    for chunk in chat_with_mymind(question, context_notes if context_notes else None, allNotes):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 324, in chat_with_mymind
+    prompt = create_search_prompt(question, context, user_profile, temporal_context, intent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 411, in create_search_prompt
+    date_filter_type = intent.get('date_filter', {}).get('type')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+DEBUG - Starting chat generation for question: 'what i clipped today?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'today?'], 'date_filter': {'type': 'today'}}
+DEBUG - Date filter: {'type': 'today'}
+DEBUG - Found 2 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+Error calling OpenRouter API: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+Full traceback: Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 370, in chat_with_mymind
+    stream = client.chat.completions.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions.py", line 859, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+Error calling OpenRouter API: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+Full traceback: Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 370, in chat_with_mymind
+    stream = client.chat.completions.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions.py", line 859, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+Error calling OpenRouter API: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+Full traceback: Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 370, in chat_with_mymind
+    stream = client.chat.completions.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions.py", line 859, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+
+DEBUG - Starting chat generation for question: 'what i clipped today?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'today?'], 'date_filter': {'type': 'today'}}
+DEBUG - Date filter: {'type': 'today'}
+DEBUG - Found 2 relevant notes
+DEBUG - Calling chat_with_mymind
+Error calling OpenRouter API: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+Full traceback: Traceback (most recent call last):
+  File "/Users/moumanet-taibi/Desktop/mymind/api.py", line 370, in chat_with_mymind
+    stream = client.chat.completions.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/resources/chat/completions.py", line 859, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4096 tokens, but can only afford 4091. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_2sSDBDa3ZwHiDXBgS1YMjCGaxcD'}
+
