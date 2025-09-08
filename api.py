@@ -320,6 +320,26 @@ def chat_with_mymind(question, context=None, all_notes=None):
     """
     Enhanced chat function with better intelligence and conversation flow.
     """
+    memories = load_memory()
+
+    remember_match = re.search(r'remember\s+(.+)', question, re.IGNORECASE)
+    if remember_match:
+        remember_content = remember_match.group(1).strip()
+        # Remove leading "that " if present for cleaner storage
+        if remember_content.lower().startswith("that "):
+            remember_content = remember_content[5:].strip()
+        if remember_content:
+            memories.append({
+                "content": remember_content,
+                "timestamp": datetime.now().isoformat()
+            })
+            save_memory(memories)
+            response = f"I have remembered: {remember_content} for you."
+            for token in response.split():
+                yield {"token": token + " "}
+            yield {"done": True}
+            return
+
     # Analyze user intent
     intent = analyze_user_intent(question)
     
@@ -361,6 +381,10 @@ def chat_with_mymind(question, context=None, all_notes=None):
             for i, note in enumerate(context, 1):
                 user_content += f"\n\nNote {i}: {note['path']} (Created: {note.get('createdTimeReadable', 'Unknown')})"
                 user_content += f"\nContent: {note['content'][:500]}..."  # Truncate for prompt length
+        
+        if memories:
+            memory_list = "\n".join([f"- {m['content']} (remembered {m['timestamp'][:10]})" for m in memories])
+            user_content += f"\n\nUSER'S REMEMBERED ITEMS:\n{memory_list}\n\nUse these remembered items when relevant to the question."
         
         messages = [
             {"role": "system", "content": system_prompt},
@@ -522,3 +546,15 @@ Question: {question}
 Response:"""
 
     return prompt
+
+
+def load_memory():
+    if os.path.exists("memory.json"):
+        with open("memory.json", "r") as f:
+            return json.load(f)
+    return []
+
+
+def save_memory(memories):
+    with open("memory.json", "w") as f:
+        json.dump(memories, f, indent=4)

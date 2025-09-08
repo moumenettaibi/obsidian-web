@@ -2412,3 +2412,117 @@ DEBUG - Found 8 relevant notes
 DEBUG - Calling chat_with_mymind
 DEBUG - Starting chat generation for question: 'translate this to arabic please Haha, alright, challenge accepted—trying to read your mind like some digital psychic. Based on your notes (which I know inside and out, with a total of 725 across your vault as of now), I'm guessing you're knee-deep in a few interconnected obsessions right now. Let me break it down conversationally, pulling from what seems freshest and most linked in your brain. I'll cite the specific notes I'm drawing from so you know I'm not just guessing wildly.  First off, I bet Obsidian and your note-taking workflow are dominating your thoughts, especially since the current date is September 8, 2025, and you've been tinkering with it hard in early September. That Reddit post you clipped about using Obsidian as your "brain" for learning Cybersecurity (from "ReadItLater Inbox/I'm using Obsidian for learning Cyber Security. This is my Brain..md", created September 3, 2025) screams it's on your radar—you mentioned having 750 notes and 5,600 links there, which is basically a full-on knowledge fortress. People in the comments are even begging for your setup details, like Imti4a2 asking about your flow and resources. Are you pondering how to share that or refine it further? It ties right into the GitHub repo for the Obsidian ReadItLater plugin (from "ReadItLater Inbox/GitHub - DominikPieperobsidian-ReadItLater.md", created August 22, 2025), which lets you archive web pages, YouTube, Twitter, and more straight into your vault. Maybe you're thinking about integrating that to supercharge your "read later" habit for CyberSec resources?  Speaking of building your brain, that code snippet for your "MyMind" app (from "00- Inbox/My mind code.md", created September 3, 2025) has me thinking you're in a creative coding mood too. You're adding a Wikipedia popup feature across app.py, index.html, styles.css, and main.js—sounds like you're DIY-ing a lightweight Obsidian clone or enhancer. With the OverType Markdown editor article you saved (from "ReadItLater Inbox/OverType The markdown editor that's just a textarea. ( ~82KB).md", created August 25, 2025), which is all about a super-simple, 82KB textarea-based editor that gives visual feedback without bloat, I wouldn't be surprised if you're mulling over how to incorporate something like that into MyMind for even snappier note-taking. Tech tinkering like this feels like it's bubbling up as a fun side project.  On a more personal level, fitness and self-improvement seem to be nagging at you too—classic "what's on my mind" territory when life's feeling routine. The bodybuilding meal plan guide (from "ReadItLater Inbox/Bodybuilding Meal Plan What to Eat, What to Avoid.md", created September 3, 2025) is fresh, emphasizing nutrient-rich foods, avoiding sugars and fried stuff, and how diet makes or breaks gym gains. It pairs perfectly with that archived old-school strength manifesto (from "Archive/2025-07-22T11_14_47.541+01_00.md", created June 14, 2025, but archived July 22, 2025), all about eating like a "worker, not a princess" with real meat, manual labor vibes, and no fancy macros. Are you planning a workout reset or meal prep this week? It contrasts nicely with your older frustration about school wasting years on pointless races (from "Archive/2024-08-29T02_35_11.111+01_00.md", created way back on December 4, 2022), like you're channeling that energy into building real skills and strength now instead.  And hey, if it's escapism you're craving amid all this, maybe Interstellar is looping in your head (from "ReadItLater Inbox/Interstellar (2014).md", created August 23, 2025). That epic line about mankind not meant to die on Earth, with Matthew McConaughey's explorers tackling wormholes—perfect for a late-night ponder at 2:15 AM like right now. Wormholes and space travel could be a metaphor for your CyberSec deep dives or even jumping through knowledge "vaults" in Obsidian.  So, am I close? If it's Cybersecurity resources, Obsidian tweaks, a gym session, or just rewatching Interstellar, hit me with details—I've got your full vault at my fingertips to dive deeper. What's actually brewing up there? 😏'
 DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['translate', 'this', 'to', 'arabic', 'please', 'Haha,', 'alright,', 'challenge', 'accepted—trying', 'to', 'read', 'your', 'mind', 'like', 'some', 'digital', 'psychic.', 'Based', 'on', 'your', 'notes', '(which', 'I', 'know', 'inside', 'and', 'out,', 'with', 'a', 'total', 'of', '725', 'across', 'your', 'vault', 'as', 'of', 'now),', "I'm", 'guessing', "you're", 'knee-deep', 'in', 'a', 'few', 'interconnected', 'obsessions', 'right', 'now.', 'Let', 'me', 'break', 'it', 'down', 'conversationally,', 'pulling', 'from', 'what', 'seems', 'freshest', 'and', 'most', 'linked', 'in', 'your', 'brain.', "I'll", 'cite', 'the', 'specific', 'notes', "I'm", 'drawing', 'from', 'so', 'you', 'know', "I'm", 'not', 'just', 'guessing', 'wildly.', 'First', 'off,', 'I', 'bet', 'Obsidian', 'and', 'your', 'note-taking', 'workflow', 'are', 'dominating', 'your', 'thoughts,', 'especially', 'since', 'the', 'current', 'date', 'is', 'September', '8,', '2025,', 'and', "you've", 'been', 'tinkering', 'with', 'it', 'hard', 'in', 'early', 'September.', 'That', 'Reddit', 'post', 'you', 'clipped', 'about', 'using', 'Obsidian', 'as', 'your', '"brain"', 'for', 'learning', 'Cybersecurity', '(from', '"ReadItLater', "Inbox/I'm", 'using', 'Obsidian', 'for', 'learning', 'Cyber', 'Security.', 'This', 'is', 'my', 'Brain..md",', 'created', 'September', '3,', '2025)', 'screams', "it's", 'on', 'your', 'radar—you', 'mentioned', 'having', '750', 'notes', 'and', '5,600', 'links', 'there,', 'which', 'is', 'basically', 'a', 'full-on', 'knowledge', 'fortress.', 'People', 'in', 'the', 'comments', 'are', 'even', 'begging', 'for', 'your', 'setup', 'details,', 'like', 'Imti4a2', 'asking', 'about', 'your', 'flow', 'and', 'resources.', 'Are', 'you', 'pondering', 'how', 'to', 'share', 'that', 'or', 'refine', 'it', 'further?', 'It', 'ties', 'right', 'into', 'the', 'GitHub', 'repo', 'for', 'the', 'Obsidian', 'ReadItLater', 'plugin', '(from', '"ReadItLater', 'Inbox/GitHub', '-', 'DominikPieperobsidian-ReadItLater.md",', 'created', 'August', '22,', '2025),', 'which', 'lets', 'you', 'archive', 'web', 'pages,', 'YouTube,', 'Twitter,', 'and', 'more', 'straight', 'into', 'your', 'vault.', 'Maybe', "you're", 'thinking', 'about', 'integrating', 'that', 'to', 'supercharge', 'your', '"read', 'later"', 'habit', 'for', 'CyberSec', 'resources?', 'Speaking', 'of', 'building', 'your', 'brain,', 'that', 'code', 'snippet', 'for', 'your', '"MyMind"', 'app', '(from', '"00-', 'Inbox/My', 'mind', 'code.md",', 'created', 'September', '3,', '2025)', 'has', 'me', 'thinking', "you're", 'in', 'a', 'creative', 'coding', 'mood', 'too.', "You're", 'adding', 'a', 'Wikipedia', 'popup', 'feature', 'across', 'app.py,', 'index.html,', 'styles.css,', 'and', 'main.js—sounds', 'like', "you're", 'DIY-ing', 'a', 'lightweight', 'Obsidian', 'clone', 'or', 'enhancer.', 'With', 'the', 'OverType', 'Markdown', 'editor', 'article', 'you', 'saved', '(from', '"ReadItLater', 'Inbox/OverType', 'The', 'markdown', 'editor', "that's", 'just', 'a', 'textarea.', '(', '~82KB).md",', 'created', 'August', '25,', '2025),', 'which', 'is', 'all', 'about', 'a', 'super-simple,', '82KB', 'textarea-based', 'editor', 'that', 'gives', 'visual', 'feedback', 'without', 'bloat,', 'I', "wouldn't", 'be', 'surprised', 'if', "you're", 'mulling', 'over', 'how', 'to', 'incorporate', 'something', 'like', 'that', 'into', 'MyMind', 'for', 'even', 'snappier', 'note-taking.', 'Tech', 'tinkering', 'like', 'this', 'feels', 'like', "it's", 'bubbling', 'up', 'as', 'a', 'fun', 'side', 'project.', 'On', 'a', 'more', 'personal', 'level,', 'fitness', 'and', 'self-improvement', 'seem', 'to', 'be', 'nagging', 'at', 'you', 'too—classic', '"what\'s', 'on', 'my', 'mind"', 'territory', 'when', "life's", 'feeling', 'routine.', 'The', 'bodybuilding', 'meal', 'plan', 'guide', '(from', '"ReadItLater', 'Inbox/Bodybuilding', 'Meal', 'Plan', 'What', 'to', 'Eat,', 'What', 'to', 'Avoid.md",', 'created', 'September', '3,', '2025)', 'is', 'fresh,', 'emphasizing', 'nutrient-rich', 'foods,', 'avoiding', 'sugars', 'and', 'fried', 'stuff,', 'and', 'how', 'diet', 'makes', 'or', 'breaks', 'gym', 'gains.', 'It', 'pairs', 'perfectly', 'with', 'that', 'archived', 'old-school', 'strength', 'manifesto', '(from', '"Archive/2025-07-22T11_14_47.541+01_00.md",', 'created', 'June', '14,', '2025,', 'but', 'archived', 'July', '22,', '2025),', 'all', 'about', 'eating', 'like', 'a', '"worker,', 'not', 'a', 'princess"', 'with', 'real', 'meat,', 'manual', 'labor', 'vibes,', 'and', 'no', 'fancy', 'macros.', 'Are', 'you', 'planning', 'a', 'workout', 'reset', 'or', 'meal', 'prep', 'this', 'week?', 'It', 'contrasts', 'nicely', 'with', 'your', 'older', 'frustration', 'about', 'school', 'wasting', 'years', 'on', 'pointless', 'races', '(from', '"Archive/2024-08-29T02_35_11.111+01_00.md",', 'created', 'way', 'back', 'on', 'December', '4,', '2022),', 'like', "you're", 'channeling', 'that', 'energy', 'into', 'building', 'real', 'skills', 'and', 'strength', 'now', 'instead.', 'And', 'hey,', 'if', "it's", 'escapism', "you're", 'craving', 'amid', 'all', 'this,', 'maybe', 'Interstellar', 'is', 'looping', 'in', 'your', 'head', '(from', '"ReadItLater', 'Inbox/Interstellar', '(2014).md",', 'created', 'August', '23,', '2025).', 'That', 'epic', 'line', 'about', 'mankind', 'not', 'meant', 'to', 'die', 'on', 'Earth,', 'with', 'Matthew', "McConaughey's", 'explorers', 'tackling', 'wormholes—perfect', 'for', 'a', 'late-night', 'ponder', 'at', '2:15', 'AM', 'like', 'right', 'now.', 'Wormholes', 'and', 'space', 'travel', 'could', 'be', 'a', 'metaphor', 'for', 'your', 'CyberSec', 'deep', 'dives', 'or', 'even', 'jumping', 'through', 'knowledge', '"vaults"', 'in', 'Obsidian.', 'So,', 'am', 'I', 'close?', 'If', "it's", 'Cybersecurity', 'resources,', 'Obsidian', 'tweaks,', 'a', 'gym', 'session,', 'or', 'just', 'rewatching', 'Interstellar,', 'hit', 'me', 'with', "details—I've", 'got', 'your', 'full', 'vault', 'at', 'my', 'fingertips', 'to', 'dive', 'deeper.', "What's", 'actually', 'brewing', 'up', 'there?', '😏'], 'date_filter': {'type': 'this_week'}}
+DEBUG - Date filter: {'type': 'this_week'}
+DEBUG - Found 0 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+ * Serving Flask app 'app'
+ * Debug mode: on
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}, 'remember_intent': False}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+🤖 AI has remembered: 'User: hi
+AI: Hi! How's it going? I see from your n...'
+DEBUG - Starting chat generation for question: 'do you know my name?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ['do', 'you', 'know', 'my', 'name?'], 'date_filter': {}, 'remember_intent': False}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+🤖 AI has remembered: 'User: do you know my name?
+AI: I'm afraid I don't ...'
+DEBUG - Starting chat generation for question: 'Remember that my name is Moumen Et-taibi you can call me Moumen'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ['Remember', 'that', 'my', 'name', 'is', 'Moumen', 'Et-taibi', 'you', 'can', 'call', 'me', 'Moumen'], 'date_filter': {}, 'remember_intent': True}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+🤖 AI has remembered: 'Remember that my name is Moumen Et-taibi you can c...'
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}, 'remember_intent': False}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+🤖 AI has remembered: 'User: hi
+AI: Hey there! How's it going? It's prett...'
+DEBUG - Starting chat generation for question: 'what's my name?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ["what's", 'my', 'name?'], 'date_filter': {}, 'remember_intent': False}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+🤖 AI has remembered: 'User: what's my name?
+AI: I'm afraid I don't have ...'
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi find YouTube videos on my vault lastest ones'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['hi', 'find', 'YouTube', 'videos', 'on', 'my', 'vault', 'lastest', 'ones'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'Show me my recent movies'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['Show', 'me', 'my', 'recent', 'movies'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'Show me my recent tv shows the recent one'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['Show', 'me', 'my', 'recent', 'tv', 'shows', 'the', 'recent', 'one'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 4 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'what's my name?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ["what's", 'my', 'name?'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'Remember that my name is Moumen Et-taibi you can call me Moumen'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ['Remember', 'that', 'my', 'name', 'is', 'Moumen', 'Et-taibi', 'you', 'can', 'call', 'me', 'Moumen'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'Remember that this is just a random reddit post i saved on my vault and it's not me Obsidian setup for Cyber Security learning—like that brain vault with 750 notes and 5600 links from "ReadItLater Inbox/I'm using Obsidian for learning Cyber Security. This is my Brain..md" (created September 3, 2025)'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ['Remember', 'that', 'this', 'is', 'just', 'a', 'random', 'reddit', 'post', 'i', 'saved', 'on', 'my', 'vault', 'and', "it's", 'not', 'me', 'Obsidian', 'setup', 'for', 'Cyber', 'Security', 'learning—like', 'that', 'brain', 'vault', 'with', '750', 'notes', 'and', '5600', 'links', 'from', '"ReadItLater', "Inbox/I'm", 'using', 'Obsidian', 'for', 'learning', 'Cyber', 'Security.', 'This', 'is', 'my', 'Brain..md"', '(created', 'September', '3,', '2025)'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'hi'
+DEBUG - Intent: {'type': 'chat', 'temporal_query': False, 'search_terms': ['hi'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'what's your name?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ["what's", 'your', 'name?'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
+DEBUG - Starting chat generation for question: 'what's oak ai?'
+DEBUG - Intent: {'type': 'search', 'temporal_query': False, 'search_terms': ["what's", 'oak', 'ai?'], 'date_filter': {}}
+DEBUG - Date filter: {}
+DEBUG - Found 8 relevant notes
+DEBUG - Calling chat_with_mymind
