@@ -62,6 +62,11 @@ const wikipediaIframe = document.getElementById('wikipedia-iframe');
 // Book Modal Elements
 const bookModal = document.getElementById('book-modal');
 const bookModalTitle = document.getElementById('book-modal-title');
+
+// X Embed Modal Elements
+const xEmbedModal = document.getElementById('x-embed-modal');
+const xEmbedContainer = document.getElementById('x-embed-container');
+const xEmbedCloseBtn = document.getElementById('x-embed-close-btn');
 const bookModalCover = document.getElementById('book-modal-cover');
 const bookModalAuthor = document.getElementById('book-modal-author');
 const bookModalGenre = document.getElementById('book-modal-genre');
@@ -111,6 +116,7 @@ let currentNoteInModal = null;
 let currentMediaNoteInModal = null;
 let currentAudioNoteInModal = null;
 let currentWikipediaNoteInModal = null;
+let currentXNoteInModal = null;
 let isEditMode = false;
 let isWikipediaEditMode = false;
 let autoSaveTimer = null;
@@ -288,7 +294,8 @@ async function loadNotesFromServer() {
                 tags: mergedTags,
                 contentWithoutTags: parsed.contentWithoutTags,
                 isAudioNote: false,
-                isRedditNote: note.isRedditNote || false
+                isRedditNote: note.isRedditNote || false,
+                isXNote: note.isXNote || false
             };
 
             const audioMatch = note.rawContent.match(/!\[\[\s*(.*?\.(mp3))\s*\]\]/i);
@@ -1049,6 +1056,24 @@ function createCardElement(note, highlightTerm) {
             </div>
             <div class="reddit-card-footer">
                 <a href="${note.redditUrl}" target="_blank" rel="noopener noreferrer" class="reddit-view-button">VIEW ON REDDIT</a>
+            </div>
+        `;
+        return div;
+    }
+
+    if (note.isXNote) {
+        div.className = 'x-card card';
+        const title = note.name.replace(/\.md$/, '');
+        const previewLines = note.contentWithoutTags.split('\n').slice(0, 3).join(' ');
+        const previewText = previewLines.length > 100 ? previewLines.substring(0, 100) + '...' : previewLines;
+
+        div.innerHTML = `
+            <div class="x-card-header">
+                <img src="/static/x-logo.svg" alt="X" class="x-logo">
+            </div>
+            <div class="x-card-body">
+                <h3 class="x-title" title="${title}">${title}</h3>
+                <p class="x-preview">${previewText}</p>
             </div>
         `;
         return div;
@@ -2296,6 +2321,49 @@ bookModal.addEventListener('click', (e) => {
     if (e.target === bookModal) hideBookModal();
 });
 
+// --- X Embed Modal Functions ---
+function showXEmbedModal(note) {
+    currentXNoteInModal = note;
+    if (!note || !note.xUrl) return;
+
+    xEmbedContainer.innerHTML = ''; // Clear previous content
+
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'twitter-tweet';
+    blockquote.innerHTML = `<a href="${note.xUrl}"></a>`;
+
+    xEmbedContainer.appendChild(blockquote);
+
+    // Use Twitter's widgets.js to render the tweet
+    if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load(xEmbedContainer);
+    } else {
+        const script = document.createElement('script');
+        script.src = 'https://platform.twitter.com/widgets.js';
+        script.async = true;
+        script.charset = 'utf-8';
+        document.head.appendChild(script);
+    }
+
+    xEmbedModal.classList.remove('hidden');
+    xEmbedModal.classList.add('flex');
+}
+
+function hideXEmbedModal() {
+    xEmbedModal.classList.add('hidden');
+    xEmbedModal.classList.remove('flex');
+    xEmbedContainer.innerHTML = '';
+    currentXNoteInModal = null;
+}
+
+xEmbedCloseBtn.addEventListener('click', hideXEmbedModal);
+xEmbedModal.addEventListener('click', (e) => {
+    if (e.target === xEmbedModal) {
+        hideXEmbedModal();
+    }
+});
+
+
 // --- Overlay Coordination ---
 function closeAllOverlays() {
     const forceHide = (el) => {
@@ -2313,6 +2381,7 @@ function closeAllOverlays() {
     forceHide(audioModal);
     forceHide(wikipediaModal);
     forceHide(searchHelpModal);
+    forceHide(xEmbedModal);
 
     // Folder tag modal
     forceHide(document.getElementById('folder-tag-modal'));
@@ -2710,6 +2779,8 @@ cardContainer.addEventListener('click', (e) => {
             showMediaModal(noteData);
         } else if (noteData.isRedditNote) {
             showStandardModal(noteData);
+        } else if (noteData.isXNote) {
+            showXEmbedModal(noteData);
         } else if (noteData.isBookNote) {
             showBookModal(noteData);
         } else if (!noteData.isMediaNote) {
@@ -2771,6 +2842,7 @@ document.addEventListener('keydown', (e) => {
         hideAudioModal();
         hideWikipediaModal();
         hideSearchHelpModal();
+        hideXEmbedModal();
     }
 });
 

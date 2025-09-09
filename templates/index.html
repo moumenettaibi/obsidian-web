@@ -398,6 +398,19 @@
     </div>
 
 
+    <div id="x-embed-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[80] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-end p-2 border-b">
+                <button id="x-embed-close-btn" class="text-gray-500 hover:text-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="x-embed-container" class="p-4 overflow-y-auto">
+                <!-- Tweet will be embedded here -->
+            </div>
+        </div>
+    </div>
+
     <div id="new-note-modal" class="fixed inset-y-0 left-16 right-0 z-[60] hidden flex-col p-8">
         <div class="absolute top-5 right-5">
             <button id="new-note-close-btn" class="text-gray-400 hover:text-gray-800 transition-colors p-2 rounded-full bg-black/5 hover:bg-black/10">

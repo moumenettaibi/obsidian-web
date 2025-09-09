@@ -1544,6 +1544,67 @@ code:not(.code-block-content code) {
     background-color: #e53f03; /* Slightly darker orange */
 }
 
+/* --- ADDED: Styles for X Card --- */
+.x-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    cursor: pointer;
+}
+
+.x-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.x-card-header {
+    background-color: #000000; /* Black */
+    padding: 1.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.x-logo {
+    width: 40px;
+    height: 40px;
+    filter: invert(1);
+}
+
+.x-card-body {
+    padding: 1rem;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.x-title {
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.4;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.x-preview {
+    font-size: 0.875rem;
+    color: #6b7280;
+    line-height: 1.5;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+
 /* --- Book Modal Styles --- */
 #book-modal.flex {
     animation: fadeIn 0.3s ease-out forwards;

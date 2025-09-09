@@ -150,6 +150,7 @@ def get_notes_from_disk(root_path):
     serializd_pattern = re.compile(r'https?://www\.serializd\.com/show/([^/]+)/?')
     wikipedia_pattern = re.compile(r'[a-z]{2}\.wikipedia\.org/wiki/([^/\s]+)')
     reddit_pattern = re.compile(r'https?://(?:www\.)?reddit\.com/r/[^\s]+/comments/[^\s]+/[^\s]+/?')
+    x_pattern = re.compile(r'https?://(?:www\.)?(?:x\.com|twitter\.com)/[a-zA-Z0-9_]+/status/[^\s]+/?')
 
     logging.info(f"Scanning for notes and media in: {root_path}")
     for dirpath, dirnames, filenames in os.walk(root_path, topdown=True):
@@ -221,7 +222,8 @@ def get_notes_from_disk(root_path):
                         "createdTime": sort_time * 1000, "createdTimeReadable": human_readable_time,
                         "links": links, "tags": all_tags, "isMediaNote": False, "isRedditNote": False, "isAudioNote": is_audio_note,
                         "isBookNote": is_book_note, "bookData": book_data,
-                        "tmdb_data": None, "media_type": None, "title_slug": None, "redditUrl": None
+                        "tmdb_data": None, "media_type": None, "title_slug": None, "redditUrl": None,
+                        "isXNote": False, "xUrl": None
                     }
 
                     letterboxd_match = letterboxd_pattern.search(raw_content)
@@ -241,6 +243,11 @@ def get_notes_from_disk(root_path):
                     if reddit_matches and not note_data.get('isMediaNote', False) and not note_data.get('isBookNote', False):
                         last_url = reddit_matches[-1].rstrip(')/')
                         note_data.update({'isRedditNote': True, 'redditUrl': last_url})
+
+                    x_matches = x_pattern.findall(raw_content)
+                    if x_matches and not note_data.get('isMediaNote', False) and not note_data.get('isBookNote', False):
+                        last_url = x_matches[-1].rstrip(')/')
+                        note_data.update({'isXNote': True, 'xUrl': last_url})
 
                     all_notes.append(note_data)
                 else:
