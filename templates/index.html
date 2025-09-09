@@ -300,7 +300,70 @@
         </div>
     </div>
 
-    <div id="wikipedia-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[80] hidden items-center justify-center p-4">
+    <!-- Book Modal -->
+    <div id="book-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[80] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+                <div class="flex-1 min-w-0">
+                    <h2 id="book-modal-title" class="text-sm font-semibold text-gray-600 truncate pr-2"></h2>
+                    <input type="text" id="book-modal-title-input" class="hidden text-sm font-semibold text-gray-800 border border-gray-300 rounded-md w-full p-1 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="flex items-center ml-4 space-x-2">
+                    <button id="book-modal-edit-btn" class="text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i data-lucide="file-pen-line" class="h-5 w-5"></i>
+                    </button>
+                    <button id="book-modal-delete-btn" class="text-gray-500 hover:text-red-600 hover:bg-red-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        <i data-lucide="trash-2" class="h-5 w-5"></i>
+                    </button>
+                    <button id="book-modal-close-btn" class="text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-full p-1.5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i data-lucide="x" class="h-5 w-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="book-modal-tags" class="p-4 border-b hidden flex-shrink-0"></div>
+            
+            <div class="flex-1 overflow-y-auto p-6">
+                <div id="book-modal-body" class="flex justify-center items-center h-full p-6">
+                    <!-- Initial Large Centered Cover and Button -->
+                    <div id="book-modal-initial-view" class="text-center">
+                        <img id="book-modal-cover" src="" alt="Book Cover" class="w-[400px] h-auto rounded-lg shadow-2xl object-cover mx-auto mb-6 cursor-pointer">
+                        <a id="book-modal-goodreads-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors border border-black">
+                            <i data-lucide="external-link" class="w-5 h-5 mr-2"></i>
+                            Goodreads
+                        </a>
+                    </div>
+                    <!-- Details Panel - Initially Hidden -->
+                    <div id="book-modal-details-panel" class="hidden flex gap-6 w-full max-w-6xl">
+                        <!-- Book Details Left -->
+                        <div class="flex-1">
+                            <div id="book-modal-author" class="text-lg text-gray-600 mb-2">Author: </div>
+                            <div id="book-modal-genre" class="text-sm text-gray-500 mb-4">Genre: </div>
+                            <ul id="book-modal-details" class="space-y-2 mb-4 text-sm text-gray-600">
+                                <li class="flex items-center gap-2"><span class="text-gray-400">📄</span>Pages: <span id="book-modal-pages"></span></li>
+                                <li class="flex items-center gap-2"><span class="text-gray-400">🏢</span>Publisher: <span id="book-modal-publisher"></span></li>
+                                <li class="flex items-center gap-2"><span class="text-gray-400">📅</span>Date: <span id="book-modal-date"></span></li>
+                                <li class="flex items-center gap-2"><span class="text-gray-400">📖</span>Format: <span id="book-modal-format"></span></li>
+                                <li class="flex items-center gap-2"><span class="text-gray-400">📖</span>ISBN: <span id="book-modal-isbn"></span></li>
+                            </ul>
+                            <div id="book-modal-topics" class="flex flex-wrap gap-2 mb-4"></div>
+                            <a id="book-modal-goodreads-link-details" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors mb-4 border border-black">
+                                <i data-lucide="external-link" class="w-5 h-5 mr-2"></i>
+                                Goodreads
+                            </a>
+                            <div id="book-modal-content" class="prose prose-sm max-w-none markdown-content"></div>
+                        </div>
+                        <!-- Cover Right -->
+                        <div class="flex-shrink-0 w-48">
+                            <img id="book-modal-cover-details" src="" alt="Book Cover" class="w-full h-auto rounded-lg shadow-lg object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <div id="wikipedia-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[80] hidden items-center justify-center p-4">
         <div id="wikipedia-modal-content" class="relative bg-white rounded-lg shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col">
             <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
                 <div class="flex-1 min-w-0">

@@ -173,6 +173,33 @@ def get_notes_from_disk(root_path):
                     raw_content = entry.read_text(encoding='utf-8')
                     file_stat = entry.stat()
                     
+                    # Parse YAML frontmatter
+                    frontmatter = {}
+                    content_body = raw_content
+                    tags_from_frontmatter = []
+                    if raw_content.strip().startswith('---'):
+                        lines = raw_content.split('\n')
+                        end_index = lines.index('---', 1) if '---' in lines[1:] else -1
+                        if end_index > 1:
+                            yaml_block = '\n'.join(lines[1:end_index])
+                            try:
+                                import yaml
+                                frontmatter = yaml.safe_load(yaml_block) or {}
+                                content_body = '\n'.join(lines[end_index+1:]).strip()
+                                if isinstance(frontmatter.get('tags'), list):
+                                    tags_from_frontmatter = frontmatter.get('tags', [])
+                            except ImportError:
+                                pass  # yaml not installed
+                            except yaml.YAMLError:
+                                pass  # invalid yaml
+                    
+                    # Use content_body as the main content, but keep raw_content for now
+                    content_without_tags = extract_content_without_tags(content_body)
+                    all_tags = extract_tags(content_body)
+                    if tags_from_frontmatter:
+                        all_tags.extend(tags_from_frontmatter)
+                        all_tags = list(set(all_tags))  # dedup
+                    
                     sort_time = getattr(file_stat, 'st_birthtime', file_stat.st_mtime)
                     human_readable_time = datetime.fromtimestamp(sort_time).strftime('%Y-%m-%d %H:%M:%S')
                     
@@ -184,12 +211,16 @@ def get_notes_from_disk(root_path):
                     tags = extract_tags(raw_content)
                     is_audio_note = detect_audio_note(raw_content, entry.name)
                     
+                    is_book_note = frontmatter.get('category') == 'Books'
+                    book_data = frontmatter if is_book_note else {}
+                    
                     note_data = {
                         "id": rel_path, "path": rel_path, "name": entry.name,
                         "rawContent": raw_content, "contentWithoutTags": content_without_tags,
                         "lastModified": file_stat.st_mtime * 1000,
                         "createdTime": sort_time * 1000, "createdTimeReadable": human_readable_time,
-                        "links": links, "tags": tags, "isMediaNote": False, "isRedditNote": False, "isAudioNote": is_audio_note,
+                        "links": links, "tags": all_tags, "isMediaNote": False, "isRedditNote": False, "isAudioNote": is_audio_note,
+                        "isBookNote": is_book_note, "bookData": book_data,
                         "tmdb_data": None, "media_type": None, "title_slug": None, "redditUrl": None
                     }
 
@@ -207,7 +238,7 @@ def get_notes_from_disk(root_path):
                         title_slug = wikipedia_match.group(1).replace('_', ' ')
                         note_data.update({'isMediaNote': True, 'media_type': 'wikipedia', 'title_slug': title_slug})
                     reddit_matches = reddit_pattern.findall(raw_content)
-                    if reddit_matches and not note_data.get('isMediaNote', False):
+                    if reddit_matches and not note_data.get('isMediaNote', False) and not note_data.get('isBookNote', False):
                         last_url = reddit_matches[-1].rstrip(')/')
                         note_data.update({'isRedditNote': True, 'redditUrl': last_url})
 

@@ -59,6 +59,21 @@ const wikipediaModalBody = document.getElementById('wikipedia-modal-body');
 const wikipediaModalTags = document.getElementById('wikipedia-modal-tags');
 const wikipediaIframe = document.getElementById('wikipedia-iframe');
 
+// Book Modal Elements
+const bookModal = document.getElementById('book-modal');
+const bookModalTitle = document.getElementById('book-modal-title');
+const bookModalCover = document.getElementById('book-modal-cover');
+const bookModalAuthor = document.getElementById('book-modal-author');
+const bookModalGenre = document.getElementById('book-modal-genre');
+const bookModalPages = document.getElementById('book-modal-pages');
+const bookModalYear = document.getElementById('book-modal-year');
+const bookModalTopics = document.getElementById('book-modal-topics');
+const bookModalContent = document.getElementById('book-modal-content');
+const bookModalGoodreadsLink = document.getElementById('book-modal-goodreads-link');
+const bookModalTags = document.getElementById('book-modal-tags');
+const bookModalCloseBtn = document.getElementById('book-modal-close-btn');
+const bookModalDeleteBtn = document.getElementById('book-modal-delete-btn');
+
 // Chat Modal Elements
 const chatBtn = document.getElementById('chat-btn');
 const chatModal = document.getElementById('chat-modal');
@@ -1102,6 +1117,18 @@ function createCardElement(note, highlightTerm) {
                             <div class="text-gray-500 text-sm font-medium">Wikipedia</div>
                         </div>`;
         }
+        return div;
+    }
+
+    if (note.isBookNote) {
+        div.className = 'book-card card bg-white border border-gray-200/80 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden relative aspect-[2/3]';
+        const bookData = note.bookData || {};
+        const title = note.path.replace(/^Books\//, '').replace(/\.md$/, '');
+        const author = bookData.Author || 'Unknown Author';
+        const coverUrl = bookData.Cover || 'https://placehold.co/300x450/e2e8f0/4a5568?text=No+Cover';
+
+        div.innerHTML = `
+            <img src="${coverUrl}" alt="Book Cover" class="absolute inset-0 w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/300x450/e2e8f0/4a5568?text=No+Cover';">`;
         return div;
     }
 
@@ -2198,6 +2225,77 @@ async function deleteWikipediaNote() {
     }
 }
 
+// --- Book Modal Functions ---
+let currentBookNoteInModal = null;
+
+function showBookModal(note) {
+    currentBookNoteInModal = note;
+    const bookData = note.bookData || {};
+    const title = note.path.replace(/^Books\//, '').replace(/\.md$/, '');
+    const goodreadsUrl = bookData.url || '#';
+    const coverUrl = bookData.Cover || 'https://placehold.co/300x450/e2e8f0/4a5568?text=No+Cover';
+
+    // Set title in header
+    bookModalTitle.textContent = title;
+
+    // Set cover
+    bookModalCover.src = coverUrl;
+    bookModalCover.alt = `${title} cover`;
+
+    // Set Goodreads link
+    bookModalGoodreadsLink.href = goodreadsUrl;
+
+    // Set content
+    bookModalContent.innerHTML = renderRichContent(note.contentWithoutTags, false);
+
+    // Show tags if available
+    if (note.tags && note.tags.length > 0) {
+        bookModalTags.innerHTML = note.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        bookModalTags.classList.remove('hidden');
+    } else {
+        bookModalTags.classList.add('hidden');
+    }
+
+    // Initialize icons
+    lucide.createIcons();
+    initializeTableIcons(bookModalContent);
+    initializeCodeBlockIcons(bookModalContent);
+
+    bookModal.classList.remove('hidden');
+    bookModal.classList.add('flex');
+}
+
+function hideBookModal() {
+    bookModal.classList.add('hidden');
+    bookModal.classList.remove('flex');
+    currentBookNoteInModal = null;
+}
+
+async function deleteBookNote() {
+    if (!currentBookNoteInModal) return;
+
+    try {
+        await api.deleteNote(currentBookNoteInModal.path);
+        updateNoteInState({
+            path: currentBookNoteInModal.path
+        }, 'delete');
+    } catch (error) {
+        console.warn(`Non-blocking delete error for: ${currentBookNoteInModal && currentBookNoteInModal.path}`, error);
+        updateNoteInState({
+            path: currentBookNoteInModal.path
+        }, 'delete');
+    } finally {
+        hideBookModal();
+    }
+}
+
+// Book Modal Event Listeners
+bookModalCloseBtn.addEventListener('click', hideBookModal);
+bookModalDeleteBtn.addEventListener('click', deleteBookNote);
+bookModal.addEventListener('click', (e) => {
+    if (e.target === bookModal) hideBookModal();
+});
+
 // --- Overlay Coordination ---
 function closeAllOverlays() {
     const forceHide = (el) => {
@@ -2595,7 +2693,7 @@ cardContainer.addEventListener('click', (e) => {
         return; // Prevent opening note popup when clicking the VIEW ON REDDIT button
     }
 
-    const cardElement = e.target.closest('.card, .card-placeholder, .audio-card');
+    const cardElement = e.target.closest('.card, .card-placeholder, .audio-card, .book-card');
     if (cardElement && !e.target.classList.contains('internal-link')) {
         const noteId = cardElement.dataset.id;
         const noteData = allNotes.find(n => n.id === noteId);
@@ -2612,6 +2710,8 @@ cardContainer.addEventListener('click', (e) => {
             showMediaModal(noteData);
         } else if (noteData.isRedditNote) {
             showStandardModal(noteData);
+        } else if (noteData.isBookNote) {
+            showBookModal(noteData);
         } else if (!noteData.isMediaNote) {
             showStandardModal(noteData);
         } else if (noteData.isMediaNote && !noteData.tmdb_data) {

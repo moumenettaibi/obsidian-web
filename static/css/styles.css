@@ -12,7 +12,7 @@ body {
     width: 6px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track { 
     background: #f1f1f1;
 }
 
@@ -1542,4 +1542,64 @@ code:not(.code-block-content code) {
 
 .reddit-view-button:hover {
     background-color: #e53f03; /* Slightly darker orange */
+}
+
+/* --- Book Modal Styles --- */
+#book-modal.flex {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+#book-modal.flex > div {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+
+#book-modal-body {
+    display: flex;
+    gap: 1.5rem;
+}
+
+#book-modal-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#book-modal-details li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+#book-modal-details li:last-child {
+    border-bottom: none;
+}
+
+#book-modal-goodreads-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #e5e7eb; /* Light Gray */
+    color: #4b5563; /* Dark Gray Text */
+    border-radius: 9999px; /* This creates the "pill" shape */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: background-color 0.2s ease;
+    border: 1px solid transparent; /* Removes the border */
+    margin-bottom: 1rem; /* Added space underneath */
+}
+
+#book-modal-goodreads-link:hover {
+    background-color: #d1d5db; /* A slightly darker gray for hover */
+}
+
+
+
+#book-modal-content {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
 }
