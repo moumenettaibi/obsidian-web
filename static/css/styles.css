@@ -1579,7 +1579,33 @@ code:not(.code-block-content code) {
 .x-card-body {
     padding: 1rem;
     flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.x-card-footer {
+    padding: 1rem;
+    margin-top: auto; /* Pushes footer to the bottom */
     text-align: center;
+}
+
+.x-view-button {
+    display: inline-block;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.875rem; /* 14px */
+    padding: 0.6rem 1.25rem;
+    border-radius: 9999px; /* pill shape */
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.x-view-button:hover {
+    background-color: #333333;
 }
 
 .x-title {
@@ -1592,6 +1618,7 @@ code:not(.code-block-content code) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    text-align: center;
 }
 
 .x-preview {
@@ -1602,6 +1629,13 @@ code:not(.code-block-content code) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+}
+
+.x-embed-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 

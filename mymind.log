@@ -10287,3 +10287,24 @@ DEBUG - Found 0 relevant notes
 DEBUG - Calling chat_with_mymind
 DEBUG - OpenRouter API key loaded: Yes
 DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+ * Serving Flask app 'app'
+ * Debug mode: on
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - OpenRouter API key loaded: Yes
+DEBUG - Client base_url: https://openrouter.ai/api/v1/
+DEBUG - Starting chat generation for question: 'what i clipped todayß'
+DEBUG - Intent: {'type': 'search', 'temporal_query': True, 'search_terms': ['what', 'i', 'clipped', 'todayß'], 'date_filter': {'type': 'today'}}
+DEBUG - Date filter: {'type': 'today'}
+DEBUG - Found 3 relevant notes
+DEBUG - Calling chat_with_mymind

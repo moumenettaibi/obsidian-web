@@ -1064,8 +1064,6 @@ function createCardElement(note, highlightTerm) {
     if (note.isXNote) {
         div.className = 'x-card card';
         const title = note.name.replace(/\.md$/, '');
-        const previewLines = note.contentWithoutTags.split('\n').slice(0, 3).join(' ');
-        const previewText = previewLines.length > 100 ? previewLines.substring(0, 100) + '...' : previewLines;
 
         div.innerHTML = `
             <div class="x-card-header">
@@ -1073,7 +1071,9 @@ function createCardElement(note, highlightTerm) {
             </div>
             <div class="x-card-body">
                 <h3 class="x-title" title="${title}">${title}</h3>
-                <p class="x-preview">${previewText}</p>
+            </div>
+            <div class="x-card-footer">
+                <a href="${note.xUrl}" target="_blank" rel="noopener noreferrer" class="x-view-button">VIEW ON X</a>
             </div>
         `;
         return div;
@@ -1656,14 +1656,26 @@ function showStandardModal(note) {
 
     modalTitle.textContent = note.path.replace(/\.md$/, '');
 
-    if (note.tags && note.tags.length > 0) {
-        modalTags.innerHTML = note.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-        modalTags.classList.remove('hidden');
+    if (note.isXNote) {
+        modalBody.innerHTML = '';
+        modalBody.classList.add('x-embed-body');
+        twttr.widgets.createTweet(
+            note.xUrl.split('/').pop(),
+            modalBody, {
+                theme: 'light'
+            }
+        );
     } else {
-        modalTags.classList.add('hidden');
-    }
+        modalBody.classList.remove('x-embed-body');
+        if (note.tags && note.tags.length > 0) {
+            modalTags.innerHTML = note.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            modalTags.classList.remove('hidden');
+        } else {
+            modalTags.classList.add('hidden');
+        }
 
-    switchToViewMode();
+        switchToViewMode();
+    }
 
     noteModal.classList.remove('hidden');
     noteModal.classList.add('flex');
@@ -2780,7 +2792,7 @@ cardContainer.addEventListener('click', (e) => {
         } else if (noteData.isRedditNote) {
             showStandardModal(noteData);
         } else if (noteData.isXNote) {
-            showXEmbedModal(noteData);
+            showStandardModal(noteData);
         } else if (noteData.isBookNote) {
             showBookModal(noteData);
         } else if (!noteData.isMediaNote) {
